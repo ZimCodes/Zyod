@@ -1,0 +1,7 @@
+.idea/
+test.py
+*.log
+*.exe
+*.txt
+!requirements.txt
+venv/
