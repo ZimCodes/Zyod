@@ -1,7 +1,12 @@
 .idea/
-test.py
 *.log
 *.exe
 *.txt
 !requirements.txt
 venv/
+
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class

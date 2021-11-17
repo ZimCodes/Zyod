@@ -1,4 +1,5 @@
 from . import base_identity
+from ...driver.support.driver_support import DriverSupport
 
 
 class GoIndex(base_identity.BaseIdentity):
@@ -6,7 +7,6 @@ class GoIndex(base_identity.BaseIdentity):
 
     @staticmethod
     def is_od(driver) -> bool:
-
         return (GoIndex._total_files_english(driver) or GoIndex._total_files_chinese(driver) or
                 GoIndex._footer_link(driver) or
                 GoIndex._script_tags(driver) or
@@ -20,7 +20,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = driver.find_elements_by_css_selector(r"div.is-divider[data-content~=Total]")
+        elements = DriverSupport.get_elements(driver, r"div.is-divider[data-content~=Total]")
         return bool(elements)
 
     @staticmethod
@@ -30,7 +30,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = driver.find_elements_by_css_selector(r"div.is-divider[data-content~=共]")
+        elements = DriverSupport.get_elements(driver, r"div.is-divider[data-content~=共]")
         return bool(elements)
 
     @staticmethod
@@ -40,7 +40,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return:bool
         """
-        elements = driver.find_elements_by_css_selector(r"footer .tag[href]")
+        elements = DriverSupport.get_elements(driver, r"footer .tag[href]")
         return bool(elements)
 
     @staticmethod
@@ -50,7 +50,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: WebDriver
         :return: bool
         """
-        elements = driver.find_elements_by_css_selector(r"script[src*=goindex]")
+        elements = DriverSupport.get_elements(driver, r"script[src*=goindex]")
         return bool(elements)
 
     @staticmethod
@@ -60,7 +60,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = driver.find_elements_by_css_selector(r"link[href*=goindex]")
+        elements = DriverSupport.get_elements(driver, r"link[href*=goindex]")
         return bool(elements)
 
     @staticmethod
@@ -70,5 +70,5 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = driver.find_elements_by_css_selector(r"div#count span.number")
+        elements = DriverSupport.get_elements(driver, r"div#count span.number")
         return bool(elements)

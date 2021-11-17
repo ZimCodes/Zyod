@@ -7,6 +7,12 @@ class Parser:
 
     @staticmethod
     def join_url(url, rel) -> str:
+        """Appends relative path to URL
+
+        :param str url: URL to join together
+        :param str rel: relative path to join together
+        :return: newly join URL with newly appended path
+        """
         if url[-1] == '/' and rel[0] == '/':
             return url[:len(url) - 1] + rel[:]
         elif url[-1] != '/' and rel[0] != '/':
@@ -16,14 +22,21 @@ class Parser:
 
     @staticmethod
     def join_path(url, rel) -> str:
+        """Replace entire path of URL with new relative path
+
+        :param str url: URL to join together
+        :param str rel: relative path to join together
+        :return: URL with a new relative path
+        """
         if rel.startswith("/"):
             rel = rel[1:]
         return re.sub("{0}$".format(rel), rel, url)
 
     @staticmethod
     def is_a_file(link) -> bool:
-        return Parser.regex.search(link) is not None
+        """Determines if link points to a file
 
-    @staticmethod
-    def get_elements(driver, css_select):
-        return driver.find_elements_by_css_selector(css_select)
+        :param str link: a URL
+        :return: True if a file, False otherwise
+        """
+        return Parser.regex.search(link) is not None
