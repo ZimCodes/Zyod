@@ -1,3 +1,5 @@
+import time
+
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
@@ -40,7 +42,6 @@ class DriverSupport:
         :return: list of page elements
         """
         elements = []
-
         try:
             elements = WebDriverWait(driver, opts.get_wait()).until(
                 lambda el:
@@ -53,3 +54,31 @@ class DriverSupport:
                 Talker.warning(message, True)
         finally:
             return elements
+
+    @staticmethod
+    def scroll_down(driver):
+        """Scroll to bottom of page
+
+        :param WebDriver driver: Selenium WebDriver
+        :return:
+        """
+        driver.execute_script("window.scrollBy(0,document.body.scrollHeight);")
+
+    @staticmethod
+    def scroll_to_bottom(driver, opts, css_select, prev_elements=None) -> list:
+        """Scroll recursively until bottom of page
+
+        :param WebDriver driver: Selenium WebDriver
+        :param Opts opts: Opts class
+        :param str css_select: Selects all file/directory content
+        :param list prev_elements: Previous list of elements
+        :return:
+        """
+        if prev_elements is None:
+            prev_elements = []
+        DriverSupport.scroll_down(driver)
+        time.sleep(opts.scroll_wait)
+        elements = DriverSupport.get_elements_wait(driver, opts, css_select)
+        if len(elements) > len(prev_elements):
+            DriverSupport.scroll_to_bottom(driver, opts, css_select, elements)
+        return elements

@@ -17,28 +17,29 @@ class GoIndex(base_scraper.BaseScraper):
         """
         super().__init__(ODType.GO_INDEX, driver, opts, filter_obj=GenericFilter)
 
-    def _prepare_nav_list(self, opts) -> None:
+    def _prepare_nav_list(self) -> None:
         """Prepare a list of navigational instructions for different versions of GoIndex
 
-        :param Opts opts: Opts class
         :return:
         """
         view_download_css = "div.golist tbody td span.icon:nth-child(n+3)"
         self._nav_list = [
-            SubNavigation(ScrapeType.LIST_VIEW, opts, "div.golist "
-                                                      "tbody td:first-child[title]",
+            SubNavigation(ScrapeType.LIST_VIEW, self._opts, "div.golist "
+                                                            "tbody td:first-child[title]",
                           view_download_css,
+                          "title",
                           "List View navigation method failed!"),
-            SubNavigation(ScrapeType.THUMBNAIL_VIEW, opts,
+            SubNavigation(ScrapeType.THUMBNAIL_VIEW, self._opts,
                           "div.column.is-one-quarter["
                           "data-v-1871190e] div[title]",
                           view_download_css,
+                          "title",
                           "Thumbnail View navigation method failed!"),
-            SubNavigation(ScrapeType.OLDER, opts, "ul#list li.mdui-list-item a",
+            SubNavigation(ScrapeType.OLDER, self._opts, "ul#list li.mdui-list-item a",
                           "a[gd-type]",
                           "Older version navigation failed! "
                           "Elements cannot be "
-                          "obtained", GoIndex._older_extra_download_task)]
+                          "obtained", extra_task=GoIndex._older_extra_download_task)]
 
     @staticmethod
     def _older_extra_download_task(driver) -> None:
@@ -51,7 +52,7 @@ class GoIndex(base_scraper.BaseScraper):
         element.click()
         driver.back()
 
-    def _get_clean_links(self, elements, depth_level) -> tuple[list, list]:
+    def _clean_links(self, elements, depth_level) -> None:
         """Retrieve file/directory links with filters applied to them
 
         :param list elements: list of elements
@@ -59,29 +60,9 @@ class GoIndex(base_scraper.BaseScraper):
         :return: filtered list of files/directory links
         """
         if not self._nav_obj:
-            return self._dirs, self._files
+            return
         match self._nav_obj.id:
             case ScrapeType.THUMBNAIL_VIEW | ScrapeType.LIST_VIEW:
-                return self._from_thumbnail_list_view(elements, depth_level)
+                self._files_append(elements, depth_level)
             case ScrapeType.OLDER:
-                return self._from_old_version(elements, depth_level)
-            case _:
-                return self._dirs, self._files
-
-    def _from_thumbnail_list_view(self, elements, level) -> tuple[list, list]:
-        """Retrieve the files/directory links from GoIndex in thumbnail view
-
-        :param list elements: list of elements
-        :param int level: the current depth folder the elements came from
-        :return: a tuple of corrected files and directory links
-        """
-        return self._get_files_append(elements, "title", level)
-
-    def _from_old_version(self, elements, level) -> tuple[list, list]:
-        """Retrieve the files/directory links from older versions of GoIndex
-
-        :param list elements: list of elements
-        :param int level: the current depth folder the elements came from
-        :return: a tuple of corrected files and directory links
-        """
-        return self._get_files_link(elements, "href", level)
+                self._files_link(elements, depth_level)

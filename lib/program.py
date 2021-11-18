@@ -120,7 +120,7 @@ class Program:
         :return: tuple containing a list of files & directories in the current directory
         """
         wait = self._opts.get_wait()
-        return self._scraper.navigate(self._opts, directory, bool(wait))
+        return self._scraper.navigate(directory, bool(wait))
 
     def _go_to_page(self, url) -> None:
         """Navigate to another page

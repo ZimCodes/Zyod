@@ -22,41 +22,39 @@ class BaseScraper:
         self.driver = driver
         self._dirs = []
         self._files = []
-        self._max_depth = opts.depth
         self._filter = filter_obj()
         self._nav_obj = None
         self._nav_list = []
-        self._accept_regex = opts.accept
-        self._reject_regex = opts.reject
+        self._opts = opts
+        self._accept_list = []
 
-    def navigate(self, opts, directory, should_wait) -> tuple[list, list]:
+    def navigate(self, directory, should_wait) -> tuple[list, list]:
         """Navigate an OD
 
         :param bool should_wait:
         :param Directory directory: directory to navigate to
-        :param Opts opts: Opt object
         """
         self._files = []
         self._dirs = []
+        self._accept_list = []
         if self.driver.current_url != directory.link:
             self._go_to_url(directory.link)
+
         if not self._nav_obj:
-            elements = self._choose_nav(opts, should_wait)
+            elements = self._choose_nav(should_wait)
         else:
-            elements = self._nav_obj.get_elements(self.driver, should_wait)
-        if elements:
-            if opts.do_download:
-                self.download(opts)
-        return self._get_clean_links(elements, directory.depth_level)
+            elements = self._nav_obj.scroll_to_bottom(self.driver)
+            # elements = self._nav_obj.get_elements(self.driver, should_wait)
+        self._clean_links(elements, directory.depth_level)
+        if elements and self._opts.do_download:
+            self.download()
+        return self._dirs, self._files
 
-    def download(self, opts) -> None:
-        """Download contents from current directory
+    def download(self) -> None:
+        """Download contents from current directory"""
+        self._nav_obj.download(self.driver, self._opts, self._accept_list)
 
-        :param Opts opts: Opts class
-        """
-        self._nav_obj.download(self.driver, opts)
-
-    def _get_clean_links(self, elements, depth_level) -> tuple[list, list]:
+    def _clean_links(self, elements, depth_level) -> None:
         """Retrieve file/directory links with filters applied to them
 
         :param list elements: list of elements
@@ -65,29 +63,26 @@ class BaseScraper:
         """
         pass
 
-    def _choose_nav(self, opts, should_wait=False) -> list:
+    def _choose_nav(self, should_wait=False) -> list:
         """ Selects a navigation type to use
 
-        :param Opts opts: Opts class
         :param bool should_wait: whether or not to wait for elements to appear
         :return: list of elements
         """
-        self._prepare_nav_list(opts)
+        self._prepare_nav_list()
         for nav_obj in self._nav_list:
             elements = nav_obj.get_elements(self.driver, should_wait)
             if elements:
                 self._nav_obj = nav_obj
+                if self._opts.scroll:
+                    elements = self._nav_obj.scroll_to_bottom(self.driver, elements)
                 return elements
         self._nav_obj = Empty()
         self._nav_obj.id = None
         return []
 
-    def _prepare_nav_list(self, opts) -> None:
-        """Prepare a list of navigational instructions for different variations
-
-        :param Opts opts: Opts class
-        :return:
-        """
+    def _prepare_nav_list(self) -> None:
+        """Prepare a list of navigational instructions for different variations"""
         pass
 
     def _go_to_url(self, url=None) -> None:
@@ -99,25 +94,25 @@ class BaseScraper:
         if url is not None:
             self.driver.get(url)
 
-    def _get_files_append(self, elements, attr, level) -> tuple[list, list]:
+    def _files_append(self, elements, level) -> None:
         """ Appends the element link onto the current URL
 
         :param elements: list of elements
-        :param attr: The attribute to extract link from
         :param level: the current depth folder the elements came from
         :return: a tuple of corrected files and directory links
         """
         try:
-            for el in elements:
-                link = el.get_attribute(attr)
+            for index, el in enumerate(elements):
+                link = el.get_attribute(self._nav_obj.css_attr)
                 if self._filter is not None:
                     link = self._filter.filter_link(link)
                 if Parser.is_a_file(link):
                     if self._user_regex_filter(link):
+                        self._accept_list.append(index)
                         self._files.append(Parser.join_url(self.driver.current_url, link))
                 else:
                     new_level = level + 1
-                    if new_level < self._max_depth:
+                    if new_level < self._opts.depth:
                         link = Parser.join_url(self.driver.current_url, link)
                         if not link.endswith('/'):
                             link += '/'
@@ -126,56 +121,52 @@ class BaseScraper:
                         self._dirs.append(new_dir)
         except StaleElementReferenceException:
             Talker.warning("Element cannot be found on current page!", new_line=True)
-        finally:
-            return self._dirs, self._files
 
-    def _get_files_link(self, elements, attr, level) -> tuple:
+    def _files_link(self, elements, level) -> None:
         """Uses the link found in each element
 
         :param elements: list of dom elements
-        :param attr: attribute to extract link from
         :param level: the current depth folder the elements came from
         :return: None
         """
         try:
-            for el in elements:
-                link = el.get_attribute(attr)
+            for index, el in enumerate(elements):
+                link = el.get_attribute(self._nav_obj.css_attr)
                 if self._filter is not None:
                     link = self._filter.filter_link(link)
                 if Parser.is_a_file(link):
                     if self._user_regex_filter(link):
+                        self._accept_list.append(index)
                         self._files.append(link)
                 else:
                     new_level = level + 1
-                    if new_level < self._max_depth:
+                    if new_level < self._opts.depth:
                         if not link.endswith('/'):
                             link += '/'
                         new_dir = Directory(new_level, link)
                         self._dirs.append(new_dir)
         except StaleElementReferenceException:
             Talker.warning("Element cannot be found on current page!", True)
-        finally:
-            return self._dirs, self._files
 
-    def _get_files_replace_path(self, elements, attr, level) -> tuple:
+    def _files_replace_path(self, elements, level) -> None:
         """Replaces the path of the URL with the path found in element
 
         :param elements:list of dom elements
-        :param attr: attribute to extract links from
         :param level: the current depth folder the elements came from
         :return: None
         """
         try:
-            for el in elements:
-                link = el.get_attribute(attr)
+            for index, el in enumerate(elements):
+                link = el.get_attribute(self._nav_obj.css_attr)
                 if self._filter is not None:
                     link = self._filter.filter_link(link)
                 if Parser.is_a_file(link):
                     if self._user_regex_filter(link):
+                        self._accept_list.append(index)
                         self._files.append(Parser.join_path(self.driver.current_url, link))
                 else:
                     new_level = level + 1
-                    if new_level < self._max_depth:
+                    if new_level < self._opts.depth:
                         link = Parser.join_path(self.driver.current_url, link)
                         if not link.endswith('/'):
                             link = link + '/'
@@ -183,7 +174,6 @@ class BaseScraper:
                         self._dirs.append(new_dir)
         except StaleElementReferenceException:
             Talker.warning("Element cannot be found on current page!", True)
-        return self._dirs, self._files
 
     def _user_regex_filter(self, link) -> bool:
         """User defined regex to filter out unwanted files
@@ -191,9 +181,9 @@ class BaseScraper:
         :param str link: file like to check
         :return: Whether the file link is acceptable
         """
-        if self._accept_regex is not None:
-            return self._accept_regex.search(link)
-        elif self._reject_regex is not None:
-            return not self._reject_regex.search(link)
+        if self._opts.accept is not None:
+            return self._opts.accept.search(link)
+        elif self._opts.reject is not None:
+            return not self._opts.reject.search(link)
         else:
             return True

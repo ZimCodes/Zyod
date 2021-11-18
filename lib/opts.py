@@ -24,6 +24,7 @@ class Opts:
         self._parse_scraper_group()
         self._parse_record_group()
         self._parse_download_group()
+        self._parse_interactive_group()
         opts = self._parser.parse_args()
         self._assign_args(opts)
 
@@ -50,6 +51,8 @@ class Opts:
         self.headless = opts.headless
         self.accept = opts.accept
         self.reject = opts.reject
+        self.scroll = opts.scroll
+        self.scroll_wait = opts.scroll_wait
 
     def _args_check(self, opts) -> None:
         """Checks arguments for conflicts and report them
@@ -188,3 +191,13 @@ class Opts:
                                        "Each line MUST represent one link to an OD. Line-by-Line "
                                        "format!"
                                   )
+
+    def _parse_interactive_group(self) -> None:
+        interact_group = self._parser.add_argument_group('interactive', 'interactivity options')
+        interact_group.add_argument('--scroll', action="store_true", help="scroll down the "
+                                                                          "page "
+                                                                          "repeatedly until the last "
+                                                                          "bottom element is reached.")
+        interact_group.add_argument('--scroll-wait', type=float, default=4.2, help="Amount of " \
+                                                                                   "seconds to wait before "
+                                                                                   "attempting to scroll again.")
