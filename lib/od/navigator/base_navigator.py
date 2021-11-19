@@ -5,7 +5,7 @@ from .helper.empty import Empty
 from ...talker import Talker
 
 
-class BaseScraper:
+class BaseNavigator:
     """Base scraper abstract class for all Scrapers"""
 
     def __init__(self, name, driver, opts, can_scrape=True, filter_obj=None):

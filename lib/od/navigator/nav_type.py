@@ -1,3 +1,4 @@
+"""ODs that have multiple variants"""
 from enum import Enum
 
 
@@ -6,3 +7,8 @@ class GoIndex(Enum):
     THUMBNAIL_VIEW = 1,
     LIST_VIEW = 2,
     OLDER = 3
+
+
+class FODI(Enum):
+    """Types of Navigations for FODI"""
+    MAIN = 1

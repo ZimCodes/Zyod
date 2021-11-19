@@ -8,7 +8,7 @@ from ....talker import Talker
 class SubNavigation:
     """Scraper navigation object to hold navigation data"""
 
-    def __init__(self, scrape_type, opts, css_extract,
+    def __init__(self, scrape_type, opts, css_select="",
                  css_download="", css_link="href", wait_err_message="navigation failed!",
                  extra_task=None):
         """Initializes SubNavigation object
@@ -16,14 +16,14 @@ class SubNavigation:
         :param extra_task: extra tasks to perform after clicking first element for download
         :param ScrapeType scrape_type: name of scraping technique
         :param Opts opts: Opts class
-        :param str css_extract: the elements to extract
+        :param str css_select: the elements used to navigate between files
         :param str css_download: the elements to interact with to download
-        :param str css_link: the attribute needed to extract links
+        :param str css_link: the attribute needed to download files
         :param wait_err_message: error message to show if no elements are found or present
         """
         self.id = scrape_type
         self._opts = opts
-        self._css_select = css_extract
+        self._css_select = css_select
         self._css_download = css_download
         self.css_attr = css_link
         self._wait_err_message = wait_err_message

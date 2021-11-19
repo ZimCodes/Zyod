@@ -1,12 +1,12 @@
-from . import base_scraper
+from . import base_navigator
 from ..filter.generic import Generic as GenericFilter
 from ...od.identity.od_type import ODType
 from ...driver.support.driver_support import DriverSupport
-from .scrape_type import GoIndex as ScrapeType
+from .nav_type import GoIndex as NavType
 from .helper.sub_navigation import SubNavigation
 
 
-class GoIndex(base_scraper.BaseScraper):
+class GoIndex(base_navigator.BaseNavigator):
     """Holds operations for navigating GoIndex ODs"""
 
     def __init__(self, driver, opts):
@@ -24,18 +24,18 @@ class GoIndex(base_scraper.BaseScraper):
         """
         view_download_css = "div.golist tbody td span.icon:nth-child(n+3)"
         self._nav_list = [
-            SubNavigation(ScrapeType.LIST_VIEW, self._opts, "div.golist "
+            SubNavigation(NavType.LIST_VIEW, self._opts, "div.golist "
                                                             "tbody td:first-child[title]",
                           view_download_css,
                           "title",
                           "List View navigation method failed!"),
-            SubNavigation(ScrapeType.THUMBNAIL_VIEW, self._opts,
+            SubNavigation(NavType.THUMBNAIL_VIEW, self._opts,
                           "div.column.is-one-quarter["
                           "data-v-1871190e] div[title]",
                           view_download_css,
                           "title",
                           "Thumbnail View navigation method failed!"),
-            SubNavigation(ScrapeType.OLDER, self._opts, "ul#list li.mdui-list-item a",
+            SubNavigation(NavType.OLDER, self._opts, "ul#list li.mdui-list-item a",
                           "a[gd-type]",
                           "Older version navigation failed! "
                           "Elements cannot be "
@@ -62,7 +62,7 @@ class GoIndex(base_scraper.BaseScraper):
         if not self._nav_obj:
             return
         match self._nav_obj.id:
-            case ScrapeType.THUMBNAIL_VIEW | ScrapeType.LIST_VIEW:
+            case NavType.THUMBNAIL_VIEW | NavType.LIST_VIEW:
                 self._files_append(elements, depth_level)
-            case ScrapeType.OLDER:
+            case NavType.OLDER:
                 self._files_link(elements, depth_level)

@@ -21,7 +21,7 @@ class Opts:
         self._parse_urls()
         self._parse_general_group()
         self._parse_driver_group()
-        self._parse_scraper_group()
+        self._parse_navigator_group()
         self._parse_record_group()
         self._parse_download_group()
         self._parse_interactive_group()
@@ -104,24 +104,24 @@ class Opts:
         general_group.add_argument('-v', '--verbose', action='store_true', help="Enable verbose "
                                                                                 "output.")
 
-    def _parse_scraper_group(self) -> None:
-        """Adds scraper related optional arguments"""
-        scraper_group = self._parser.add_argument_group('scraper', 'configure the scraping ODs')
-        scraper_group.add_argument('-w', '--wait', type=float, default=0, help='Maximum '
-                                                                               'seconds to '
-                                                                               'wait '
-                                                                               'before navigating '
-                                                                               'each page.')
-        scraper_group.add_argument('--random-wait', action='store_true', help='Randomize --wait '
-                                                                              'option; Between '
-                                                                              '0.5 * --wait,-w '
-                                                                              '(inclusive) to 1.5 *'
-                                                                              ' --wait,-w '
-                                                                              '(exclusive)')
-        scraper_group.add_argument('-d', '--depth', default=20, metavar='LEVEL', type=int,
-                                   help='How many '
-                                        'directories deep to scrape?')
-        filter_group = scraper_group.add_mutually_exclusive_group()
+    def _parse_navigator_group(self) -> None:
+        """Adds navigator related optional arguments"""
+        navigator_group = self._parser.add_argument_group('scraper', 'configure the scraping ODs')
+        navigator_group.add_argument('-w', '--wait', type=float, default=0, help='Maximum '
+                                                                                 'seconds to '
+                                                                                 'wait '
+                                                                                 'before navigating '
+                                                                                 'each page.')
+        navigator_group.add_argument('--random-wait', action='store_true', help='Randomize --wait '
+                                                                                'option; Between '
+                                                                                '0.5 * --wait,-w '
+                                                                                '(inclusive) to 1.5 *'
+                                                                                ' --wait,-w '
+                                                                                '(exclusive)')
+        navigator_group.add_argument('-d', '--depth', default=20, metavar='LEVEL', type=int,
+                                     help='How many '
+                                          'directories deep to scrape?')
+        filter_group = navigator_group.add_mutually_exclusive_group()
 
         filter_group.add_argument('-a', '--accept', type=re.compile, help="Regex of links to "
                                                                           "accept for recording "

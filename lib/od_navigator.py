@@ -1,10 +1,12 @@
 from .od.identity.od_type import ODType
 import lib.od.identity.goindex as go_index_id
-import lib.od.scraper.goindex as go_index_scraper
+import lib.od.identity.fodi as fodi_id
+import lib.od.navigator.fodi as fodi_nav
+import lib.od.navigator.goindex as go_index_nav
 
 
-class OdScraper:
-    """OdScraper object retrieves the appropriate scraper to use for an OD"""
+class OdNavigator:
+    """OdScraper object retrieves the appropriate navigator to use for an OD"""
 
     def __init__(self, driver, opts):
         """Initializes OdScraper object
@@ -12,9 +14,9 @@ class OdScraper:
         :param WebDriver driver: Selenium Webdriver object
         :param Opts opts: Opts class
         """
-        self._init_scraper(driver, opts)
+        self._init_navigator(driver, opts)
 
-    def _init_scraper(self, driver, opts) -> None:
+    def _init_navigator(self, driver, opts) -> None:
         """Initializes the appropriate Scraper to use
 
         :param WebDriver driver: Selenium Webdriver object
@@ -22,7 +24,9 @@ class OdScraper:
         :return:
         """
         if go_index_id.GoIndex.is_od(driver):
-            self.scraper = go_index_scraper.GoIndex(driver, opts)
+            self.navigator = go_index_nav.GoIndex(driver, opts)
+        elif fodi_id.FODI.is_od(driver):
+            self.navigator = fodi_nav.FODI(driver, opts)
         else:
             self.id = ODType.GENERIC
-            self.scraper = None
+            self.navigator = None

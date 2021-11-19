@@ -2,7 +2,7 @@
 import time
 
 from lib.main_driver import MainDriver
-from lib.od_scraper import OdScraper
+from lib.od_navigator import OdNavigator
 from lib.opts import Opts
 from lib.writer import Writer
 from lib.asset.directory import Directory
@@ -25,7 +25,7 @@ class Program:
             Links of files retrieved from all URLs
         _total_dirs: set
             Links of directories retrieved from all URLs
-        _scraper: Scraper
+        _navigator: Navigator
             Scraper object
         _writer: Writer
             Writer object
@@ -34,7 +34,7 @@ class Program:
         self._driver = None
         self._total_files = set()
         self._total_dirs = set()
-        self._scraper = None
+        self._navigator = None
         self._writer = None
 
     def start(self) -> None:
@@ -61,22 +61,22 @@ class Program:
         """Initializes non-constant objects"""
         if self._opts.verbose:
             Talker.loading('Initializing Scraper')
-        scraper_obj = OdScraper(self._driver, self._opts)
-        self._scraper = scraper_obj.scraper
+        scraper_obj = OdNavigator(self._driver, self._opts)
+        self._navigator = scraper_obj.navigator
         if self._opts.verbose:
             Talker.complete('Scraper finalized')
-        Talker.arrow_header_info('Scrape Method', self._scraper.id.name, True)
+        Talker.arrow_header_info('Scrape Method', self._navigator.id.name, True)
 
     def _scrape_and_download(self, url: str) -> None:
         """Scrape and/or download from OD
 
         :param str url: starting link to OD
         """
-        if not self._scraper.can_scrape:
+        if not self._navigator.can_scrape:
             Talker.warning(f'Recording/Scraping features are not supported f'
-                           f'or {self._scraper.id.name}', True)
+                           f'or {self._navigator.id.name}', True)
 
-        if self._scraper.can_scrape:
+        if self._navigator.can_scrape:
             if not self._opts.do_download:
                 Talker.loading("Begin Scrape process")
             else:
@@ -110,7 +110,7 @@ class Program:
                 Talker.complete("Finished Scrape process", True)
         elif self._opts.do_download:
             Talker.loading("Begin Download process")
-            self._scraper.download(self._opts)
+            self._navigator.download(self._opts)
             Talker.complete("Finished Download process", True)
 
     def _navigate_page(self, directory) -> tuple[list, list]:
@@ -119,7 +119,7 @@ class Program:
         :param Directory directory: Current directory to scrape/download through
         :return: tuple containing a list of files & directories in the current directory
         """
-        return self._scraper.navigate(directory)
+        return self._navigator.navigate(directory)
 
     def _go_to_page(self, url) -> None:
         """Navigate to another page
