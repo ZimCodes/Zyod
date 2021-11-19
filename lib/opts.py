@@ -110,10 +110,14 @@ class Opts:
         scraper_group.add_argument('-w', '--wait', type=float, default=0, help='Maximum '
                                                                                'seconds to '
                                                                                'wait '
-                                                                               'before navigating each page.')
+                                                                               'before navigating '
+                                                                               'each page.')
         scraper_group.add_argument('--random-wait', action='store_true', help='Randomize --wait '
                                                                               'option; Between '
-                                                                              '0.5 * --wait,-w (inclusive) to 1.5 * --wait,-w (exclusive)')
+                                                                              '0.5 * --wait,-w '
+                                                                              '(inclusive) to 1.5 *'
+                                                                              ' --wait,-w '
+                                                                              '(exclusive)')
         scraper_group.add_argument('-d', '--depth', default=20, metavar='LEVEL', type=int,
                                    help='How many '
                                         'directories deep to scrape?')
@@ -166,8 +170,11 @@ class Opts:
                                                                                    "randomized"
                                                                                    "between 0.5 "
                                                                                    "* "
-                                                                                   "--download-wait (inclusive) "
-                                                                                   "to 1.5 * --download-wait (exclusive)")
+                                                                                   "--download-wait"
+                                                                                   " (inclusive) "
+                                                                                   "to 1.5 * "
+                                                                                   "--download-wait"
+                                                                                   " (exclusive)")
 
     def _parse_record_group(self) -> None:
         """Adds Record related optional arguments"""
@@ -196,8 +203,11 @@ class Opts:
         interact_group = self._parser.add_argument_group('interactive', 'interactivity options')
         interact_group.add_argument('--scroll', action="store_true", help="scroll down the "
                                                                           "page "
-                                                                          "repeatedly until the last "
-                                                                          "bottom element is reached.")
-        interact_group.add_argument('--scroll-wait', type=float, default=4.2, help="Amount of " \
-                                                                                   "seconds to wait before "
-                                                                                   "attempting to scroll again.")
+                                                                          "repeatedly until the"
+                                                                          " last bottom element is "
+                                                                          "reached.")
+        interact_group.add_argument('--scroll-wait', type=float, default=4.2, help="Amount of "
+                                                                                   "seconds to wait"
+                                                                                   " before "
+                                                                                   "attempting to "
+                                                                                   "scroll again.")
