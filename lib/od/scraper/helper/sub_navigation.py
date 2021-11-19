@@ -29,14 +29,13 @@ class SubNavigation:
         self._wait_err_message = wait_err_message
         self._extra_task = extra_task
 
-    def get_elements(self, driver, should_wait=False) -> list:
+    def get_elements(self, driver) -> list:
         """Navigating GoIndex in List View
 
         :param WebDriver driver: Selenium WebDriver
-        :param bool should_wait: enables waiting feature
         :return: list of found elements
         """
-
+        should_wait = self._opts.get_wait()
         if should_wait:
             return DriverSupport.get_elements_wait(driver, self._opts,
                                                    self._css_select,
@@ -65,6 +64,15 @@ class SubNavigation:
         except StaleElementReferenceException:
             Talker.warning(f"Cannot find download button at {driver.current_url}. Webpage probably "
                            f"did not load up in time.", True)
+
+    def scroll_to_bottom(self, driver, elements=None) -> list:
+        """Scroll until bottom of page is reached
+
+        :param WebDriver driver: Selenium WebDriver
+        :param list elements: list of elements
+        :return:list of all elements
+        """
+        return DriverSupport.scroll_to_bottom(driver, self._opts, self._css_select, elements)
 
     def _get_download_elements(self, driver, opts) -> list:
         """Retrieve all elements needed for downloading
@@ -140,12 +148,3 @@ class SubNavigation:
                 Talker.loading(f"Waiting for {wait} seconds")
             time.sleep(wait)
         element.click()
-
-    def scroll_to_bottom(self, driver, elements=None) -> list:
-        """Scroll until bottom of page is reached
-
-        :param WebDriver driver: Selenium WebDriver
-        :param list elements: list of elements
-        :return:list of all elements
-        """
-        return DriverSupport.scroll_to_bottom(driver, self._opts, self._css_select, elements)

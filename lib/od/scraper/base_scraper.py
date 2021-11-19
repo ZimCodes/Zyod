@@ -28,10 +28,9 @@ class BaseScraper:
         self._opts = opts
         self._accept_list = []
 
-    def navigate(self, directory, should_wait) -> tuple[list, list]:
+    def navigate(self, directory) -> tuple[list, list]:
         """Navigate an OD
 
-        :param bool should_wait:
         :param Directory directory: directory to navigate to
         """
         self._files = []
@@ -41,10 +40,11 @@ class BaseScraper:
             self._go_to_url(directory.link)
 
         if not self._nav_obj:
-            elements = self._choose_nav(should_wait)
-        else:
+            elements = self._choose_nav()
+        elif self._opts.scroll:
             elements = self._nav_obj.scroll_to_bottom(self.driver)
-            # elements = self._nav_obj.get_elements(self.driver, should_wait)
+        else:
+            elements = self._nav_obj.get_elements(self.driver)
         self._clean_links(elements, directory.depth_level)
         if elements and self._opts.do_download:
             self.download()
@@ -63,15 +63,14 @@ class BaseScraper:
         """
         pass
 
-    def _choose_nav(self, should_wait=False) -> list:
+    def _choose_nav(self) -> list:
         """ Selects a navigation type to use
 
-        :param bool should_wait: whether or not to wait for elements to appear
         :return: list of elements
         """
         self._prepare_nav_list()
         for nav_obj in self._nav_list:
-            elements = nav_obj.get_elements(self.driver, should_wait)
+            elements = nav_obj.get_elements(self.driver)
             if elements:
                 self._nav_obj = nav_obj
                 if self._opts.scroll:

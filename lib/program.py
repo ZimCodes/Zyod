@@ -119,8 +119,7 @@ class Program:
         :param Directory directory: Current directory to scrape/download through
         :return: tuple containing a list of files & directories in the current directory
         """
-        wait = self._opts.get_wait()
-        return self._scraper.navigate(directory, bool(wait))
+        return self._scraper.navigate(directory)
 
     def _go_to_page(self, url) -> None:
         """Navigate to another page
