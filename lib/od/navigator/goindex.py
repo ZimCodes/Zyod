@@ -1,9 +1,10 @@
 from . import base_navigator
-from ..filter.generic import Generic as GenericFilter
+from ...scraper.filter.generic import Generic as ScrapeFilter
 from ...od.identity.od_type import ODType
 from ...driver.support.driver_support import DriverSupport
 from .nav_type import GoIndex as NavType
-from .helper.sub_navigation import SubNavigation
+from ...asset.nav_info import NavInfo
+from ...scraper.join_scraper import JoinScraper
 
 
 class GoIndex(base_navigator.BaseNavigator):
@@ -15,31 +16,39 @@ class GoIndex(base_navigator.BaseNavigator):
         :param Opts opts: Opts class
         :param WebDriver driver: Selenium Webdriver object
         """
-        super().__init__(ODType.GO_INDEX, driver, opts, filter_obj=GenericFilter)
+        super().__init__(ODType.GO_INDEX, driver, opts)
 
-    def _prepare_nav_list(self) -> None:
+    def _prepare_nav_info_list(self) -> None:
         """Prepare a list of navigational instructions for different versions of GoIndex
 
         :return:
         """
         view_download_css = "div.golist tbody td span.icon:nth-child(n+3)"
-        self._nav_list = [
-            SubNavigation(NavType.LIST_VIEW, self._opts, "div.golist "
-                                                            "tbody td:first-child[title]",
-                          view_download_css,
-                          "title",
-                          "List View navigation method failed!"),
-            SubNavigation(NavType.THUMBNAIL_VIEW, self._opts,
-                          "div.column.is-one-quarter["
-                          "data-v-1871190e] div[title]",
-                          view_download_css,
-                          "title",
-                          "Thumbnail View navigation method failed!"),
-            SubNavigation(NavType.OLDER, self._opts, "ul#list li.mdui-list-item a",
-                          "a[gd-type]",
-                          "Older version navigation failed! "
-                          "Elements cannot be "
-                          "obtained", extra_task=GoIndex._older_extra_download_task)]
+        self._nav_info_list = [
+            NavInfo(NavType.LIST_VIEW, "div.golist "
+                                       "tbody td:first-child[title]",
+                    "title",
+                    view_download_css,
+                    "List View navigation method failed!"),
+            NavInfo(NavType.THUMBNAIL_VIEW,
+                    "div.column.is-one-quarter["
+                    "data-v-1871190e] div[title]",
+                    "title",
+                    view_download_css,
+                    "Thumbnail View navigation method failed!"),
+            NavInfo(NavType.OLDER, "ul#list li.mdui-list-item a",
+                    css_download="a[gd-type]",
+                    wait_err_message="Older version navigation failed! "
+                                     "Elements cannot be "
+                                     "obtained", extra_task=GoIndex._older_extra_download_task)]
+
+    def _setup_scraper(self, nav_info) -> None:
+        match nav_info.id:
+            case NavType.OLDER:
+                self._scraper = JoinScraper(self._driver, self._opts, nav_info,
+                                            ScrapeFilter)
+            case _:
+                self._scraper = JoinScraper(self._driver, self._opts, nav_info, ScrapeFilter)
 
     @staticmethod
     def _older_extra_download_task(driver) -> None:
@@ -51,18 +60,3 @@ class GoIndex(base_navigator.BaseNavigator):
         element = DriverSupport.get_element(driver, "a.mdui-fab")
         element.click()
         driver.back()
-
-    def _clean_links(self, elements, depth_level) -> None:
-        """Retrieve file/directory links with filters applied to them
-
-        :param list elements: list of elements
-        :param int depth_level: the current depth level
-        :return: filtered list of files/directory links
-        """
-        if not self._nav_obj:
-            return
-        match self._nav_obj.id:
-            case NavType.THUMBNAIL_VIEW | NavType.LIST_VIEW:
-                self._files_append(elements, depth_level)
-            case NavType.OLDER:
-                self._files_link(elements, depth_level)

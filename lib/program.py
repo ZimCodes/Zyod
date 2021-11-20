@@ -72,54 +72,46 @@ class Program:
 
         :param str url: starting link to OD
         """
-        if not self._navigator.can_scrape:
-            Talker.warning(f'Recording/Scraping features are not supported f'
-                           f'or {self._navigator.id.name}', True)
+        if self._navigator.no_full_links and not self._navigator.dont_record:
+            Talker.warning(f"Recording full file links from {self._navigator.id.name} ODs are not "
+                           f"supported! However, the file names can be.")
+            answer = input("Would you like to purse this instead? (y,n)")
+            if answer not in 'yes':
+                exit(0)
 
-        if self._navigator.can_scrape:
-            if not self._opts.do_download:
-                Talker.loading("Begin Scrape process")
-            else:
-                Talker.loading("Begin Scrape & Download process")
+        if not self._navigator.no_full_links:
 
-            dirs_to_navigate = {Directory(0, url)}
-            while len(dirs_to_navigate) != 0:
-                current_dir = dirs_to_navigate.pop()
-                Talker.header("Current Directory")
-                if self._opts.verbose:
-                    Talker.arrow_info("level", current_dir.depth_level)
-                Talker.arrow_info("url", current_dir.link, True)
-                (dirs, files) = self._navigate_page(current_dir)
-                if self._opts.verbose:
-                    Talker.header("Directories")
-                    Talker.list_dir_info(dirs, 'Dir')
-                    Talker.arrow_info("Total", len(dirs), True)
-                    Talker.header("Files")
-                    Talker.list_info(files, 'File')
-                    Talker.arrow_info("Total", len(files))
-                    Talker.divider()
-
-                dir_set = set(dirs)
-                file_set = set(files)
-                dirs_to_navigate |= dir_set
-                self._total_dirs |= dir_set
-                self._total_files |= file_set
-            if self._opts.do_download:
-                Talker.complete("Finished Scrape & Download process", True)
-            else:
-                Talker.complete("Finished Scrape process", True)
+            self._navigate_recurse(url, self._navigator.navigate)
         elif self._opts.do_download:
-            Talker.loading("Begin Download process")
-            self._navigator.download(self._opts)
-            Talker.complete("Finished Download process", True)
+            self._navigate_recurse(url, self._navigator.download)
 
-    def _navigate_page(self, directory) -> tuple[list, list]:
+    def _navigate_recurse(self, url, navigation_func) -> None:
+        """Recursively navigate an OD
+
+        :param str url: the starting URL of an OD
+        :param function navigation_func: function for navigating an OD
+        :return:
         """
-        Navigate to a page and scrape it
-        :param Directory directory: Current directory to scrape/download through
-        :return: tuple containing a list of files & directories in the current directory
-        """
-        return self._navigator.navigate(directory)
+        if not self._opts.do_download:
+            Talker.loading("Begin Scrape process")
+        else:
+            Talker.loading("Begin Scrape & Download process")
+        dirs_to_navigate = {Directory(0, url)}
+        while len(dirs_to_navigate) != 0:
+            current_dir = dirs_to_navigate.pop()
+            Talker.current_directory(self._opts.verbose, current_dir.link, current_dir.depth_level)
+            (dirs, files) = navigation_func(current_dir)
+            Talker.file_stats(self._opts.verbose, dirs, files)
+
+            dir_set = set(dirs)
+            dirs_to_navigate |= dir_set
+            self._total_dirs |= dir_set
+            file_set = set(files)
+            self._total_files |= file_set
+        if self._opts.do_download:
+            Talker.complete("Finished Scrape & Download process", True)
+        else:
+            Talker.complete("Finished Scrape process", True)
 
     def _go_to_page(self, url) -> None:
         """Navigate to another page

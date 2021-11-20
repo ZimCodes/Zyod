@@ -2,7 +2,6 @@ import argparse
 import random
 from .writer import Writer
 from .talker import Talker
-import re
 
 
 class Opts:
@@ -49,8 +48,6 @@ class Opts:
         self._download_wait = abs(opts.download_wait)
         self.dont_record = opts.no_record
         self.headless = opts.headless
-        self.accept = opts.accept
-        self.reject = opts.reject
         self.scroll = opts.scroll
         self.scroll_wait = opts.scroll_wait
 
@@ -110,32 +107,18 @@ class Opts:
         navigator_group.add_argument('-w', '--wait', type=float, default=0, help='Maximum '
                                                                                  'seconds to '
                                                                                  'wait '
-                                                                                 'before navigating '
+                                                                                 'before '
+                                                                                 'navigating '
                                                                                  'each page.')
         navigator_group.add_argument('--random-wait', action='store_true', help='Randomize --wait '
                                                                                 'option; Between '
                                                                                 '0.5 * --wait,-w '
-                                                                                '(inclusive) to 1.5 *'
-                                                                                ' --wait,-w '
+                                                                                '(inclusive) to 1.5'
+                                                                                ' * --wait,-w '
                                                                                 '(exclusive)')
         navigator_group.add_argument('-d', '--depth', default=20, metavar='LEVEL', type=int,
                                      help='How many '
                                           'directories deep to scrape?')
-        filter_group = navigator_group.add_mutually_exclusive_group()
-
-        filter_group.add_argument('-a', '--accept', type=re.compile, help="Regex of links to "
-                                                                          "accept for recording "
-                                                                          "& downloading. Only "
-                                                                          "applies to ODs that "
-                                                                          "are eligible for "
-                                                                          "scraping.")
-        filter_group.add_argument('-r', '--reject', type=re.compile,
-                                  help="Regex of file links to "
-                                       "reject for recording "
-                                       "& downloading. Only "
-                                       "applies to ODs that "
-                                       "are eligible for "
-                                       "scraping.")
 
     def _parse_driver_group(self) -> None:
         """Adds Driver related optional arguments"""

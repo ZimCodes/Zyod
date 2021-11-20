@@ -2,14 +2,14 @@ import re
 
 
 class Generic:
-    """Generic Filter for all links"""
+    """Generic Scraper Filter for all links"""
 
     def __init__(self):
         """Initializes Generic filter object"""
         self._re = re
         self._link = None
 
-    def filter_link(self, link) -> str:
+    def apply(self, link) -> str:
         """Applies generic filters to link
 
         :param str link: link to apply filter on

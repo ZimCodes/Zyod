@@ -1,3 +1,6 @@
+from .asset.directory import Directory
+
+
 class Talker:
     """Talker object prints colorful messages to the console"""
 
@@ -20,7 +23,7 @@ class Talker:
 
     @staticmethod
     def list_dir_info(dirs, title, new_line=False) -> None:
-        links = [directory.link for directory in dirs]
+        links = [directory.link for directory in dirs if isinstance(directory, Directory)]
         Talker.list_info(links, title, new_line)
 
     @staticmethod
@@ -59,3 +62,21 @@ class Talker:
         if new_line:
             message += '\n'
         print(message)
+
+    @staticmethod
+    def current_directory(verbose, url, depth_level) -> None:
+        Talker.header("Current Directory")
+        if verbose:
+            Talker.arrow_info("level", depth_level)
+        Talker.arrow_info("url", url, True)
+
+    @staticmethod
+    def file_stats(verbose, dirs, files) -> None:
+        if verbose:
+            Talker.header("Directories")
+            Talker.list_dir_info(dirs, 'Dir')
+            Talker.arrow_info("Total", len(dirs), True)
+            Talker.header("Files")
+            Talker.list_info(files, 'File')
+            Talker.arrow_info("Total", len(files))
+            Talker.divider()
