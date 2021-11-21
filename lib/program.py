@@ -6,6 +6,7 @@ from lib.od_navigator import OdNavigator
 from lib.opts import Opts
 from lib.writer import Writer
 from lib.asset.directory import Directory
+from lib.asset.url import URL
 from selenium.common.exceptions import WebDriverException
 from urllib3.exceptions import MaxRetryError
 from lib.talker import Talker
@@ -72,17 +73,17 @@ class Program:
 
         :param str url: starting link to OD
         """
-        if self._navigator.no_full_links and not self._navigator.dont_record:
+        if self._navigator.no_full_links and not self._opts.dont_record:
             Talker.warning(f"Recording full file links from {self._navigator.id.name} ODs are not "
                            f"supported! However, the file names can be.")
-            answer = input("Would you like to purse this instead? (y,n)")
+            answer = input("Would you like to pursue this instead? (y,n)")
             if answer not in 'yes':
                 exit(0)
 
         if not self._navigator.no_full_links:
 
             self._navigate_recurse(url, self._navigator.navigate)
-        elif self._opts.do_download:
+        else:
             self._navigate_recurse(url, self._navigator.download)
 
     def _navigate_recurse(self, url, navigation_func) -> None:
@@ -96,10 +97,10 @@ class Program:
             Talker.loading("Begin Scrape process")
         else:
             Talker.loading("Begin Scrape & Download process")
-        dirs_to_navigate = {Directory(0, url)}
+        dirs_to_navigate = {Directory(0, URL(url))}
         while len(dirs_to_navigate) != 0:
             current_dir = dirs_to_navigate.pop()
-            Talker.current_directory(self._opts.verbose, current_dir.link, current_dir.depth_level)
+            Talker.current_directory(self._opts.verbose, current_dir.url, current_dir.depth_level)
             (dirs, files) = navigation_func(current_dir)
             Talker.file_stats(self._opts.verbose, dirs, files)
 

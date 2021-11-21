@@ -1,3 +1,6 @@
+from .url import URL
+
+
 class Directory:
     """Directory object holds directory related data"""
 
@@ -5,16 +8,23 @@ class Directory:
         """Initializes Directory object
 
         :param int level: depth level of directory
-        :param str url: link to directory
+        :param URL url: URL object of directory location
         """
         self.depth_level = level
-        self.link = url
+        self._url = url
+
+    @property
+    def url(self) -> str:
+        return self._url.geturl()
+
+    def pop_path(self) -> None:
+        self._url.pop_path()
 
     def __eq__(self, other):
-        return self.link == other.link
+        return self.url == other.url
 
     def __ne__(self, other):
-        return self.link != other.link
+        return self.url != other.url
 
     def __hash__(self):
-        return hash((self.link, self.depth_level))
+        return hash((self.url, self.depth_level))

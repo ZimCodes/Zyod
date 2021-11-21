@@ -25,18 +25,18 @@ class GoIndex(base_navigator.BaseNavigator):
         """
         view_download_css = "div.golist tbody td span.icon:nth-child(n+3)"
         self._nav_info_list = [
-            NavInfo(NavType.LIST_VIEW, "div.golist "
-                                       "tbody td:first-child[title]",
-                    "title",
-                    view_download_css,
-                    "List View navigation method failed!"),
+            NavInfo(NavType.LIST_VIEW, css_select="div.golist "
+                                                  "tbody td:first-child[title]",
+                    css_attr="title",
+                    css_download=view_download_css,
+                    wait_err_message="List View navigation method failed!"),
             NavInfo(NavType.THUMBNAIL_VIEW,
-                    "div.column.is-one-quarter["
-                    "data-v-1871190e] div[title]",
-                    "title",
-                    view_download_css,
-                    "Thumbnail View navigation method failed!"),
-            NavInfo(NavType.OLDER, "ul#list li.mdui-list-item a",
+                    css_select="div.column.is-one-quarter["
+                               "data-v-1871190e] div[title]",
+                    css_attr="title",
+                    css_download=view_download_css,
+                    wait_err_message="Thumbnail View navigation method failed!"),
+            NavInfo(NavType.OLDER, css_select="ul#list li.mdui-list-item a",
                     css_download="a[gd-type]",
                     wait_err_message="Older version navigation failed! "
                                      "Elements cannot be "

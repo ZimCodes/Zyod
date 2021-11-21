@@ -23,7 +23,7 @@ class Talker:
 
     @staticmethod
     def list_dir_info(dirs, title, new_line=False) -> None:
-        links = [directory.link for directory in dirs if isinstance(directory, Directory)]
+        links = [directory.url for directory in dirs if isinstance(directory, Directory)]
         Talker.list_info(links, title, new_line)
 
     @staticmethod

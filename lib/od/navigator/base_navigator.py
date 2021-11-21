@@ -1,6 +1,6 @@
-from ...scraper.base_scraper import BaseScraper
 from ...asset.directory import Directory
 from ...download.downloader import Downloader
+from ...driver.support.driver_support import DriverSupport
 
 
 class BaseNavigator:
@@ -34,23 +34,21 @@ class BaseNavigator:
         results = self._scraper.get_results()
         return results
 
-    def _setup_navigate(self, directory, activate_go_to_url=True) -> list:
+    def _setup_navigate(self, directory) -> list:
         """Set up navigation dependencies
 
         :param Directory directory: current parent Directory object
-        :param bool activate_go_to_url: activate going to another URL
         :return: list of navigation elements
         """
-        if self._driver.current_url != directory.link and activate_go_to_url:
-            self._go_to_url(directory.link)
 
+        self._go_to_directory(directory)
         elements = None
         if not self._scraper:
             elements = self._setup_dependencies()
         elif self._opts.scroll:
             elements = self._scraper.scroll_to_bottom()
         if self._scraper:
-            self._scraper.scrape(elements, directory.depth_level)
+            self._scraper.scrape(elements, directory)
         return elements
 
     def download(self) -> None:
@@ -66,7 +64,9 @@ class BaseNavigator:
         for nav_info in self._nav_info_list:
             opts = self._opts
             opts._wait = 15
-            elements = BaseScraper.get_elements(self._driver, self._opts, nav_info)
+            elements = DriverSupport.get_elements_all(self._driver, self._opts,
+                                                      nav_info.css_select,
+                                                      nav_info.wait_err_message)
             if elements:
                 self._setup_scraper(nav_info)
                 self._setup_downloader(nav_info)
@@ -90,11 +90,12 @@ class BaseNavigator:
         """Prepare a list of navigational instructions for different variations"""
         pass
 
-    def _go_to_url(self, url=None) -> None:
-        """Navigate to webpage
+    def _go_to_directory(self, directory) -> None:
+        """Navigate to directory
 
-        :param str url: the link to navigate to
+        :param Directory directory: directory to navigate to
         :return:
         """
-        if url is not None:
-            self._driver.get(url)
+        if self._driver.current_url != directory.url:
+            if directory.url is not None:
+                self._driver.get(directory.url)

@@ -11,6 +11,24 @@ class DriverSupport:
     MIMES = ""
 
     @staticmethod
+    def get_elements_all(driver, opts, css_select, wait_err_message) -> list:
+        """Retrieve a list of elements
+
+        :param wait_err_message: Error message when elements doesn't show
+        :param WebDriver driver: Selenium WebDriver
+        :param Opts opts: Opts class
+        :param str css_select: css selector
+        :return: list of found elements
+        """
+        should_wait = opts.get_wait()
+        if should_wait:
+            return DriverSupport.get_elements_wait(driver, opts,
+                                                   css_select,
+                                                   wait_err_message)
+        else:
+            return DriverSupport.get_elements(driver, css_select)
+
+    @staticmethod
     def get_elements(driver, css_select) -> list:
         """Retrieve a list of page elements using CSS selectors
 
