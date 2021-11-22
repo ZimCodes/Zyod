@@ -31,7 +31,7 @@ class TextScraper(JoinScraper):
 
     def _scrape_items(self) -> list:
         if self._sleep:
-            time.sleep(6)
+            time.sleep(4)
             return DriverSupport.get_elements_all(self._driver, self._opts,
                                                   self.nav_info.css_name,
                                                   self.nav_info.wait_err_message)
