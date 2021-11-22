@@ -74,17 +74,10 @@ class Program:
         :param str url: starting link to OD
         """
         if self._navigator.no_full_links and not self._opts.dont_record:
-            Talker.warning(f"Recording full file links from {self._navigator.id.name} ODs are not "
-                           f"supported! However, the file names can be.")
-            answer = input("Would you like to pursue this instead? (y,n)")
-            if answer not in 'yes':
-                exit(0)
-
-        if not self._navigator.no_full_links:
-
-            self._navigate_recurse(url, self._navigator.navigate)
-        else:
-            self._navigate_recurse(url, self._navigator.download)
+            Talker.warning(f"CORRECT file links for {self._navigator.id.name} are unavailable. "
+                           f"However pseudo file links will be generated instead!")
+            time.sleep(7)
+        self._navigate_recurse(url, self._navigator.navigate)
 
     def _navigate_recurse(self, url, navigation_func) -> None:
         """Recursively navigate an OD

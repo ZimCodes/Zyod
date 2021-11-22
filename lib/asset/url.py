@@ -4,7 +4,7 @@ import re
 
 class URL:
     """Mutable URL object holding URL data"""
-    regex = re.compile(r"\.(?:[a-zA-Z0-9]{3,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$")
+    regex = re.compile(r"\.(?:[a-zA-Z0-9]{1,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$")
 
     def __init__(self, url):
         """Initializes Url object
@@ -61,7 +61,9 @@ class URL:
 
     def pop_path(self) -> None:
         paths = self.path.split('/')
-        paths.pop()
+        popped_item = paths.pop()
+        if not popped_item:
+            paths.pop()
         self.path = '/'.join(paths)
 
     def add_path(self, path):

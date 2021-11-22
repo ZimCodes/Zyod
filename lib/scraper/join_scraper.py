@@ -1,3 +1,4 @@
+
 from ..driver.support.driver_support import DriverSupport
 from ..asset.directory import Directory
 from ..asset.url import URL
@@ -23,11 +24,18 @@ class JoinScraper:
         self._filter = filter_obj() if filter_obj else None
         self.nav_info = nav_info
 
-    def scrape(self, elements, directory) -> None:
+    def scrape(self, elements, directory) -> list:
+        """Begin Scraping OD
+
+        :param list elements: list of elements scraped
+        :param Directory directory: current Directory
+        """
+
         self._reset_lists()
         if elements is None:
             elements = self._scrape_items()
         self._store_links(elements, directory)
+        return elements
 
     def _scrape_items(self) -> list:
         """Retrieve scraped elements"""

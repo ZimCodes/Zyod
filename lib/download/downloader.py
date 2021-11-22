@@ -25,7 +25,7 @@ class Downloader:
 
         :return:
         """
-        elements = self._get_download_elements(self._driver, self._opts)
+        elements = self.get_download_elements(self._driver, self._opts)
         if self._filter_obj:
             elements = self._filter_obj.apply(elements)
 
@@ -42,7 +42,7 @@ class Downloader:
                            f"probably "
                            f"did not load up in time.", True)
 
-    def _get_download_elements(self, driver, opts) -> list:
+    def get_download_elements(self, driver, opts) -> list:
         """Retrieve all elements needed for downloading
 
         :param WebDriver driver: Selenium WebDriver
@@ -78,9 +78,18 @@ class Downloader:
             if i == 0:
                 Downloader._download_step(opts, el)
             else:
-                els = self._get_download_elements(driver, opts)
+                els = self.get_download_elements(driver, opts)
+                if self._filter_obj:
+                    els = self._filter_obj.apply(els)
                 Downloader._download_step(opts, els[i])
             self._nav_info.extra_task(driver)
+
+    def multi_task_lazy(self, driver, opts, index):
+        els = self.get_download_elements(driver, opts)
+        if self._filter_obj:
+            els = self._filter_obj.apply(els)
+        Downloader._download_step(opts, els[index])
+        self._nav_info.extra_task(driver)
 
     @staticmethod
     def _download_step(opts, element) -> None:

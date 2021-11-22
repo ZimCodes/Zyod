@@ -12,7 +12,7 @@ class BaseNavigator:
         :param name: name of Navigator
         :param WebDriver driver: Selenium Webdriver
         :param Opts opts: Opts class
-        :param bool no_full_links: Whether or not file links can be recorded from this OD
+        :param bool no_full_links: Whether or not correct file links can be recorded from this OD
         """
         self.id = name
         self._driver = driver
@@ -40,15 +40,15 @@ class BaseNavigator:
         :param Directory directory: current parent Directory object
         :return: list of navigation elements
         """
-
         self._go_to_directory(directory)
+
         elements = None
         if not self._scraper:
             elements = self._setup_dependencies()
         elif self._opts.scroll:
             elements = self._scraper.scroll_to_bottom()
         if self._scraper:
-            self._scraper.scrape(elements, directory)
+            elements = self._scraper.scrape(elements, directory)
         return elements
 
     def download(self) -> None:
@@ -64,9 +64,7 @@ class BaseNavigator:
         for nav_info in self._nav_info_list:
             opts = self._opts
             opts._wait = 15
-            elements = DriverSupport.get_elements_all(self._driver, self._opts,
-                                                      nav_info.css_select,
-                                                      nav_info.wait_err_message)
+            elements = self._get_nav_info_elements(nav_info)
             if elements:
                 self._setup_scraper(nav_info)
                 self._setup_downloader(nav_info)
@@ -74,6 +72,11 @@ class BaseNavigator:
                     elements = self._scraper.scroll_to_bottom(elements)
                 return elements
         return []
+
+    def _get_nav_info_elements(self, nav_info) -> list:
+        return DriverSupport.get_elements_all(self._driver, self._opts,
+                                              nav_info.css_select,
+                                              nav_info.wait_err_message)
 
     def _setup_scraper(self, nav_info) -> None:
         """Setup Scraper dependencies"""

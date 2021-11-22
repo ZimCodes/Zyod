@@ -1,3 +1,5 @@
+import time
+
 from .od.identity.od_type import ODType
 import lib.od.identity.goindex as go_index_id
 import lib.od.identity.fodi as fodi_id
@@ -23,6 +25,7 @@ class OdNavigator:
         :param Opts opts: Opts class
         :return:
         """
+        time.sleep(10)  # Provides time for OD to load up
         if go_index_id.GoIndex.is_od(driver):
             self.navigator = go_index_nav.GoIndex(driver, opts)
         elif fodi_id.FODI.is_od(driver):
