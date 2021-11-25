@@ -24,6 +24,7 @@ class Opts:
         self._parse_record_group()
         self._parse_download_group()
         self._parse_interactive_group()
+        self._parse_misc_group()
         opts = self._parser.parse_args()
         self._assign_args(opts)
 
@@ -49,7 +50,8 @@ class Opts:
         self.dont_record = opts.no_record
         self.headless = opts.headless
         self.scroll = opts.scroll
-        self.scroll_wait = opts.scroll_wait
+        self.scroll_wait = abs(opts.scroll_wait)
+        self.web_wait = abs(opts.web_wait)
 
     def _args_check(self, opts) -> None:
         """Checks arguments for conflicts and report them
@@ -194,3 +196,10 @@ class Opts:
                                                                                    " before "
                                                                                    "attempting to "
                                                                                    "scroll again.")
+
+    def _parse_misc_group(self):
+        self._parser.add_argument('--web-wait', type=float, default=15, help="Amount of seconds to "
+                                                                             "wait for browser to "
+                                                                             "start up each OD "
+                                                                             "before starting "
+                                                                             "Zyod.")

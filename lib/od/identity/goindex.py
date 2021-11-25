@@ -20,7 +20,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = DriverSupport.get_elements(driver, r"div.is-divider[data-content~=Total]")
+        elements = DriverSupport.get_elements(driver, r"div.is-divider[data-content~=Total]", "")
         return bool(elements)
 
     @staticmethod
@@ -30,7 +30,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = DriverSupport.get_elements(driver, r"div.is-divider[data-content~=共]")
+        elements = DriverSupport.get_elements(driver, r"div.is-divider[data-content~=共]", "")
         return bool(elements)
 
     @staticmethod
@@ -40,7 +40,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return:bool
         """
-        elements = DriverSupport.get_elements(driver, r"footer .tag[href]")
+        elements = DriverSupport.get_elements(driver, r"footer .tag[href]", "")
         return bool(elements)
 
     @staticmethod
@@ -50,7 +50,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: WebDriver
         :return: bool
         """
-        elements = DriverSupport.get_elements(driver, r"script[src*=goindex]")
+        elements = DriverSupport.get_elements(driver, r"script[src*=goindex]", "")
         return bool(elements)
 
     @staticmethod
@@ -60,7 +60,7 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = DriverSupport.get_elements(driver, r"link[href*=goindex]")
+        elements = DriverSupport.get_elements(driver, r"link[href*=goindex]", "")
         return bool(elements)
 
     @staticmethod
@@ -70,5 +70,5 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = DriverSupport.get_elements(driver, r"div#count span.number")
+        elements = DriverSupport.get_elements(driver, r"div#count span.number", "")
         return bool(elements)

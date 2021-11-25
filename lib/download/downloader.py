@@ -1,6 +1,5 @@
 import time
 from ..talker import Talker
-from selenium.common.exceptions import StaleElementReferenceException
 from ..driver.support.driver_support import DriverSupport
 
 
@@ -31,22 +30,34 @@ class Downloader:
 
         Talker.loading("Downloading Files", new_line=True)
 
-        try:
-            if self._nav_info.extra_task:
-                self._multiple_tasks(self._driver, self._opts, elements)
-            else:
-                Downloader._single_task(self._opts, elements)
+        if self._nav_info.extra_task:
+            self._multiple_tasks(elements)
+        else:
+            Downloader._single_task(self._opts, elements)
 
-        except StaleElementReferenceException:
-            Talker.warning(f"Cannot find download button at {self._driver.current_url}. Webpage "
-                           f"probably "
-                           f"did not load up in time.", True)
+    def right_click_download(self) -> None:
+        """Download files using the right click's context menu"""
+        elements = DriverSupport.get_elements_all(self._driver,
+                                                  self._opts,
+                                                  self._nav_info.css_select,
+                                                  f"Download Elements "
+                                                  f"cannot be found at "
+                                                  f"{self._driver.current_url}")
+        if self._filter_obj:
+            elements = self._filter_obj.apply(elements)
+        context_download_element = DriverSupport.get_element(self._driver,
+                                                             self._nav_info.css_download)
+
+        for el in elements:
+            if self._opts.scroll:
+                DriverSupport.scroll_to_element(self._driver, el)
+                time.sleep(self._opts.scroll_wait)
+            DriverSupport.right_click(self._driver, el)
+            context_download_element.click()
 
     def get_download_elements(self, driver, opts) -> list:
         """Retrieve all elements needed for downloading
 
-        :param WebDriver driver: Selenium WebDriver
-        :param Opts opts: Opts class
         :return: list of elements related to downloading
         """
         opts.get_wait = lambda: 30
@@ -66,23 +77,21 @@ class Downloader:
         for el in elements:
             Downloader._download_step(opts, el)
 
-    def _multiple_tasks(self, driver, opts, elements) -> None:
+    def _multiple_tasks(self, elements) -> None:
         """Download operation with multiple actions
 
-        :param WebDriver driver: Selenium WebDriver
-        :param Opts opts: Opts class
         :param list elements: list of elements
         :return:
         """
         for i, el in enumerate(elements):
             if i == 0:
-                Downloader._download_step(opts, el)
+                Downloader._download_step(self._opts, el)
             else:
-                els = self.get_download_elements(driver, opts)
+                els = self.get_download_elements(self._driver, self._opts)
                 if self._filter_obj:
                     els = self._filter_obj.apply(els)
-                Downloader._download_step(opts, els[i])
-            self._nav_info.extra_task(driver)
+                Downloader._download_step(self._opts, els[i])
+            self._nav_info.extra_task(self._driver)
 
     def multi_task_lazy(self, driver, opts, index):
         els = self.get_download_elements(driver, opts)

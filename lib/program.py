@@ -61,12 +61,12 @@ class Program:
     def _init_navigation(self) -> None:
         """Initializes non-constant objects"""
         if self._opts.verbose:
-            Talker.loading('Initializing Scraper')
+            Talker.loading('Initializing Navigator')
         scraper_obj = OdNavigator(self._driver, self._opts)
         self._navigator = scraper_obj.navigator
         if self._opts.verbose:
-            Talker.complete('Scraper finalized')
-        Talker.arrow_header_info('Scrape Method', self._navigator.id.name, True)
+            Talker.complete('Navigator finalized')
+        Talker.arrow_header_info('Navigation Method', self._navigator.id.name, True)
 
     def _scrape_and_download(self, url: str) -> None:
         """Scrape and/or download from OD
@@ -76,14 +76,13 @@ class Program:
         if self._navigator.no_full_links and not self._opts.dont_record:
             Talker.warning(f"CORRECT file links for {self._navigator.id.name} are unavailable. "
                            f"However pseudo file links will be generated instead!")
-            time.sleep(7)
-        self._navigate_recurse(url, self._navigator.navigate)
+            time.sleep(3)
+        self._navigate_recurse(url)
 
-    def _navigate_recurse(self, url, navigation_func) -> None:
+    def _navigate_recurse(self, url) -> None:
         """Recursively navigate an OD
 
         :param str url: the starting URL of an OD
-        :param function navigation_func: function for navigating an OD
         :return:
         """
         if not self._opts.do_download:
@@ -94,7 +93,7 @@ class Program:
         while len(dirs_to_navigate) != 0:
             current_dir = dirs_to_navigate.pop()
             Talker.current_directory(self._opts.verbose, current_dir.url, current_dir.depth_level)
-            (dirs, files) = navigation_func(current_dir)
+            (dirs, files) = self._navigator.navigate(current_dir)
             Talker.file_stats(self._opts.verbose, dirs, files)
 
             dir_set = set(dirs)
@@ -158,5 +157,4 @@ class Program:
     @staticmethod
     def _shutdown_headless() -> None:
         """Headless shutdown"""
-        input("Please submit any key to finish......\n")
         Talker.loading("Zyod is shutting down")

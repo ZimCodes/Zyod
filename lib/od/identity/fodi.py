@@ -40,8 +40,9 @@ class FODI(BaseIdentity):
         :param WebDriver driver: Selenium WebDriver
         :return: True if table header exist. False otherwise
         """
-        element = DriverSupport.get_element(driver, "div.right div.list-header div.file span.name")
-        return element.text.strip() == 'ITEMS'
+        element = DriverSupport.get_element(driver, "div.right div.list-header div.file span.name",
+                                            "")
+        return FODI.text_check(element, 'ITEMS')
 
     @staticmethod
     def _time_header(driver) -> bool:
@@ -50,8 +51,9 @@ class FODI(BaseIdentity):
         :param WebDriver driver: Selenium WebDriver
         :return: True if table header exist, False otherwise
         """
-        element = DriverSupport.get_element(driver, "div.right div.list-header div.file span.time")
-        return element.text.strip() == 'TIME'
+        element = DriverSupport.get_element(driver, "div.right div.list-header div.file span.time",
+                                            "")
+        return FODI.text_check(element, 'TIME')
 
     @staticmethod
     def _size_header(driver) -> bool:
@@ -60,5 +62,6 @@ class FODI(BaseIdentity):
         :param WebDriver driver: Selenium WebDriver
         :return:True if table header exist, False otherwise
         """
-        element = DriverSupport.get_element(driver, "div.right div.list-header div.file span.size")
-        return element.text.strip() == 'SIZE'
+        element = DriverSupport.get_element(driver, "div.right div.list-header div.file span.size",
+                                            "")
+        return FODI.text_check(element, 'SIZE')

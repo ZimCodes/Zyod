@@ -6,3 +6,4 @@ class ODType(Enum):
     GENERIC = "Generic",
     GO_INDEX = "GoIndex",
     FODI = "FODI"
+    ZFILE = "ZFile"

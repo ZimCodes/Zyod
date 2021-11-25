@@ -1,11 +1,11 @@
-from .base_navigator import BaseNavigator
+from .name_navigator import NameNavigator
 from ...asset.directory import Directory
 from ...asset.url import URL
 from ...driver.support.driver_support import DriverSupport
 import time
 
 
-class TouchNavigator(BaseNavigator):
+class TouchNavigator(NameNavigator):
     """Navigator object that navigates purely through interaction"""
 
     def __init__(self, name, driver, opts, no_full_links=False):
@@ -18,10 +18,6 @@ class TouchNavigator(BaseNavigator):
         """
         super().__init__(name, driver, opts, no_full_links)
         self._cur_dir = Directory(0, URL(self._driver.current_url))
-
-    def _get_nav_info_elements(self, nav_info) -> list:
-        return DriverSupport.get_elements_all(self._driver, self._opts, nav_info.css_name,
-                                              nav_info.wait_err_message)
 
     def _go_to_directory(self, directory) -> None:
         self._move_up_to_destination(directory)

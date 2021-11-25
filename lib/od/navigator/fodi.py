@@ -4,7 +4,7 @@ from .nav_type import FODI as NavType
 from ...driver.support.driver_support import DriverSupport
 from ...asset.nav_info import NavInfo
 from ...download.downloader import Downloader
-from ...download.filter.fodi import FODI as FODIDownloadFilter
+from ...download.filters import FODI as FODIDownloadFilter
 from ...scraper.text_scraper import TextScraper
 
 

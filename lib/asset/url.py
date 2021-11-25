@@ -4,7 +4,7 @@ import re
 
 class URL:
     """Mutable URL object holding URL data"""
-    regex = re.compile(r"\.(?:[a-zA-Z0-9]{1,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$")
+    regex = re.compile(r"\.(?:[a-zA-Z0-9]{3,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$")
 
     def __init__(self, url):
         """Initializes Url object
@@ -17,6 +17,11 @@ class URL:
         self.path = URL._add_start_slash(url.path)
         self.query = url.query
         self.fragment = url.fragment
+        # /#/ a fragment as a path
+        if self.fragment.startswith('/'):
+            self.fragment = URL._slash_join('/#/', self.fragment)
+            self.path = URL._slash_join(self.path, self.fragment)
+            self.fragment = ''
 
     def geturl(self) -> str:
         url = ''

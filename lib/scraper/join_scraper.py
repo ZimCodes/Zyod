@@ -1,4 +1,3 @@
-
 from ..driver.support.driver_support import DriverSupport
 from ..asset.directory import Directory
 from ..asset.url import URL
@@ -31,13 +30,12 @@ class JoinScraper:
         :param Directory directory: current Directory
         """
 
-        self._reset_lists()
         if elements is None:
-            elements = self._scrape_items()
+            elements = self.scrape_items()
         self._store_links(elements, directory)
         return elements
 
-    def _scrape_items(self) -> list:
+    def scrape_items(self) -> list:
         """Retrieve scraped elements"""
         return DriverSupport.get_elements_all(self._driver, self._opts,
                                               self.nav_info.css_select,
@@ -60,10 +58,12 @@ class JoinScraper:
     def _join_links(self, directory, link) -> None:
         """ Filter & join links together to make a new URL
 
-        :param directory:
-        :param link:
+        :param directory: current Parent directory
+        :param link: new link to join together
         :return:
         """
+        if JoinScraper._is_home(link):
+            return
         link = self.apply_filter(link)
         if URL.is_a_file(link):
             self._files.append(URL.joiner(directory.url, link))
@@ -75,21 +75,19 @@ class JoinScraper:
                 new_dir = Directory(new_level, url)
                 self._dirs.append(new_dir)
 
-    def scroll_to_bottom(self, elements=None) -> list:
-        """Scroll until bottom of page is reached
-
-        :param list elements: list of elements
-        :return:list of all elements
-        """
-        return DriverSupport.scroll_to_bottom(self._driver, self._opts, self.nav_info.css_select,
-                                              elements)
+    @staticmethod
+    def _is_home(text):
+        home_list = {'/', '.', '..', '../', './'}
+        init_total = len(home_list)
+        home_list.add(text)
+        return init_total == len(home_list)
 
     def apply_filter(self, link):
         if self._filter:
             return self._filter.apply(link)
         return link
 
-    def _reset_lists(self) -> None:
+    def reset(self) -> None:
         """Reset the list fields"""
         self._files = []
         self._dirs = []

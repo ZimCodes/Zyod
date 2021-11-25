@@ -1,10 +1,12 @@
 import time
-
+from .talker import Talker
 from .od.identity.od_type import ODType
 import lib.od.identity.goindex as go_index_id
 import lib.od.identity.fodi as fodi_id
 import lib.od.navigator.fodi as fodi_nav
 import lib.od.navigator.goindex as go_index_nav
+import lib.od.identity.zfile as zfile_id
+import lib.od.navigator.zfile as zfile_nav
 
 
 class OdNavigator:
@@ -25,11 +27,16 @@ class OdNavigator:
         :param Opts opts: Opts class
         :return:
         """
-        time.sleep(10)  # Provides time for OD to load up
+        if opts.web_wait:
+            Talker.loading("Providing time for OD to finish loading up")
+            time.sleep(opts.web_wait)  # Provides time for OD to load up
+            Talker.loading("Setting Up Navigator")
         if go_index_id.GoIndex.is_od(driver):
             self.navigator = go_index_nav.GoIndex(driver, opts)
         elif fodi_id.FODI.is_od(driver):
             self.navigator = fodi_nav.FODI(driver, opts)
+        elif zfile_id.ZFile.is_od(driver):
+            self.navigator = zfile_nav.ZFile(driver, opts)
         else:
             self.id = ODType.GENERIC
             self.navigator = None

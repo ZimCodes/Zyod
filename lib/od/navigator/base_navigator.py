@@ -1,15 +1,16 @@
 from ...asset.directory import Directory
 from ...download.downloader import Downloader
 from ...driver.support.driver_support import DriverSupport
+import time
 
 
 class BaseNavigator:
-    """Base scraper abstract class for all Scrapers"""
+    """Base scraper abstract class for all Scrapers. Uses an element's attributes to navigate ODs"""
 
     def __init__(self, name, driver, opts, no_full_links=False):
         """Initializes BaseNavigator object
 
-        :param name: name of Navigator
+        :param name: type of OD
         :param WebDriver driver: Selenium Webdriver
         :param Opts opts: Opts class
         :param bool no_full_links: Whether or not correct file links can be recorded from this OD
@@ -31,7 +32,7 @@ class BaseNavigator:
         elements = self._setup_navigate(directory)
         if elements and self._opts.do_download:
             self.download()
-        results = self._scraper.get_results()
+        results = self._scraper.get_results() if self._scraper else ([], [])
         return results
 
     def _setup_navigate(self, directory) -> list:
@@ -40,13 +41,17 @@ class BaseNavigator:
         :param Directory directory: current parent Directory object
         :return: list of navigation elements
         """
-        self._go_to_directory(directory)
+        if self._scraper:
+            self._scraper.reset()
+        is_url_displayed = self._go_to_directory(directory)
 
+        if not is_url_displayed:
+            return []
         elements = None
         if not self._scraper:
             elements = self._setup_dependencies()
         elif self._opts.scroll:
-            elements = self._scraper.scroll_to_bottom()
+            elements = self._scroll_to_bottom()
         if self._scraper:
             elements = self._scraper.scrape(elements, directory)
         return elements
@@ -69,7 +74,7 @@ class BaseNavigator:
                 self._setup_scraper(nav_info)
                 self._setup_downloader(nav_info)
                 if self._opts.scroll:
-                    elements = self._scraper.scroll_to_bottom(elements)
+                    elements = self._scroll_to_bottom(elements)
                 return elements
         return []
 
@@ -93,12 +98,32 @@ class BaseNavigator:
         """Prepare a list of navigational instructions for different variations"""
         pass
 
-    def _go_to_directory(self, directory) -> None:
-        """Navigate to directory
+    def _scroll_to_bottom(self, prev_elements=None) -> list:
+        """Scroll recursively until bottom of page
+
+        :param list prev_elements: Previous list of elements
+        :return:
+        """
+        if prev_elements is None:
+            prev_elements = []
+        self._scroll_down()
+        time.sleep(self._opts.scroll_wait)
+        elements = self._scraper.scrape_items()
+        if len(elements) > len(prev_elements):
+            self._scroll_to_bottom(elements)
+        return elements
+
+    def _scroll_down(self) -> None:
+        """Scroll down the page of contents"""
+        DriverSupport.global_scroll_down(self._driver)
+
+    def _go_to_directory(self, directory) -> bool:
+        """Navigate to directory.
 
         :param Directory directory: directory to navigate to
-        :return:
+        :return:True if page can be navigated to without a login box appearing, False otherwise
         """
         if self._driver.current_url != directory.url:
             if directory.url is not None:
                 self._driver.get(directory.url)
+        return True

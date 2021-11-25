@@ -12,3 +12,8 @@ class GoIndex(Enum):
 class FODI(Enum):
     """Types of Navigations for FODI"""
     MAIN = 1
+
+
+class ZFile(Enum):
+    """Types of Navigator for ZFile"""
+    MAIN = 1
