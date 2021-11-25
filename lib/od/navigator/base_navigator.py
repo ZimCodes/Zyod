@@ -107,7 +107,8 @@ class BaseNavigator:
         if prev_elements is None:
             prev_elements = []
         self._scroll_down()
-        time.sleep(self._opts.scroll_wait)
+        if self._opts.scroll_wait:
+            time.sleep(self._opts.scroll_wait)
         elements = self._scraper.scrape_items()
         if len(elements) > len(prev_elements):
             self._scroll_to_bottom(elements)

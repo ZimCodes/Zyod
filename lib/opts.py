@@ -107,11 +107,9 @@ class Opts:
         """Adds navigator related optional arguments"""
         navigator_group = self._parser.add_argument_group('scraper', 'configure the scraping ODs')
         navigator_group.add_argument('-w', '--wait', type=float, default=0, help='Maximum '
-                                                                                 'seconds to '
-                                                                                 'wait '
-                                                                                 'before '
-                                                                                 'navigating '
-                                                                                 'each page.')
+                                                                                 'seconds to wait'
+                                                                                 ' before scraping'
+                                                                                 ' each page.')
         navigator_group.add_argument('--random-wait', action='store_true', help='Randomize --wait '
                                                                                 'option; Between '
                                                                                 '0.5 * --wait,-w '

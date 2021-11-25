@@ -51,7 +51,8 @@ class Downloader:
         for el in elements:
             if self._opts.scroll:
                 DriverSupport.scroll_to_element(self._driver, el)
-                time.sleep(self._opts.scroll_wait)
+                if self._opts.scroll_wait:
+                    time.sleep(self._opts.scroll_wait)
             DriverSupport.right_click(self._driver, el)
             context_download_element.click()
 

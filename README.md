@@ -1,36 +1,34 @@
 # Zyod
-**Zyod** is designed to scrape file links from **dynamic ODs** *(JavaScript only Open Directories)* 
-with the help of **[Selenium](https://github.com/seleniumhq/selenium)**. 
-Primarily, Zyod was created to fulfill the missing features not available in Zeiver. 
 
-For **static ODs**, check out [Zeiver](https://github.com/ZimCodes/Zeiver).
+**Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
+Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**.
 
-## Workflow
-Since Zyod was created to work alongside Zeiver, it is ideal to use these tools together. This 
-workflow focuses on a scenario in which Zeiver is unable to scrape/download files from an unknown 
-*(probably dynamic)* OD. As a solution, Zyod will scrape the OD *for* Zeiver and prepare the 
-links for download.
+## Sample Usage
 
-1. Input the OD URL in Zyod. By default, the scraped links will be placed in the *output.txt* file.
-   1. Ex: `python zyod.py --driver chrome -o output.txt https://example.com/cool`
-2. Now let Zeiver read the links from the *output.txt* file. This will invoke Zeiver to download 
-the files from the OD.
-   1. Ex `zeiver -i output.txt -o ./save_dir`
-3. That's it.
+This command uses the Google Chrome driver to scrape and record links from *https://od.example. com*
+. While scraping, Zyod will write more text to the console, wait a maximum of *15 seconds*
+before scraping each page, search 3 directory levels deep, interact by scrolling, and do not wait in
+between each scroll action.
+
+`--driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com`
 
 ## Installation
 
 ## Commands
+
 ### Positional
+
 __URL*s*...__
 
-Link(*s*) to the OD(*s*) you would like to scrape content from.
+Link(*s*) to the OD(*s*) you would like to scrape/record/download content from.
 *_This is not needed if you are using `-i, --input`._
 
 ---
 
 ### Options
+
 #### General
+
 ***-h, --help***
 
 Prints help information.
@@ -46,51 +44,121 @@ Enable verbose output
 ---
 
 #### WebDriver
+
 ***--driver***
 
-Type of webdriver in use. *Choices:* `firefox`,`chrome`,`chromium`,`opera`,`safari`,`edge`
+Type of webdriver in use. *Choices:* `firefox`,`chrome`,`edge`
 
 ***--driver-path***
 
 Location of the WebDriver in use. *Default: `%PATH%`*
 
+***--headless***
+
+Activates headless mode. **Cannot be used with `--download`.
+
 ---
 
-#### Scraper
+#### Navigator
+
 ***-d, --depth***
 
-Specify the maximum depth for recursive scraping. _Default: `20`_. **Depth of`1` is current 
+Specify the maximum depth for recursive scraping. _Default: `20`_. **Depth of`1` is current
 directory.**
 
 ***-w, --wait***
 
-Wait a specified number of seconds before scraping.
+Wait a maximum number of seconds before scraping.
+
+Most dynamic ODs load content on the page *very slooooowly*. This option allows Zyod to wait a 
+certain amount of time before scraping.
 
 ***--random-wait***
 
 Wait a random amount of seconds before scraping.
 
-The time before scraping will vary between 0.5 * `--wait,-w` (_inclusive_) 
+The time before scraping will vary between 0.5 * `--wait,-w` (_inclusive_)
 to 1.5 * `--wait,-w` (_exclusive_)
 
 ---
 
-#### Files/Directories
+#### Downloading
+***--download***
+
+Enable downloading feature.
+
+By default, downloading is disabled. Use this option to allow Zyod to download files from ODs. 
+**Cannot be used with `--headless`**.
+
+
+***--dir, --download-dir***
+
+Path to store downloaded files.
+
+The directory path to store download files. *Default:* `Downloads folder`
+
+***--download-wait***
+Wait a random amount of seconds before downloading.
+
+Wait between 0.5 * `--download-wait` (_inclusive_) to 1.5 * `--download-wait` 
+(_exclusive_) seconds before downloading. *Default:* `0`.
+
+---
+
+#### Recording
+
 ***-o, --output***
 
 The file path to store the scraped links. *Default:* `output.txt`
 
 ***-i, --input***
 
-Read links from a file, which points to a series of ODs. **Each line must represent a link to an 
-OD**. This option can be used with the `URL..` positional option. To use this option as a 
+Read links from a file.
+
+Read links from a file, which points to a series of ODs. **Each line must represent a link to an
+OD**. **This option can be used with the `URL..` positional argument.** To use this option as a
 standalone you must provide `URL..` as an empty string `""`:
 
 `python zyod.py -i input.txt ""`
 
+***--no-record***
+
+Disable recording feature.
+
+Recording is enabled by default. Use this option to disable recording.
+
 ---
 
+#### Interactivity
+
+***--scroll***
+
+Activates scrolling feature.
+
+Scroll down the page repeatedly until last element is reached. Some dynamic ODs only loads 25, 
+50, etc. amount of content on the page at a time. When the bottom of the page is reached, more 
+content is loaded. This option will allow Zyod to scroll in order to scrape and download more 
+content from the OD.
+
+***--scroll-wait***
+
+Amount of seconds to wait before attempting to scroll again.
+
+---
+
+#### Miscellaneous
+
+***--web-wait***
+
+Amount of seconds to wait for browser to initially load up each OD before executing Zyod.
+
+When Zyod visits a dynamic OD for the first time, it may take a long time for the OD to load up. 
+Use this option to delay execution of Zyod, giving the page time to load up.
+
+
+
 ## License
+
 Zyod is licensed under the MIT License.
 
 See the [MIT](https://github.com/ZimCodes/Zyod/blob/main/LICENSE) license for more info. 
