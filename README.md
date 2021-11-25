@@ -10,7 +10,7 @@ This command uses the Google Chrome driver to scrape and record links from *http
 before scraping each page, search 3 directory levels deep, interact by scrolling, and do not wait in
 between each scroll action.
 
-`--driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com`
+`python zyod.py --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com`
 
 ## Installation
 
