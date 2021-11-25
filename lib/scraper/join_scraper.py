@@ -32,6 +32,10 @@ class JoinScraper:
 
         if elements is None:
             elements = self.scrape_items()
+            if not elements:
+                # Refresh the page and try again
+                self._driver.refresh()
+                elements = self.scrape_items()
         self._store_links(elements, directory)
         return elements
 

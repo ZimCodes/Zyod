@@ -7,6 +7,8 @@ import lib.od.navigator.fodi as fodi_nav
 import lib.od.navigator.goindex as go_index_nav
 import lib.od.identity.zfile as zfile_id
 import lib.od.navigator.zfile as zfile_nav
+import lib.od.identity.gdindex as gd_index_id
+import lib.od.navigator.gdindex as gd_index_nav
 
 
 class OdNavigator:
@@ -37,6 +39,8 @@ class OdNavigator:
             self.navigator = fodi_nav.FODI(driver, opts)
         elif zfile_id.ZFile.is_od(driver):
             self.navigator = zfile_nav.ZFile(driver, opts)
+        elif gd_index_id.GDIndex.is_od(driver):
+            self.navigator = gd_index_nav.GDIndex(driver, opts)
         else:
             self.id = ODType.GENERIC
             self.navigator = None

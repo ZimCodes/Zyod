@@ -2,3 +2,4 @@
 - GoIndex
 - FODI
 - ZFile
+- GDIndex

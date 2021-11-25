@@ -7,3 +7,4 @@ class ODType(Enum):
     GO_INDEX = "GoIndex",
     FODI = "FODI"
     ZFILE = "ZFile"
+    GD_INDEX = "GDIndex"

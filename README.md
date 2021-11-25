@@ -11,8 +11,16 @@ before scraping each page, search 3 directory levels deep, interact by scrolling
 between each scroll action.
 
 `python zyod.py --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com`
+## Open Directory Support
+Supported ODs can be found in [OD.md](https://github.com/ZimCodes/Zyod/blob/main/OD.md).
 
 ## Installation
+1. This project requires Python in order to start, please make sure Python is install.
+   1. You can download Python here: https://www.python.org/downloads/
+2. Download this repository
+3. Extract zip file
+4. Open a terminal and point it to the Zyod project directory containing `zyod.py`.
+5. To run zyod start you commands using `python zyod.py`.
 
 ## Commands
 
