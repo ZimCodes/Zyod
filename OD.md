@@ -1,3 +1,4 @@
 ### Supported
 - GoIndex
 - FODI
+- ZFile
