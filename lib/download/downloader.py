@@ -25,6 +25,8 @@ class Downloader:
         :return:
         """
         elements = self.get_download_elements(self._driver, self._opts)
+        if not elements:
+            return
         if self._filter_obj:
             elements = self._filter_obj.apply(elements)
 

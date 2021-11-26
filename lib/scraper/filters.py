@@ -31,3 +31,10 @@ class Generic:
     def _remove_double_quotes(self):
         """Remove quotes from text"""
         self._text = self._re.sub(r"\"", "", self._text)
+
+
+class OneDriveVercelIndex(Generic):
+
+    def _apply_filters(self) -> None:
+        super()._apply_filters()
+        self._text = self._text.replace("\n", " ", 1)

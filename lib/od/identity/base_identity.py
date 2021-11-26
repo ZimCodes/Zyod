@@ -1,3 +1,6 @@
+from ...driver.support.driver_support import DriverSupport
+
+
 class BaseIdentity:
     """Base for identifying ODs"""
 
@@ -7,7 +10,7 @@ class BaseIdentity:
         pass
 
     @staticmethod
-    def text_check(element, match_text) -> bool:
+    def _text_check(element, match_text) -> bool:
         """Checks the text of an element
 
         :param WebElement element: the element to check
@@ -18,3 +21,11 @@ class BaseIdentity:
             return element.text.strip() == match_text
         else:
             return False
+
+    @staticmethod
+    def _attr_check(driver, css_element, attr, match_text) -> bool:
+        element = DriverSupport.get_element(driver, css_element, "")
+        if not element:
+            return False
+        attr_text = element.get_attribute(attr)
+        return match_text in attr_text

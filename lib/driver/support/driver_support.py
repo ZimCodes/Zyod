@@ -43,9 +43,11 @@ class DriverSupport:
         try:
             return driver.find_elements(By.CSS_SELECTOR, css_select)
         except StaleElementReferenceException:
-            Talker.warning(err_message, True)
+            if err_message:
+                Talker.warning(err_message, True)
         except NoSuchElementException:
-            Talker.warning(err_message, False)
+            if err_message:
+                Talker.warning(err_message, False)
 
     @staticmethod
     def get_element(driver, css_select, err_message="Unable to locate element. Webpage probably "
@@ -60,9 +62,11 @@ class DriverSupport:
         try:
             return driver.find_element(By.CSS_SELECTOR, css_select)
         except StaleElementReferenceException:
-            Talker.warning(err_message, True)
+            if err_message:
+                Talker.warning(err_message, True)
         except NoSuchElementException:
-            Talker.warning(err_message, False)
+            if err_message:
+                Talker.warning(err_message, False)
 
     @staticmethod
     def get_elements_wait(driver, opts, css_select, message='Element cannot be found! '

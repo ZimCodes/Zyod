@@ -9,6 +9,8 @@ import lib.od.identity.zfile as zfile_id
 import lib.od.navigator.zfile as zfile_nav
 import lib.od.identity.gdindex as gd_index_id
 import lib.od.navigator.gdindex as gd_index_nav
+import lib.od.identity.onedrive_vercel_index as onedrive_vercel_id
+import lib.od.navigator.onedrive_vercel_index as onedrive_vercel_nav
 
 
 class OdNavigator:
@@ -41,6 +43,8 @@ class OdNavigator:
             self.navigator = zfile_nav.ZFile(driver, opts)
         elif gd_index_id.GDIndex.is_od(driver):
             self.navigator = gd_index_nav.GDIndex(driver, opts)
+        elif onedrive_vercel_id.OneDriveVercelIndex.is_od(driver):
+            self.navigator = onedrive_vercel_nav.OneDriveVercelIndex(driver, opts)
         else:
             self.id = ODType.GENERIC
             self.navigator = None

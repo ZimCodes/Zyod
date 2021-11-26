@@ -3,3 +3,4 @@
 - FODI
 - ZFile
 - GDIndex
+- onedrive-vercel-index

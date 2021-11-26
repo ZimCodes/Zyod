@@ -8,3 +8,4 @@ class ODType(Enum):
     FODI = "FODI"
     ZFILE = "ZFile"
     GD_INDEX = "GDIndex"
+    ONEDRIVE_VERCEL_INDEX = "onedriver-vercel-index"

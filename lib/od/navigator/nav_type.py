@@ -22,3 +22,8 @@ class ZFile(Enum):
 class GDIndex(Enum):
     """Types of Navigations for GDIndex"""
     MAIN = 1
+
+
+class OneDriveVercelIndex(Enum):
+    """Types of Navigations for oneindex-vercel-index"""
+    MAIN = 1

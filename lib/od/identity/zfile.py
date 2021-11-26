@@ -17,7 +17,7 @@ class ZFile(BaseIdentity):
         :param WebDriver driver: Selenium WebDriver
         :return: True if selector exists, False otherwise
         """
-        element = DriverSupport.get_element(driver, ".zfile-header")
+        element = DriverSupport.get_element(driver, ".zfile-header", "")
         return element
 
     @staticmethod
@@ -27,7 +27,7 @@ class ZFile(BaseIdentity):
         :param WebDriver driver: Selenium WebDriver
         :return True if selector exists, False otherwise
         """
-        element = DriverSupport.get_element(driver, ".zfile-table-col-name")
+        element = DriverSupport.get_element(driver, ".zfile-table-col-name", "")
         return element
 
     @staticmethod
@@ -48,4 +48,4 @@ class ZFile(BaseIdentity):
         :return: True if column name is appropriate, False otherwise
         """
         element = DriverSupport.get_element(driver, "thead th div span:not(.caret-wrapper)", "")
-        return ZFile.text_check(element, "文件名")
+        return ZFile._text_check(element, "文件名")

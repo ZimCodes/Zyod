@@ -18,7 +18,7 @@ class GDIndex(BaseIdentity):
         :return True if id is found, False otherwise
         """
         element = DriverSupport.get_element(driver, "title", "")
-        return GDIndex.text_check(element, "GDIndex")
+        return GDIndex._text_check(element, "GDIndex")
 
     @staticmethod
     def header(driver) -> bool:
@@ -27,7 +27,7 @@ class GDIndex(BaseIdentity):
         :param WebDriver driver: Selenium WebDriver
         """
         element = DriverSupport.get_element(driver, "div.v-toolbar__title span", "")
-        return GDIndex.text_check(element, "GDIndex")
+        return GDIndex._text_check(element, "GDIndex")
 
     @staticmethod
     def repo_link(driver) -> bool:
@@ -36,9 +36,8 @@ class GDIndex(BaseIdentity):
         :param WebDriver driver: Selenium WebDriver
         :return:
         """
-        element = DriverSupport.get_element(driver, "div.v-toolbar__items a[href]", "")
-        attr = element.get_attribute("href")
-        return "maple3142/GDIndex" in attr
+        return GDIndex._attr_check(driver, "div.v-toolbar__items a[href]", "href",
+                                   "maple3142/GDIndex")
 
     @staticmethod
     def script_tag(driver) -> bool:
@@ -46,9 +45,7 @@ class GDIndex(BaseIdentity):
 
         :param WebDriver driver: selenium WebDriver
         """
-        element = DriverSupport.get_element(driver, "script[src*=gdindex]", "")
-        attr = element.get_attribute("src")
-        return "gdindex" in attr
+        return GDIndex._attr_check(driver, "script[src*=gdindex]", "src", "gdindex")
 
     @staticmethod
     def link_tag(driver) -> bool:
@@ -56,6 +53,4 @@ class GDIndex(BaseIdentity):
 
         :param WebDriver driver: Selenium WebDriver
         """
-        element = DriverSupport.get_element(driver, "link[href*=gdindex]", "")
-        attr = element.get_attribute("href")
-        return "gdindex" in attr
+        return GDIndex._attr_check(driver, "link[href*=gdindex]", "href", "gdindex")
