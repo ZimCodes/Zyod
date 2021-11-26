@@ -18,8 +18,7 @@ class TextScraper(JoinScraper):
         :param generic.Generic filter_obj: Filter object to use
         :param bool sleep: stops the program before scraping
         """
-        super().__init__(driver, opts, nav_info, filter_obj)
-        self._sleep = sleep
+        super().__init__(driver, opts, nav_info, filter_obj, sleep)
 
     def _store_links(self, elements, directory) -> None:
         if not elements:

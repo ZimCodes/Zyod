@@ -1,3 +1,5 @@
+import time
+
 from ..driver.support.driver_support import DriverSupport
 from ..asset.directory import Directory
 from ..asset.url import URL
@@ -8,13 +10,14 @@ from ..talker import Talker
 class JoinScraper:
     """Scraper object for scraping ODs"""
 
-    def __init__(self, driver, opts, nav_info, filter_obj=None):
+    def __init__(self, driver, opts, nav_info, filter_obj=None, sleep=False):
         """Initializes Scraper object
 
         :param WebDriver driver: Selenium Webdriver
         :param Opts opts: Opts class
         :param NavInfo nav_info: NavInfo object
         :param generic.Generic filter_obj: Filter object to use
+        :param bool sleep: stops the program before scraping
         """
         self._driver = driver
         self._opts = opts
@@ -22,6 +25,7 @@ class JoinScraper:
         self._files = []
         self._filter = filter_obj() if filter_obj else None
         self.nav_info = nav_info
+        self._sleep = sleep
 
     def scrape(self, elements, directory) -> list:
         """Begin Scraping OD
@@ -41,6 +45,8 @@ class JoinScraper:
 
     def scrape_items(self) -> list:
         """Retrieve scraped elements"""
+        if self._sleep:
+            time.sleep(4)
         return DriverSupport.get_elements_all(self._driver, self._opts,
                                               self.nav_info.css_select,
                                               self.nav_info.wait_err_message)
@@ -80,11 +86,19 @@ class JoinScraper:
                 self._dirs.append(new_dir)
 
     @staticmethod
+    def _all_filters(text) -> bool:
+        return JoinScraper._is_home(text) or JoinScraper._is_js_void(text)
+
+    @staticmethod
     def _is_home(text):
         home_list = {'/', '.', '..', '../', './'}
         init_total = len(home_list)
         home_list.add(text)
         return init_total == len(home_list)
+
+    @staticmethod
+    def _is_js_void(text):
+        return "javascript:" in text
 
     def apply_filter(self, link):
         if self._filter:

@@ -40,3 +40,17 @@ class ZFile(Base):
             if file_type != "#el-icon-my-folder":
                 filtered_list.append(elements[i])
         return filtered_list
+
+
+class GONEList(Base):
+    """Download filter for GONEList"""
+
+    def apply(self, elements) -> list:
+        files = [el.find_element(By.CSS_SELECTOR, "span i") for el in
+                 elements]
+        filtered_list = []
+        for i, el in enumerate(files):
+            file_type = el.get_attribute("class")
+            if "fa-folder-open" not in file_type:
+                filtered_list.append(elements[i])
+        return filtered_list

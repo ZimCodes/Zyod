@@ -27,3 +27,8 @@ class GDIndex(Enum):
 class OneDriveVercelIndex(Enum):
     """Types of Navigations for oneindex-vercel-index"""
     MAIN = 1
+
+
+class GONEList(Enum):
+    """Types of Navigations for GONEList"""
+    MAIN = 1

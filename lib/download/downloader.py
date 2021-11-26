@@ -24,6 +24,7 @@ class Downloader:
 
         :return:
         """
+        self._remove_target_attr()
         elements = self.get_download_elements(self._driver, self._opts)
         if not elements:
             return
@@ -35,7 +36,7 @@ class Downloader:
         if self._nav_info.extra_task:
             self._multiple_tasks(elements)
         else:
-            Downloader._single_task(self._opts, elements)
+            self._single_task(elements)
 
     def right_click_download(self) -> None:
         """Download files using the right click's context menu"""
@@ -69,16 +70,17 @@ class Downloader:
                                                f"Download element cannot be found at"
                                                f"{driver.current_url}!")
 
-    @staticmethod
-    def _single_task(opts, elements) -> None:
+    def _single_task(self, elements) -> None:
         """Download operation with a single action
 
-        :param Opts opts: Opts class
         :param list elements: list of elements
         :return:
         """
-        for el in elements:
-            Downloader._download_step(opts, el)
+        for i in range(len(elements)):
+            elems = self.get_download_elements(self._driver, self._opts)
+            if self._filter_obj:
+                elems = self._filter_obj.apply(elems)
+            Downloader._download_step(self._opts, elems[i])
 
     def _multiple_tasks(self, elements) -> None:
         """Download operation with multiple actions
@@ -117,3 +119,10 @@ class Downloader:
                 Talker.loading(f"Waiting for {wait} seconds")
             time.sleep(wait)
         element.click()
+
+    def _remove_target_attr(self):
+        """Removes [target] attribute from <a>"""
+        DriverSupport.execute_script(self._driver,
+                                     "document.querySelectorAll('a').forEach((el)=>{"
+                                     "el.removeAttribute('target')});"
+                                     )

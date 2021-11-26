@@ -4,3 +4,4 @@
 - ZFile
 - GDIndex
 - onedrive-vercel-index
+- GONEList
