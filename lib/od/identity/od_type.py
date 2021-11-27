@@ -11,3 +11,4 @@ class ODType(Enum):
     ONEDRIVE_VERCEL_INDEX = "onedriver-vercel-index"
     GONELIST = "GONEList"
     SHARELIST = "ShareList"
+    YUKI_DRIVE = "Yuki Drive"

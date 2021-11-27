@@ -39,3 +39,8 @@ class ShareList(Enum):
     PREVIEW_QUERY = 1
     DOWNLOAD_QUERY = 2
     INTERACTIVE = 3
+
+
+class YukiDrive(Enum):
+    """Types of Navigations for YukiDrive"""
+    MAIN = 1

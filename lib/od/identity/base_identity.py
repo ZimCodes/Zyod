@@ -26,6 +26,22 @@ class BaseIdentity:
             return False
 
     @staticmethod
+    def _has_text(element, match_text, case_sensitive=True):
+        """Checks if text can be found in element
+
+        :param WebElement element: the element to check
+        :param str match_text: The text to match
+        :return: True if element text matches False otherwise
+        """
+        if element:
+            if case_sensitive:
+                return match_text in element.text.strip()
+            else:
+                return match_text.lower() in element.text.strip().lower()
+        else:
+            return False
+
+    @staticmethod
     def _attr_check(driver, css_element, attr, match_text) -> bool:
         element = DriverSupport.get_element(driver, css_element, "")
         if not element:

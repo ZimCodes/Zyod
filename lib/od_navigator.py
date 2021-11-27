@@ -15,6 +15,8 @@ import lib.od.identity.gonelist as gonelist_id
 import lib.od.navigator.gonelist as gonelist_nav
 import lib.od.identity.sharelist as sharelist_id
 import lib.od.navigator.sharelist as sharelist_nav
+import lib.od.identity.yuki_drive as yuki_drive_id
+import lib.od.navigator.yuki_drive as yuki_drive_nav
 
 
 class OdNavigator:
@@ -53,6 +55,8 @@ class OdNavigator:
             self.navigator = gonelist_nav.GONEList(driver, opts)
         elif sharelist_id.ShareList.is_od(driver):
             self.navigator = sharelist_nav.ShareList(driver, opts)
+        elif yuki_drive_id.YukiDrive.is_od(driver):
+            self.navigator = yuki_drive_nav.YukiDrive(driver, opts)
         else:
             self.id = ODType.GENERIC
             self.navigator = None
