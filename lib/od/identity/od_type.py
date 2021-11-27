@@ -13,3 +13,4 @@ class ODType(Enum):
     SHARELIST = "ShareList"
     YUKI_DRIVE = "Yuki Drive"
     ALIST = "AList"
+    WATCHLIST_ON_FIRE = "Watchlist on fire 🔥🔥🔥"

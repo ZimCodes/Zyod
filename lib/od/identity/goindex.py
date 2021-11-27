@@ -70,5 +70,4 @@ class GoIndex(base_identity.BaseIdentity):
         :param driver: Webdriver
         :return: bool
         """
-        elements = DriverSupport.get_elements(driver, r"div#count span.number", "")
-        return bool(elements)
+        return GoIndex._attr_check(driver, "form#search_bar_form[action]", "action", "/0:search")

@@ -8,5 +8,6 @@
 - ShareList
 - Yuki Drive
 - AList
+- Watchlist on fire
 
 ### Small Support

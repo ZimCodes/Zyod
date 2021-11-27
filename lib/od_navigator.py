@@ -19,6 +19,8 @@ import lib.od.identity.yuki_drive as yuki_drive_id
 import lib.od.navigator.yuki_drive as yuki_drive_nav
 import lib.od.identity.alist as alist_id
 import lib.od.navigator.alist as alist_nav
+import lib.od.identity.watchlist_on_fire as watchlist_on_fire_id
+import lib.od.navigator.watchlist_on_fire as watchlist_on_fire_nav
 
 
 class OdNavigator:
@@ -61,6 +63,8 @@ class OdNavigator:
             self.navigator = yuki_drive_nav.YukiDrive(driver, opts)
         elif alist_id.AList.is_od(driver):
             self.navigator = alist_nav.AList(driver, opts)
+        elif watchlist_on_fire_id.WatchListOnFire.is_od(driver):
+            self.navigator = watchlist_on_fire_nav.WatchListOnFire(driver, opts)
         else:
             self.id = ODType.GENERIC
             self.navigator = None

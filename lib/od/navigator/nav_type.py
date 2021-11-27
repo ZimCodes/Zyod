@@ -50,3 +50,8 @@ class AList(Enum):
     """Types of Navigations for AList"""
     ORIGINAL = 1
     WEB = 2
+
+
+class WatchListOnFire(Enum):
+    """Types of Navigations for Watchlist on fire"""
+    MAIN = 1
