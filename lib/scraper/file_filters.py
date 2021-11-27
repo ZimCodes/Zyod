@@ -17,7 +17,7 @@ class Generic:
         """
         self._text = text
         self._apply_filters()
-        return self._text
+        return self._text.strip()
 
     def _apply_filters(self) -> None:
         """Apply all filters to text"""

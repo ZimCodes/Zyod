@@ -103,6 +103,16 @@ class DriverSupport:
         ActionChains(driver).context_click(right_click_elem).perform()
 
     @staticmethod
+    def hover(driver, element) -> None:
+        """Hover over an element
+
+        :param WebDriver driver: Selenium WebDriver
+        :param WebElement element: Element to hover over
+        :return:
+        """
+        ActionChains(driver).move_to_element(element).perform()
+
+    @staticmethod
     def global_scroll_down(driver) -> None:
         """Scroll to bottom of page
 

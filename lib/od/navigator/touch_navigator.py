@@ -19,9 +19,10 @@ class TouchNavigator(NameNavigator):
         super().__init__(name, driver, opts, no_full_links)
         self._cur_dir = Directory(0, URL(self._driver.current_url))
 
-    def _go_to_directory(self, directory) -> None:
+    def _go_to_directory(self, directory) -> tuple:
         self._move_up_to_destination(directory)
         self._move_down_to_destination(directory)
+        return True, directory
 
     def _move_up_to_destination(self, directory) -> None:
         """Move up the directory tree before heading down to the destination directory
@@ -53,7 +54,7 @@ class TouchNavigator(NameNavigator):
             for el in elements:
                 name_element = DriverSupport.get_element(el, self._scraper.nav_info.css_name)
                 name = name_element.text.strip()
-                name = self._scraper.apply_filter(name)
+                name = self._scraper.apply_file_filter(name)
                 if name in directory.url:
                     el.click()
                     self._cur_dir.depth_level += 1

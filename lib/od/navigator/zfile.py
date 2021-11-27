@@ -49,7 +49,7 @@ class ZFile(NameNavigator):
     def download(self) -> None:
         self._downloader.right_click_download()
 
-    def _go_to_directory(self, directory) -> bool:
+    def _go_to_directory(self, directory) -> tuple:
         super()._go_to_directory(directory)
         time.sleep(3.4)
         try:
@@ -59,8 +59,8 @@ class ZFile(NameNavigator):
             if dialog_boxes:
                 dialog_box = dialog_boxes[0]
                 attr = dialog_box.get_attribute("style")
-                return "none" in attr
+                return "none" in attr, directory
             else:
-                return True
+                return True, directory
         except NoSuchElementException:
-            return True
+            return True, directory

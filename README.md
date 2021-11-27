@@ -3,6 +3,8 @@
 **Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
 Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**.
 
+For static ODs check out [Zeiver](https://github.com/ZimCodes/Zeiver)!
+
 ## Sample Usage
 
 This command uses the Google Chrome driver to scrape and record links from *https://od.example. com*
@@ -163,7 +165,16 @@ Amount of seconds to wait for browser to initially load up each OD before execut
 When Zyod visits a dynamic OD for the first time, it may take a long time for the OD to load up. 
 Use this option to delay execution of Zyod, giving the page time to load up.
 
+***-r, --refresh***
 
+Refresh the page and try again upon failure.
+
+Refresh the page when Zyod fails to navigate to a page or fails to locate elements on the page.
+Then try again.
+
+***--load-wait***
+
+Amount of seconds to wait for a page load to complete before throwing an error.
 
 ## License
 

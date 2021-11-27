@@ -12,3 +12,4 @@ class ODType(Enum):
     GONELIST = "GONEList"
     SHARELIST = "ShareList"
     YUKI_DRIVE = "Yuki Drive"
+    ALIST = "AList"

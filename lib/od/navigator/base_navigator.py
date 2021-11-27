@@ -43,7 +43,7 @@ class BaseNavigator:
         """
         if self._scraper:
             self._scraper.reset()
-        is_url_displayed = self._go_to_directory(directory)
+        is_url_displayed, new_directory = self._go_to_directory(directory)
 
         if not is_url_displayed:
             return []
@@ -53,7 +53,7 @@ class BaseNavigator:
         elif self._opts.scroll:
             elements = self._scroll_to_bottom()
         if self._scraper:
-            elements = self._scraper.scrape(elements, directory)
+            elements = self._scraper.scrape(elements, new_directory)
         return elements
 
     def download(self) -> None:
@@ -118,7 +118,7 @@ class BaseNavigator:
         """Scroll down the page of contents"""
         DriverSupport.global_scroll_down(self._driver)
 
-    def _go_to_directory(self, directory) -> bool:
+    def _go_to_directory(self, directory) -> tuple:
         """Navigate to directory.
 
         :param Directory directory: directory to navigate to
@@ -127,4 +127,4 @@ class BaseNavigator:
         if self._driver.current_url != directory.url:
             if directory.url is not None:
                 self._driver.get(directory.url)
-        return True
+        return True, directory

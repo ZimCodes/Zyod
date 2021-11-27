@@ -44,3 +44,9 @@ class ShareList(Enum):
 class YukiDrive(Enum):
     """Types of Navigations for YukiDrive"""
     MAIN = 1
+
+
+class AList(Enum):
+    """Types of Navigations for AList"""
+    ORIGINAL = 1
+    WEB = 2

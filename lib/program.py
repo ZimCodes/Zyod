@@ -55,7 +55,7 @@ class Program:
         Talker.loading('Initializing constants')
         self._writer = Writer(self._opts.output)
         self._driver = MainDriver.get_driver(self._opts)  # Webdriver
-        self._driver.set_page_load_timeout(15)
+        self._driver.set_page_load_timeout(self._opts.load_wait)
         if self._opts.verbose:
             Talker.complete('Constants are loaded')
 
@@ -118,8 +118,12 @@ class Program:
         try:
             self._driver.get(url)  # visit page
         except TimeoutException:
-            self._driver.refresh()
-            time.sleep(6)
+            if self._opts.refresh:
+                self._driver.refresh()
+                time.sleep(self._opts.web_wait)
+            else:
+                print(f"Failed to load {url}!")
+                exit(0)
 
     def _output_to_file(self) -> None:
         """Record all file links to a file"""

@@ -20,6 +20,10 @@ class Directory:
     def pop_path(self) -> None:
         self._url.pop_path()
 
+    def total_paths(self) -> int:
+        total = self._url.path.count("/")
+        return total
+
     def __eq__(self, other):
         return self.url == other.url
 

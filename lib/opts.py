@@ -52,6 +52,8 @@ class Opts:
         self.scroll = opts.scroll
         self.scroll_wait = abs(opts.scroll_wait)
         self.web_wait = abs(opts.web_wait)
+        self.refresh = opts.refresh
+        self.load_wait = opts.load_wait
 
     def _args_check(self, opts) -> None:
         """Checks arguments for conflicts and report them
@@ -184,7 +186,7 @@ class Opts:
 
     def _parse_interactive_group(self) -> None:
         interact_group = self._parser.add_argument_group('interactive', 'interactivity options')
-        interact_group.add_argument('--scroll', action="store_true", help="scroll down the "
+        interact_group.add_argument('--scroll', action="store_true", help="Scroll down the "
                                                                           "page "
                                                                           "repeatedly until the"
                                                                           " last bottom element is "
@@ -196,8 +198,19 @@ class Opts:
                                                                                    "scroll again.")
 
     def _parse_misc_group(self):
-        self._parser.add_argument('--web-wait', type=float, default=15, help="Amount of seconds to "
-                                                                             "wait for browser to "
-                                                                             "start up each OD "
-                                                                             "before starting "
-                                                                             "Zyod.")
+        misc_group = self._parser.add_argument_group('miscellaneous', 'miscellaneous options')
+        misc_group.add_argument('--web-wait', type=float, default=15, help="Amount of seconds to "
+                                                                           "wait for browser to "
+                                                                           "start up each OD "
+                                                                           "before executing "
+                                                                           "Zyod.")
+        misc_group.add_argument('--load-wait', type=float, default=30,
+                                help="Set the amount of seconds to wait for a"
+                                     " page load to complete before "
+                                     "throwing an error.")
+        misc_group.add_argument('-r', '--refresh', action="store_true",
+                                help="Refresh the page when "
+                                     "Zyod fails to "
+                                     "navigate to a page or "
+                                     "fails to locate elements "
+                                     "on the page.")

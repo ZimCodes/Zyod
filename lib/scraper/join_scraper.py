@@ -36,7 +36,7 @@ class JoinScraper:
 
         if elements is None:
             elements = self.scrape_items()
-            if not elements:
+            if not elements and self._opts.refresh:
                 # Refresh the page and try again
                 self._driver.refresh()
                 elements = self.scrape_items()

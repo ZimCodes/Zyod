@@ -1,4 +1,4 @@
-### Supported
+### Full Support
 - GoIndex
 - FODI
 - ZFile
@@ -7,3 +7,6 @@
 - GONEList
 - ShareList
 - Yuki Drive
+- AList
+
+### Small Support
