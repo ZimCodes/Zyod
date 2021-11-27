@@ -108,6 +108,7 @@ Path to store downloaded files.
 The directory path to store download files. *Default:* `Downloads folder`
 
 ***--download-wait***
+
 Wait a random amount of seconds before downloading.
 
 Wait between 0.5 * `--download-wait` (_inclusive_) to 1.5 * `--download-wait` 
