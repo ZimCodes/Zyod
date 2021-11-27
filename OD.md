@@ -5,3 +5,4 @@
 - GDIndex
 - onedrive-vercel-index
 - GONEList
+- ShareList

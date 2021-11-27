@@ -13,6 +13,8 @@ import lib.od.identity.onedrive_vercel_index as onedrive_vercel_id
 import lib.od.navigator.onedrive_vercel_index as onedrive_vercel_nav
 import lib.od.identity.gonelist as gonelist_id
 import lib.od.navigator.gonelist as gonelist_nav
+import lib.od.identity.sharelist as sharelist_id
+import lib.od.navigator.sharelist as sharelist_nav
 
 
 class OdNavigator:
@@ -49,6 +51,8 @@ class OdNavigator:
             self.navigator = onedrive_vercel_nav.OneDriveVercelIndex(driver, opts)
         elif gonelist_id.GONEList.is_od(driver):
             self.navigator = gonelist_nav.GONEList(driver, opts)
+        elif sharelist_id.ShareList.is_od(driver):
+            self.navigator = sharelist_nav.ShareList(driver, opts)
         else:
             self.id = ODType.GENERIC
             self.navigator = None

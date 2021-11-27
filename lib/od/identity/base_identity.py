@@ -10,7 +10,7 @@ class BaseIdentity:
         pass
 
     @staticmethod
-    def _text_check(element, match_text) -> bool:
+    def _text_check(element, match_text, case_sensitive=True) -> bool:
         """Checks the text of an element
 
         :param WebElement element: the element to check
@@ -18,7 +18,10 @@ class BaseIdentity:
         :return: True if element text matches False otherwise
         """
         if element:
-            return element.text.strip() == match_text
+            if case_sensitive:
+                return element.text.strip() == match_text
+            else:
+                return element.text.strip().lower() == match_text.lower()
         else:
             return False
 

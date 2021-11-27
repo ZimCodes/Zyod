@@ -24,7 +24,6 @@ class Downloader:
 
         :return:
         """
-        self._remove_target_attr()
         elements = self.get_download_elements(self._driver, self._opts)
         if not elements:
             return
@@ -77,10 +76,11 @@ class Downloader:
         :return:
         """
         for i in range(len(elements)):
+            Downloader._waiting(self._opts)
             elems = self.get_download_elements(self._driver, self._opts)
             if self._filter_obj:
                 elems = self._filter_obj.apply(elems)
-            Downloader._download_step(self._opts, elems[i])
+            elems[i].click()
 
     def _multiple_tasks(self, elements) -> None:
         """Download operation with multiple actions
@@ -89,40 +89,28 @@ class Downloader:
         :return:
         """
         for i, el in enumerate(elements):
+            Downloader._waiting(self._opts)
             if i == 0:
-                Downloader._download_step(self._opts, el)
+                el.click()
             else:
                 els = self.get_download_elements(self._driver, self._opts)
                 if self._filter_obj:
                     els = self._filter_obj.apply(els)
-                Downloader._download_step(self._opts, els[i])
+                els[i].click()
             self._nav_info.extra_task(self._driver)
 
     def multi_task_lazy(self, driver, opts, index):
+        Downloader._waiting(opts)
         els = self.get_download_elements(driver, opts)
         if self._filter_obj:
             els = self._filter_obj.apply(els)
-        Downloader._download_step(opts, els[index])
+        els[index].click()
         self._nav_info.extra_task(driver)
 
     @staticmethod
-    def _download_step(opts, element) -> None:
-        """The basic steps for downloading
-
-        :param Opts opts: Opts class
-        :param element: list of elements
-        :return:
-        """
+    def _waiting(opts) -> None:
         wait = opts.get_download_wait()
         if wait:
             if opts.verbose:
                 Talker.loading(f"Waiting for {wait} seconds")
             time.sleep(wait)
-        element.click()
-
-    def _remove_target_attr(self):
-        """Removes [target] attribute from <a>"""
-        DriverSupport.execute_script(self._driver,
-                                     "document.querySelectorAll('a').forEach((el)=>{"
-                                     "el.removeAttribute('target')});"
-                                     )

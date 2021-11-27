@@ -32,3 +32,10 @@ class OneDriveVercelIndex(Enum):
 class GONEList(Enum):
     """Types of Navigations for GONEList"""
     MAIN = 1
+
+
+class ShareList(Enum):
+    """Types of Navigations for ShareList"""
+    PREVIEW_QUERY = 1
+    DOWNLOAD_QUERY = 2
+    INTERACTIVE = 3

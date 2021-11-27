@@ -8,16 +8,16 @@ from selenium.webdriver.common.by import By
 class SiftScraper(TextScraper):
     """SiftScraper object to filter out DOM elements"""
 
-    def __init__(self, driver, opts, nav_info, filter_obj=None, sleep=False):
+    def __init__(self, driver, opts, nav_info, file_filter=None, sleep=False):
         """Initializes SiftScraper object
 
        :param WebDriver driver: Selenium Webdriver
         :param Opts opts: Opts class
         :param NavInfo nav_info: NavInfo object
-        :param generic.Generic filter_obj: Filter object to use
+        :param generic.Generic file_filter: Filter object to use for files
         :param bool sleep: stops the program before scraping
         """
-        super().__init__(driver, opts, nav_info, filter_obj, sleep)
+        super().__init__(driver, opts, nav_info, file_filter, sleep)
 
     def scrape_items(self) -> list:
         if self._sleep:

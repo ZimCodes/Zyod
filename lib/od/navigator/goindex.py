@@ -1,5 +1,5 @@
 from . import base_navigator
-from lib.scraper.filters import Generic as ScrapeFilter
+from lib.scraper.file_filters import Generic as ScrapeFilter
 from ...od.identity.od_type import ODType
 from ...driver.support.driver_support import DriverSupport
 from .nav_type import GoIndex as NavType

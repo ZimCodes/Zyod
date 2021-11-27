@@ -10,3 +10,4 @@ class ODType(Enum):
     GD_INDEX = "GDIndex"
     ONEDRIVE_VERCEL_INDEX = "onedriver-vercel-index"
     GONELIST = "GONEList"
+    SHARELIST = "ShareList"

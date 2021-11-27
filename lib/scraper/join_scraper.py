@@ -10,20 +10,20 @@ from ..talker import Talker
 class JoinScraper:
     """Scraper object for scraping ODs"""
 
-    def __init__(self, driver, opts, nav_info, filter_obj=None, sleep=False):
+    def __init__(self, driver, opts, nav_info, file_filter=None, sleep=False):
         """Initializes Scraper object
 
         :param WebDriver driver: Selenium Webdriver
         :param Opts opts: Opts class
         :param NavInfo nav_info: NavInfo object
-        :param generic.Generic filter_obj: Filter object to use
+        :param generic.Generic file_filter: Filter object to use for files
         :param bool sleep: stops the program before scraping
         """
         self._driver = driver
         self._opts = opts
         self._dirs = []
         self._files = []
-        self._filter = filter_obj() if filter_obj else None
+        self._file_filter = file_filter() if file_filter else None
         self.nav_info = nav_info
         self._sleep = sleep
 
@@ -74,7 +74,7 @@ class JoinScraper:
         """
         if JoinScraper._is_home(link):
             return
-        link = self.apply_filter(link)
+        link = self.apply_file_filter(link)
         if URL.is_a_file(link):
             self._files.append(URL.joiner(directory.url, link))
         else:
@@ -100,9 +100,9 @@ class JoinScraper:
     def _is_js_void(text):
         return "javascript:" in text
 
-    def apply_filter(self, link):
-        if self._filter:
-            return self._filter.apply(link)
+    def apply_file_filter(self, link):
+        if self._file_filter:
+            return self._file_filter.apply(link)
         return link
 
     def reset(self) -> None:

@@ -3,7 +3,8 @@ from .nav_type import OneDriveVercelIndex as NavType
 from ..identity.od_type import ODType
 from ...asset.nav_info import NavInfo
 from ...scraper.text_scraper import TextScraper
-from ...scraper.filters import OneDriveVercelIndex as ScrapeFilter
+from ...scraper.file_filters import OneDriveVercelIndex as ScrapeFilter
+
 
 class OneDriveVercelIndex(BaseNavigator):
     """Navigation object for onedrive-vercel-index"""
@@ -24,4 +25,3 @@ class OneDriveVercelIndex(BaseNavigator):
 
     def _setup_scraper(self, nav_info) -> None:
         self._scraper = TextScraper(self._driver, self._opts, nav_info, ScrapeFilter)
-

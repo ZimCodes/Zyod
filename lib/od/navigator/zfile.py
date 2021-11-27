@@ -5,7 +5,7 @@ from .nav_type import ZFile as NavType
 from ..identity.od_type import ODType
 from ...asset.nav_info import NavInfo
 from ...scraper.sift_scraper import SiftScraper
-from lib.scraper.filters import Generic
+from lib.scraper.file_filters import Generic
 from ...driver.support.driver_support import DriverSupport
 from selenium.common.exceptions import NoSuchElementException
 from ...asset.directory import Directory
@@ -35,7 +35,8 @@ class ZFile(NameNavigator):
     def _setup_scraper(self, nav_info) -> None:
         match nav_info.id:
             case _:
-                self._scraper = SiftScraper(self._driver, self._opts, nav_info, Generic, True)
+                self._scraper = SiftScraper(self._driver, self._opts, nav_info, file_filter=Generic,
+                                            sleep=True)
 
     def _setup_downloader(self, nav_info) -> None:
         self._downloader = Downloader(self._driver, self._opts, nav_info, DownloadFilter)

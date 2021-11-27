@@ -54,3 +54,29 @@ class GONEList(Base):
             if "fa-folder-open" not in file_type:
                 filtered_list.append(elements[i])
         return filtered_list
+
+
+class ShareListPreview(Base):
+    """Download filter for ShareList Preview type"""
+
+    def apply(self, elements) -> list:
+        files = [el.find_element(By.CSS_SELECTOR, "span[data-type]") for el in elements]
+        filtered_list = []
+        for i, el in enumerate(files):
+            file_type = el.get_attribute("data-type")
+            if "folder" not in file_type:
+                filtered_list.append(elements[i])
+        return filtered_list
+
+
+class ShareListGeneral(Base):
+    """Download filter for ShareList Download type"""
+
+    def apply(self, elements) -> list:
+        files = [el.find_element(By.CSS_SELECTOR, "span svg use[*|href]") for el in elements]
+        filtered_list = []
+        for i, el in enumerate(files):
+            file_type = el.get_attribute("xlink:href")
+            if file_type != "#icon-folder":
+                filtered_list.append(elements[i])
+        return filtered_list

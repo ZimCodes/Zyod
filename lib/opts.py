@@ -89,7 +89,7 @@ class Opts:
         :param wait: amount of seconds to wait
         :return: the randomized seconds to wait
         """
-        return random.randint(0.5 * wait, 1.5 * wait)
+        return random.randint(int(0.5 * wait), int(1.5 * wait))
 
     def _parse_urls(self) -> None:
         """Adds urls positional argument"""

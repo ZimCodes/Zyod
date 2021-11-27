@@ -10,6 +10,7 @@ from lib.asset.url import URL
 from selenium.common.exceptions import WebDriverException
 from urllib3.exceptions import MaxRetryError
 from lib.talker import Talker
+from selenium.common.exceptions import TimeoutException
 
 
 class Program:
@@ -74,8 +75,9 @@ class Program:
         :param str url: starting link to OD
         """
         if self._navigator.no_full_links and not self._opts.dont_record:
-            Talker.warning(f"CORRECT file links for {self._navigator.id.name} are unavailable. "
-                           f"However pseudo file links will be generated instead!")
+            Talker.warning(f"Some/All file links for {self._navigator.id.name} may not be fully "
+                           f"correct. However pseudo file links will be generated in place of "
+                           f"incorrect ones!")
             time.sleep(3)
         self._navigate_recurse(url)
 
@@ -113,7 +115,11 @@ class Program:
         :return: None
         """
         Talker.arrow_info("Navigating", url, new_line=True)
-        self._driver.get(url)  # visit page
+        try:
+            self._driver.get(url)  # visit page
+        except TimeoutException:
+            self._driver.refresh()
+            time.sleep(6)
 
     def _output_to_file(self) -> None:
         """Record all file links to a file"""
