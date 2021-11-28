@@ -14,10 +14,6 @@ class MainDriver:
         match opts.driver_type:
             case 'firefox':
                 return firefox.Firefox(opts).get_driver()
-            case 'safari':
-                return safari.Safari(opts).get_driver()
-            case 'opera':
-                return opera.Opera(opts).get_driver()
             case 'edge':
                 return edge.Edge(opts).get_driver()
             case 'chrome':

@@ -1,7 +1,6 @@
 import argparse
 import random
 from .writer import Writer
-from .talker import Talker
 
 
 class Opts:
@@ -64,8 +63,6 @@ class Opts:
         if opts.headless and opts.download:
             self._parser.exit(message="The option, '--headless', CANNOT be used alongside "
                                       "'--download'!")
-        if opts.headless and opts.driver == 'safari':
-            Talker.warning("Safari currently does not support headless mode.", True)
 
     def get_wait(self) -> int:
         """Retrieve wait time

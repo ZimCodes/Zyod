@@ -1,1 +1,1 @@
-__all__ = ["edge", "opera", "chrome", "chromium"]
+__all__ = ["edge", "chrome", "chromium"]

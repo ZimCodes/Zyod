@@ -1,1 +1,1 @@
-__all__ = ["safari", "firefox"]
+__all__ = ["firefox"]
