@@ -171,6 +171,8 @@ content from the OD.
 
 Amount of seconds to wait before attempting to scroll again.
 
+ *Default:* `4.2`.
+
 ---
 
 #### Miscellaneous
@@ -180,7 +182,9 @@ Amount of seconds to wait before attempting to scroll again.
 Amount of seconds to wait for browser to initially load up each OD before executing Zyod.
 
 When Zyod visits a dynamic OD for the first time, it may take a long time for the OD to load up. 
-Use this option to delay execution of Zyod, giving the page time to load up.
+Use this option to delay execution of Zyod, giving the page time to load up. 
+
+*Default:* `15`.
 
 ***-r, --refresh***
 
@@ -191,7 +195,7 @@ Then try again.
 
 ***--load-wait***
 
-Amount of seconds to wait for a page load to complete before throwing an error.
+Amount of seconds to wait for a page load to complete before throwing an error. *Default:* `30`.
 
 ---
 
