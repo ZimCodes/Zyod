@@ -56,6 +56,8 @@ class YukiDrive(BaseIdentity):
         :return:
         """
         element = DriverSupport.get_element(driver, "div.v-navigation-drawer__content "
-                                                    "div.v-list-group__header div.v-list-item__content div.v-list-item__title",
+                                                    "div.v-list-group__header "
+                                                    "div.v-list-item__content "
+                                                    "div.v-list-item__title",
                                             "")
         return YukiDrive._text_check(element, "驱动器")

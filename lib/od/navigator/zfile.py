@@ -41,7 +41,7 @@ class ZFile(NameNavigator):
     def _setup_downloader(self, nav_info) -> None:
         self._downloader = Downloader(self._driver, self._opts, nav_info, DownloadFilter)
 
-    def navigate(self, directory) -> tuple[list, list]:
+    def navigate(self, directory) -> tuple[list, list, list]:
         if not re.search(r'/[1-9]/main', directory.url):
             directory = Directory(0, URL(self._driver.current_url))
         return super().navigate(directory)
