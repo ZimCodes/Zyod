@@ -95,12 +95,14 @@ class Program:
         while len(dirs_to_navigate) != 0:
             current_dir = dirs_to_navigate.pop()
             Talker.current_directory(self._opts.verbose, current_dir.url, current_dir.depth_level)
-            (dirs, files) = self._navigator.navigate(current_dir)
-            Talker.file_stats(self._opts.verbose, dirs, files)
+            (dirs, files, stat_dirs) = self._navigator.navigate(current_dir)
+            if self._opts.verbose:
+                Talker.file_stats(stat_dirs, files)
 
             dir_set = set(dirs)
+            stat_dirs_set = set(stat_dirs)
             dirs_to_navigate |= dir_set
-            self._total_dirs |= dir_set
+            self._total_dirs |= stat_dirs_set
             file_set = set(files)
             self._total_files |= file_set
         if self._opts.do_download:

@@ -1,8 +1,6 @@
 import time
 
 from .join_scraper import JoinScraper
-from selenium.common.exceptions import StaleElementReferenceException
-from ..talker import Talker
 from ..driver.support.driver_support import DriverSupport
 
 
@@ -20,15 +18,9 @@ class TextScraper(JoinScraper):
         """
         super().__init__(driver, opts, nav_info, file_filter, sleep)
 
-    def _store_links(self, elements, directory) -> None:
-        if not elements:
-            return
-        try:
-            for el in elements:
-                link = el.text.strip()
-                self._join_links(directory, link)
-        except StaleElementReferenceException:
-            Talker.warning("Element cannot be found on current page!", new_line=True)
+    def _join_loop(self, element, directory) -> None:
+        link = element.text.strip()
+        self._join_links(directory, link)
 
     def scrape_items(self) -> list:
         if self._sleep:

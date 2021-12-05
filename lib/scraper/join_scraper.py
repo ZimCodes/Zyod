@@ -23,6 +23,7 @@ class JoinScraper:
         self._opts = opts
         self._dirs = []
         self._files = []
+        self._stat_dirs = []
         self._file_filter = file_filter() if file_filter else None
         self.nav_info = nav_info
         self._sleep = sleep
@@ -58,12 +59,23 @@ class JoinScraper:
         :param Directory directory: current parent folder
         :return:
         """
+        if not elements:
+            return
         try:
             for el in elements:
-                link = el.get_attribute(self.nav_info.css_attr)
-                self._join_links(directory, link)
+                self._join_loop(el, directory)
         except StaleElementReferenceException:
             Talker.warning("Element cannot be found on current page!", new_line=True)
+
+    def _join_loop(self, element, directory) -> None:
+        """Specified item to join with the current URL
+
+        :param element: DOM element
+        :param directory: Parent Directory
+        :return:
+        """
+        link = element.get_attribute(self.nav_info.css_attr)
+        self._join_links(directory, link)
 
     def _join_links(self, directory, link) -> None:
         """ Filter & join links together to make a new URL
@@ -79,11 +91,12 @@ class JoinScraper:
             self._files.append(URL.joiner(directory.url, link))
         else:
             new_level = directory.depth_level + 1
+            url = URL.joiner(directory.url, link)
+            url.dir_transform()
+            new_dir = Directory(new_level, url)
             if new_level < self._opts.depth:
-                url = URL.joiner(directory.url, link)
-                url.dir_transform()
-                new_dir = Directory(new_level, url)
                 self._dirs.append(new_dir)
+            self._stat_dirs.append(new_dir)
 
     @staticmethod
     def _all_filters(text) -> bool:
@@ -109,10 +122,11 @@ class JoinScraper:
         """Reset the list fields"""
         self._files = []
         self._dirs = []
+        self._stat_dirs = []
 
-    def get_results(self) -> tuple[list, list]:
+    def get_results(self) -> tuple[list, list, list]:
         """Retrieve the files/directories as a result of scraping
 
         :return: list of files and directories
         """
-        return self._dirs, self._files
+        return self._dirs, self._files, self._stat_dirs

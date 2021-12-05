@@ -71,12 +71,11 @@ class Talker:
         Talker.arrow_info("url", url, True)
 
     @staticmethod
-    def file_stats(verbose, dirs, files) -> None:
-        if verbose:
-            Talker.header("Directories")
-            Talker.list_dir_info(dirs, 'Dir')
-            Talker.arrow_info("Total", len(dirs), True)
-            Talker.header("Files")
-            Talker.list_info(files, 'File')
-            Talker.arrow_info("Total", len(files))
-            Talker.divider()
+    def file_stats(dirs, files) -> None:
+        Talker.header("Directories")
+        Talker.list_dir_info(dirs, 'Dir')
+        Talker.arrow_info("Total", len(dirs), True)
+        Talker.header("Files")
+        Talker.list_info(files, 'File')
+        Talker.arrow_info("Total", len(files))
+        Talker.divider()

@@ -23,7 +23,7 @@ class BaseNavigator:
         self._opts = opts
         self.no_full_links = no_full_links
 
-    def navigate(self, directory) -> tuple[list, list]:
+    def navigate(self, directory) -> tuple[list, list, list]:
         """Navigate an OD
 
         :param Directory directory: directory to navigate to

@@ -127,7 +127,7 @@ class Opts:
                                                         'Default: %PATH%')
         driver_group.add_argument('--driver',
                                   choices=['firefox', 'chrome', 'edge'],
-                                  required=True, help='The type of browser driver it is.')
+                                  default="firefox", help='The type of browser driver it is.')
         driver_group.add_argument('--headless', action="store_true", help="Activates "
                                                                           "headless mode. "
                                                                           "Cannot be used "

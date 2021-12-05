@@ -3,7 +3,7 @@
 **Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
 Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**. 
 
-For static ODs check out [Zeiver](https://github.com/ZimCodes/Zeiver)!
+For static ODs check out [Zeiver!](https://github.com/ZimCodes/Zeiver)
 
 For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
 
@@ -41,6 +41,7 @@ Supported ODs can be found in [OD.md](https://github.com/ZimCodes/Zyod/blob/main
 3. Extract zip file.
 4. Open a terminal and point it to the Zyod project directory containing `zyod.py`.
 5. To run zyod, start you commands using `python zyod.py`.
+
 
 ## Commands
 ### Positional
