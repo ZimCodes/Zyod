@@ -25,8 +25,8 @@ For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
 
 ## Sample Usage
 
-This command uses the Google Chrome driver to scrape and record links from *https://od.example. com*
-. While scraping, Zyod will write more text to the console, wait a maximum of *15 seconds*
+This command uses the Google Chrome driver to scrape and record links from *https://od.example.com*.
+While scraping, Zyod will write more text to the console, wait a maximum of *15 seconds*
 before scraping each page, search 3 directory levels deep, interact by scrolling, and do not wait in
 between each scroll action.
 
