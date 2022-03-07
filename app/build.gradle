@@ -42,6 +42,14 @@ tasks.named('test') {
 
 jar {
     manifest {
+        //Attributes to add to
         attributes("Main-Class": "xyz.zimtools.zyod.App")
     }
 }
+
+/*
+test {
+    filter {
+        includeTestsMatching("ArgsTest")
+    }
+}*/
