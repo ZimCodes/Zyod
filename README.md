@@ -102,7 +102,7 @@ certain amount of time before scraping.
 
 ***--random-wait***
 
-Wait a random amount of seconds before scraping.
+Randomize the amount of time to wait.
 
 The time before scraping will vary between 0.5 * `--wait,-w` (_inclusive_)
 to 1.5 * `--wait,-w` (_exclusive_)
@@ -112,19 +112,19 @@ to 1.5 * `--wait,-w` (_exclusive_)
 #### Downloading
 ***--download***
 
-Enable downloading feature.
+Enable downloading features.
 
 By default, downloading is disabled. Use this option to allow Zyod to download files from ODs. 
 **Cannot be used with `--headless`**.
 
 
-***--dir, --download-dir***
+***--ddir, --download-dir***
 
-Path to store downloaded files.
+Directory path to store downloaded files.
 
 The directory path to store download files. *Default:* `Downloads folder`
 
-***--download-wait***
+***--dwait, --download-wait***
 
 Wait a random amount of seconds before downloading.
 
@@ -137,7 +137,10 @@ Wait between 0.5 * `--download-wait` (_inclusive_) to 1.5 * `--download-wait`
 
 ***-o, --output***
 
-The file path to store the scraped links. *Default:* `output.txt`
+The file path to store the scraped links.
+
+The output file path to place all recorded links. Links are appended to the file! 
+*Default:* `./output.txt`.
 
 ***-i, --input***
 
@@ -151,7 +154,7 @@ standalone you must provide `URL..` as an empty string `""`:
 
 ***--no-record***
 
-Disable recording feature.
+Disable recording features.
 
 Recording is enabled by default. Use this option to disable recording.
 
@@ -172,7 +175,7 @@ content from the OD.
 
 Amount of seconds to wait before attempting to scroll again.
 
- *Default:* `4.2`.
+ *Default:* `4`.
 
 ---
 

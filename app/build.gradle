@@ -9,6 +9,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id "io.freefair.lombok" version "6.4.1"
 }
 
 repositories {
@@ -47,9 +48,8 @@ jar {
     }
 }
 
-/*
-test {
+/*test {
     filter {
-        includeTestsMatching("ArgsTest")
+        includeTestsMatching("ArgsTest.randomValueGeneration")
     }
 }*/
