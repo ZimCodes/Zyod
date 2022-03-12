@@ -31,7 +31,7 @@ class Chromium(browser.Browser):
 
         if opts.do_download:
             self._prefs['download.prompt_for_download'] = False
-            self._prefs['profile.default_content_settings.popups'] = 0
+            self._prefs['profile.default_content_setting_values.popups'] = 0
             self._prefs["download.directory_upgrade"] = True
             self._prefs['plugins.always_open_pdf_externally'] = True
             self._prefs["browser.helperApps.alwaysAsk.force"] = False

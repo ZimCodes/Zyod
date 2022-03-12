@@ -19,8 +19,8 @@ class Edge(Chromium):
         :param Opts opts: Opts class
         :return:
         """
-        self._prefs['headless_save_as_pdf_enabled'] = False
-        self._prefs["open_pdf_in_system_reader"] = False
+        self._prefs['printing.headless_save_as_pdf_enabled'] = False
+        self._prefs["download.open_pdf_in_system_reader"] = False
         super()._set_preferences(opts)
 
     def get_driver(self):
