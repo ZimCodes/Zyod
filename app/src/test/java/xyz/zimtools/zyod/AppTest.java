@@ -4,11 +4,13 @@
 package xyz.zimtools.zyod;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 class AppTest {
-    @Test void appHasAGreeting() {
-        App classUnderTest = new App();
-        assertNotNull(classUnderTest.getGreeting(), "app should have a greeting");
+    private static final String YELLOW = "\u001B[35m";
+
+    @Test
+    void life() {
+        System.out.println(YELLOW + "A Miracle was born!");
     }
+
 }

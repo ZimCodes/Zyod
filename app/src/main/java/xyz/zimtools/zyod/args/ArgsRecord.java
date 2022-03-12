@@ -2,13 +2,11 @@ package xyz.zimtools.zyod.args;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.converters.FileConverter;
-import lombok.Getter;
 import xyz.zimtools.zyod.args.validators.PathExistValidator;
 
 import java.io.File;
 
-@Getter
-public class ArgsRecord {
+public final class ArgsRecord {
     @Parameter(names = {"-o", "--output"}, description = "The output file path to place all recorded " +
             "links. Links are appended to the file!", converter = FileConverter.class)
     private File outputFile = new File("output.txt");
@@ -19,5 +17,17 @@ public class ArgsRecord {
     private File inputFile;
 
     @Parameter(names = {"--no-record"}, description = "Disable recording features.")
-    private boolean dontRecord;
+    private boolean notRecording;
+
+    public File getOutputFile() {
+        return outputFile;
+    }
+
+    public File getInputFile() {
+        return inputFile;
+    }
+
+    public boolean isNotRecording() {
+        return notRecording;
+    }
 }

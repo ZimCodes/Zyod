@@ -1,13 +1,10 @@
 package xyz.zimtools.zyod.args;
 
-
 import com.beust.jcommander.Parameter;
-import lombok.Getter;
 
 import java.util.List;
 
-@Getter
-public class ArgsMain {
+public final class ArgsMain {
     @Parameter(description = "The URL(s) of the dynamic ODs. Can be used with or without the" +
             "'--input' option.")
     private List<String> urls;
@@ -20,4 +17,20 @@ public class ArgsMain {
 
     @Parameter(names = {"-V", "--version"}, description = "Prints version information.")
     private boolean version;
+
+    public List<String> getUrls() {
+        return urls;
+    }
+
+    public boolean isHelp() {
+        return help;
+    }
+
+    public boolean isVerbose() {
+        return verbose;
+    }
+
+    public boolean isVersion() {
+        return version;
+    }
 }

@@ -3,12 +3,10 @@ package xyz.zimtools.zyod.args;
 
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.validators.PositiveInteger;
-import lombok.Getter;
 
 import java.util.Random;
 
-@Getter
-public class ArgsNavigator {
+public final class ArgsNavigator {
     @Parameter(names = {"-d", "--depth"}, description = "Specify the maximum depth for recursive " +
             "scraping. Depth of '1' is current directory.", validateWith = PositiveInteger.class)
     private int depth = 20;
@@ -21,6 +19,10 @@ public class ArgsNavigator {
             "before scraping.")
     private boolean isRandomWait;
 
+    public int getDepth() {
+        return this.depth;
+    }
+
     public int getWait() {
         int result = this.wait;
         if (this.wait > 0 && this.isRandomWait) {
@@ -31,5 +33,9 @@ public class ArgsNavigator {
                     .getAsInt();
         }
         return result;
+    }
+
+    public boolean isRandomWait() {
+        return this.isRandomWait;
     }
 }

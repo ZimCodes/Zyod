@@ -3,18 +3,10 @@
  */
 package xyz.zimtools.zyod;
 
-import java.util.Properties;
-
 public class App {
-    public String getGreeting() {
-        return "Hello World!";
-    }
-
     public static void main(String[] args) {
-        Properties prop = new Properties();
         try {
-            prop.load(App.class.getResourceAsStream("/app.properties"));
-            String version = prop.getProperty("version");
+            String version = AppConfig.getAppVersion();
             System.out.println(version);
         } catch (Exception e) {
             System.out.println(e.getMessage());

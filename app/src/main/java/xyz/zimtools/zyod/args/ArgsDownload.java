@@ -3,16 +3,15 @@ package xyz.zimtools.zyod.args;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.converters.FileConverter;
 import com.beust.jcommander.validators.PositiveInteger;
-import lombok.Getter;
+
 import java.util.Random;
 
 import java.io.File;
 
-@Getter
-public class ArgsDownload {
+public final class ArgsDownload {
     @Parameter(names = "--download", description = "Enable downloading features. Conflicts with " +
             "'--headless'.")
-    private boolean canDownload;
+    private boolean downloading;
 
     @Parameter(names = {"--ddir", "--download-dir"}, description = "Directory path to store " +
             "downloaded files. (Default: Downloads Folder)", converter = FileConverter.class)
@@ -27,13 +26,19 @@ public class ArgsDownload {
         int result = 0;
         if (this.downloadWait > 0) {
             Random rand = new Random();
-            result = rand.doubles(this.downloadWait * 0.5,this.downloadWait * 1.5)
-                    .mapToInt(dval -> (int)dval)
+            result = rand.doubles(this.downloadWait * 0.5, this.downloadWait * 1.5)
+                    .mapToInt(dval -> (int) dval)
                     .findFirst()
                     .getAsInt();
         }
         return result;
     }
 
+    public boolean isDownloading() {
+        return downloading;
+    }
 
+    public File getDownloadDir() {
+        return downloadDir;
+    }
 }

@@ -76,13 +76,21 @@ Enable verbose output
 
 Type of webdriver to use. *Choices:* `firefox`,`chrome`,`edge`. *Default: `firefox`*.
 
-***--driver-path***
-
-Location of the WebDriver in use. *Default: `%PATH%`*
-
 ***--headless***
 
-Activates headless mode. **Cannot be used with `--download`.
+Activates headless mode. Use a browser without the Graphical User Interface component. **Cannot be 
+used with`--download`.**
+
+***--all-certs***
+
+Accepts all certificates *(Beware!)*
+
+Accepts all certificates even invalid ones. **Use this option at your own risk!**
+
+***--compat-driver***
+
+The driver version to download. In case an incompatible driver was downloaded, use this option to 
+specify the correct driver version. **Default:** `auto`.
 
 ---
 
