@@ -1,7 +1,6 @@
 package xyz.zimtools.zyod.drivers;
 
-import xyz.zimtools.zyod.args.ArgsDownload;
-import xyz.zimtools.zyod.args.ArgsWebDriver;
+import xyz.zimtools.zyod.args.Args;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,8 +9,8 @@ import java.util.Map;
 public abstract class ChromiumBrowser extends Browser {
     protected final Map<String, Object> prefs;
 
-    public ChromiumBrowser(ArgsWebDriver argsWebDriver, ArgsDownload argsDownload) {
-        super(argsWebDriver, argsDownload);
+    public ChromiumBrowser(Args args) {
+        super(args);
         this.prefs = new HashMap<>();
     }
 

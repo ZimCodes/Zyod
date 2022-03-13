@@ -3,16 +3,15 @@ package xyz.zimtools.zyod.drivers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import xyz.zimtools.zyod.args.ArgsDownload;
-import xyz.zimtools.zyod.args.ArgsWebDriver;
+import xyz.zimtools.zyod.args.Args;
 
 import java.util.Map;
 
 public class ChromeBrowser extends ChromiumBrowser {
     private final ChromeOptions options;
 
-    public ChromeBrowser(ArgsWebDriver argsWebDriver, ArgsDownload argsDownload) {
-        super(argsWebDriver, argsDownload);
+    public ChromeBrowser(Args args) {
+        super(args);
         this.options = new ChromeOptions();
         this.setCapabilities();
         this.setPreferences();
@@ -28,8 +27,8 @@ public class ChromeBrowser extends ChromiumBrowser {
 
     @Override
     protected void setPreferences() {
-        this.options.setHeadless(this.argsWebDriver.isHeadless());
-        if (this.argsDownload.isDownloading()) {
+        this.options.setHeadless(this.args.getArgsWebDriver().isHeadless());
+        if (this.args.getArgsDownload().isDownloading()) {
             super.setPreferences();
         }
 
@@ -47,10 +46,10 @@ public class ChromeBrowser extends ChromiumBrowser {
      */
     @Override
     public ChromeDriver getDriver() {
-        if ("auto".equals(this.argsWebDriver.getDriverVersion())) {
+        if ("auto".equals(this.args.getArgsWebDriver().getDriverVersion())) {
             WebDriverManager.getInstance(ChromeDriver.class).setup();
         } else {
-            WebDriverManager.getInstance(ChromeDriver.class).driverVersion(this.argsWebDriver.getDriverVersion()).setup();
+            WebDriverManager.getInstance(ChromeDriver.class).driverVersion(this.args.getArgsWebDriver().getDriverVersion()).setup();
         }
         return new ChromeDriver(this.options);
     }

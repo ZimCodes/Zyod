@@ -8,9 +8,7 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import xyz.zimtools.zyod.Writer;
-import xyz.zimtools.zyod.args.ArgsDownload;
-import xyz.zimtools.zyod.args.ArgsWebDriver;
-import xyz.zimtools.zyod.fixtures.ArgsDefault;
+import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.fixtures.Assert;
 import xyz.zimtools.zyod.fixtures.DriversDefault;
 
@@ -21,20 +19,8 @@ import java.util.Map;
  */
 @DisplayName("WebDriver Settings Test")
 class SettingsTest {
-    static ArgsDownload argsDownload;
-    static ArgsWebDriver argsWebDriver;
-    static String[] firefoxArgs = {"--headless", "--download", "--all-certs"};
-    static String[] chromiumArgs = {"--download", "--all-certs"};
-
-    @BeforeEach
-    void initArgs() {
-        argsDownload = new ArgsDownload();
-        argsWebDriver = new ArgsWebDriver();
-    }
-
-    private void parseArgs(String[] args) {
-        ArgsDefault.argParse(args, argsWebDriver, argsDownload);
-    }
+    static String[] firefoxArgs = {"--headless", "--all-certs", DriversDefault.URL};
+    static String[] noHeadlessArg = {"--download", "--all-certs", DriversDefault.URL};
 
     private void changeSettingName(StringBuilder builder, String settingName) {
         builder.replace(0, builder.length(), settingName);
@@ -45,19 +31,21 @@ class SettingsTest {
         Assert.settingTrue(allCerts, "acceptInsecureCerts");
     }
 
+    /**
+     * Tests webdriver and browser if all settings have been applied except '--headless.'
+     * */
     @Test
     void firefoxSettings() {
-        this.parseArgs(firefoxArgs);
-        FirefoxBrowser browser = new FirefoxBrowser(argsWebDriver, argsDownload);
+        Args args = new Args(noHeadlessArg);
+        FirefoxBrowser browser = new FirefoxBrowser(args);
         FirefoxDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
         this.defaultCapabilitiesAsserts(caps);
-        Assert.settingTrue((Boolean) caps.get("moz:headless"), "headless");
         FirefoxProfile profile = browser.getProfile();
         StringBuilder setting = new StringBuilder("browser.download.dir");
 
         Assert.settingEquals(profile.getStringPreference(setting.toString(), ""),
-                argsDownload.getDownloadDir().getPath(), setting.toString());
+                args.getArgsDownload().getDownloadDir().getPath(), setting.toString());
 
         changeSettingName(setting, "browser.helperApps.neverAsk.saveToDisk");
         Assert.settingEquals(profile.getStringPreference(setting.toString(), ""),
@@ -72,12 +60,23 @@ class SettingsTest {
     }
 
     /**
+     * Tests if firefox webdriver '--headless' option has been set.*/
+    @Test
+    void firefoxHeadless() {
+        Args args = new Args(firefoxArgs);
+        FirefoxBrowser browser = new FirefoxBrowser(args);
+        FirefoxDriver driver = browser.getDriver();
+        Map<String, Object> caps = driver.getCapabilities().asMap();
+        Assert.settingTrue((Boolean) caps.get("moz:headless"), "headless");
+    }
+
+    /**
      * NOTE: Unable to check if 'headless' & experimental options has been applied.
      */
     @Test
     void chromeSettings() {
-        this.parseArgs(chromiumArgs);
-        ChromeBrowser browser = new ChromeBrowser(argsWebDriver, argsDownload);
+        Args args = new Args(noHeadlessArg);
+        ChromeBrowser browser = new ChromeBrowser(args);
         ChromeDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
 
@@ -86,16 +85,19 @@ class SettingsTest {
         driver.navigate().to(DriversDefault.URL);
     }
 
+    /**
+     * NOTE: Unable to check if 'headless' & experimental options has been applied.
+     */
     @Test
     void edgeSettings() {
-        this.parseArgs(chromiumArgs);
-        EdgeBrowser browser = new EdgeBrowser(argsWebDriver, argsDownload);
+        Args args = new Args(noHeadlessArg);
+        EdgeBrowser browser = new EdgeBrowser(args);
         EdgeDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
 
         this.defaultCapabilitiesAsserts(caps);
 
-        // Check 'edge://prefs-internals' in browser to see if other options are applied
+        // Check 'edge://prefs-internals' in browser to see if other options are applied.
         driver.navigate().to(DriversDefault.URL);
     }
 }

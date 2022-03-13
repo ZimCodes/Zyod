@@ -1,8 +1,7 @@
 package xyz.zimtools.zyod.drivers;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
-import xyz.zimtools.zyod.args.ArgsDownload;
-import xyz.zimtools.zyod.args.ArgsWebDriver;
+import xyz.zimtools.zyod.args.Args;
 
 import java.util.Map;
 import java.util.HashMap;
@@ -12,19 +11,17 @@ import java.util.HashMap;
  */
 public abstract class Browser {
     protected final Map<String, Object> capabilities;
-    protected final ArgsWebDriver argsWebDriver;
-    protected final ArgsDownload argsDownload;
+    protected final Args args;
 
-    public Browser(ArgsWebDriver argsWebDriver, ArgsDownload argsDownload) {
+    public Browser(Args args) {
         this.capabilities = new HashMap<>();
-        this.argsDownload = argsDownload;
-        this.argsWebDriver = argsWebDriver;
+        this.args = args;
     }
 
     protected abstract void setPreferences();
 
     protected void setCapabilities() {
-        this.capabilities.put("acceptInsecureCerts", this.argsWebDriver.isAllCerts());
+        this.capabilities.put("acceptInsecureCerts", this.args.getArgsWebDriver().isAllCerts());
     }
 
     public abstract RemoteWebDriver getDriver();

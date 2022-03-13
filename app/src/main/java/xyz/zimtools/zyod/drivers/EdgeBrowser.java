@@ -3,16 +3,15 @@ package xyz.zimtools.zyod.drivers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
-import xyz.zimtools.zyod.args.ArgsDownload;
-import xyz.zimtools.zyod.args.ArgsWebDriver;
+import xyz.zimtools.zyod.args.Args;
 
 import java.util.Map;
 
 public class EdgeBrowser extends ChromiumBrowser {
     EdgeOptions options;
 
-    public EdgeBrowser(ArgsWebDriver argsWebDriver, ArgsDownload argsDownload) {
-        super(argsWebDriver, argsDownload);
+    public EdgeBrowser(Args args) {
+        super(args);
         this.options = new EdgeOptions();
         this.setCapabilities();
         this.setPreferences();
@@ -28,10 +27,10 @@ public class EdgeBrowser extends ChromiumBrowser {
 
     @Override
     protected void setPreferences() {
-        this.options.setHeadless(this.argsWebDriver.isHeadless());
+        this.options.setHeadless(this.args.getArgsWebDriver().isHeadless());
         this.prefs.put("printing.headless_save_as_pdf_enabled", false);
         this.prefs.put("download.open_pdf_in_system_reader", false);
-        if (this.argsDownload.isDownloading()) {
+        if (this.args.getArgsDownload().isDownloading()) {
             super.setPreferences();
         }
 
@@ -42,10 +41,10 @@ public class EdgeBrowser extends ChromiumBrowser {
 
     @Override
     public EdgeDriver getDriver() {
-        if ("auto".equals(this.argsWebDriver.getDriverVersion())) {
+        if ("auto".equals(this.args.getArgsWebDriver().getDriverVersion())) {
             WebDriverManager.getInstance(EdgeDriver.class).setup();
         } else {
-            WebDriverManager.getInstance(EdgeDriver.class).driverVersion(this.argsWebDriver.getDriverVersion()).setup();
+            WebDriverManager.getInstance(EdgeDriver.class).driverVersion(this.args.getArgsWebDriver().getDriverVersion()).setup();
         }
         return new EdgeDriver(this.options);
     }

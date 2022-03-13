@@ -26,106 +26,104 @@ class ArgsTest {
         return list.toArray(items);
     }
 
-    private void mainAsserts(ArgsMain main) {
-        Assert.argTrue(main.isVerbose(), "verbose");
-        Assert.argTrue(main.isHelp(), "help");
-        Assert.argTrue(main.isVersion(), "version");
+    private void urlAssert(String[] args) {
+        assertDoesNotThrow(() -> new Args(args), "URL(s) may not have been present.");
+    }
+
+    private void mainAsserts(Args args) {
+        Assert.argTrue(args.getArgsMain().isVerbose(), "verbose");
+        Assert.argTrue(args.getArgsMain().isHelp(), "help");
+        Assert.argTrue(args.getArgsMain().isVersion(), "version");
     }
 
     private void mainArgs() {
-        ArgsMain main = new ArgsMain();
-        ArgsDefault.argParse(ArgsDefault.MAIN_ARGS, main);
-        this.mainAsserts(main);
+        this.urlAssert(ArgsDefault.MAIN_ARGS);
+        Args args = new Args(ArgsDefault.MAIN_ARGS);
+        this.mainAsserts(args);
     }
 
-    private void webDriverAsserts(ArgsWebDriver webDriver) {
-        assertEquals(webDriver.getDriverName(), "firefox", "The chosen driver name is incorrect.");
-        Assert.argTrue(webDriver.isHeadless(), "headless");
-        Assert.argTrue(webDriver.isAllCerts(), "all certs");
-        assertEquals(webDriver.getDriverVersion(), "auto", "Driver versions do not match.");
+    private void webDriverAsserts(Args args) {
+        assertEquals(args.getArgsWebDriver().getDriverName(), "firefox", "The chosen driver name " +
+                "is incorrect.");
+        Assert.argTrue(args.getArgsWebDriver().isAllCerts(), "all certs");
+        assertEquals(args.getArgsWebDriver().getDriverVersion(), "auto", "Driver versions do not match.");
     }
 
     private void webDriverArgs() {
-        ArgsWebDriver webDriver = new ArgsWebDriver();
-        ArgsDefault.argParse(ArgsDefault.WEB_DRIVER_ARGS, webDriver);
-        this.webDriverAsserts(webDriver);
+        this.urlAssert(ArgsDefault.WEB_DRIVER_ARGS);
+        Args args = new Args(ArgsDefault.WEB_DRIVER_ARGS);
+        Assert.argTrue(args.getArgsWebDriver().isHeadless(), "headless");
+        this.webDriverAsserts(args);
     }
 
-    private void navigatorAsserts(ArgsNavigator navigator) {
-        Assert.argTrue(navigator.isRandomWait(), "random wait");
-        assertEquals(navigator.getDepth(), ArgsDefault.DEPTH_VALUE);
+    private void navigatorAsserts(Args args) {
+        Assert.argTrue(args.getArgsNavigator().isRandomWait(), "random wait");
+        assertEquals(args.getArgsNavigator().getDepth(), ArgsDefault.DEPTH_VALUE);
     }
 
     private void navigatorArgs() {
-        ArgsNavigator navigator = new ArgsNavigator();
-        ArgsDefault.argParse(ArgsDefault.NAVIGATOR_ARGS, navigator);
-        this.navigatorAsserts(navigator);
+        this.urlAssert(ArgsDefault.NAVIGATOR_ARGS);
+        Args args = new Args(ArgsDefault.NAVIGATOR_ARGS);
+        this.navigatorAsserts(args);
     }
 
-    private void downloadAsserts(ArgsDownload download) {
-        Assert.argTrue(download.isDownloading(), "download");
-        assertEquals(download.getDownloadDir().getPath(), ArgsDefault.DOWNLOAD_DIR);
+    private void downloadAsserts(Args args) {
+        Assert.argTrue(args.getArgsDownload().isDownloading(), "download");
+        assertEquals(args.getArgsDownload().getDownloadDir().getPath(), ArgsDefault.DOWNLOAD_DIR);
     }
 
     private void downloadArgs() {
-        ArgsDownload download = new ArgsDownload();
-        ArgsDefault.argParse(ArgsDefault.DOWNLOAD_ARGS, download);
-        this.downloadAsserts(download);
+        this.urlAssert(ArgsDefault.DOWNLOAD_ARGS);
+        Args args = new Args(ArgsDefault.DOWNLOAD_ARGS);
+        this.downloadAsserts(args);
     }
 
-    private void recordAsserts(ArgsRecord record) {
-        Assert.argTrue(record.isNotRecording(), "no record");
-        assertEquals(record.getInputFile().getPath(), ArgsDefault.INPUT_FILE);
-        assertEquals(record.getOutputFile().getPath(), "output.txt");
+    private void recordAsserts(Args args) {
+        Assert.argTrue(args.getArgsRecord().isNotRecording(), "no args.getArgsRecord");
+        assertEquals(args.getArgsRecord().getInputFile().getPath(), ArgsDefault.INPUT_FILE);
+        assertEquals(args.getArgsRecord().getOutputFile().getPath(), "output.txt");
     }
 
     private void recordArgs() {
-        ArgsRecord record = new ArgsRecord();
-        ArgsDefault.argParse(ArgsDefault.RECORD_ARGS, record);
-        this.recordAsserts(record);
+        this.urlAssert(ArgsDefault.RECORD_ARGS);
+        Args args = new Args(ArgsDefault.RECORD_ARGS);
+        this.recordAsserts(args);
     }
 
-    private void interactiveAsserts(ArgsInteractive interactive) {
-        Assert.argTrue(interactive.isScrolling(), "scroll");
-        assertEquals(interactive.getScrollWait(), ArgsDefault.WAIT_VALUE);
+    private void interactiveAsserts(Args args) {
+        Assert.argTrue(args.getArgsInteractive().isScrolling(), "scroll");
+        assertEquals(args.getArgsInteractive().getScrollWait(), ArgsDefault.WAIT_VALUE);
     }
 
     private void interactiveArgs() {
-        ArgsInteractive interactive = new ArgsInteractive();
-        ArgsDefault.argParse(ArgsDefault.INTERACTIVE_ARGS, interactive);
-        this.interactiveAsserts(interactive);
+        this.urlAssert(ArgsDefault.INTERACTIVE_ARGS);
+        Args args = new Args(ArgsDefault.INTERACTIVE_ARGS);
+        this.interactiveAsserts(args);
     }
 
-    private void miscAsserts(ArgsMisc misc) {
-        Assert.argTrue(misc.isRefreshing(), "refresh");
-        assertEquals(misc.getLoadWait(), ArgsDefault.WAIT_VALUE);
-        assertEquals(misc.getWebWait(), ArgsDefault.WAIT_VALUE);
+    private void miscAsserts(Args args) {
+        Assert.argTrue(args.getArgsMisc().isRefreshing(), "refresh");
+        assertEquals(args.getArgsMisc().getLoadWait(), ArgsDefault.WAIT_VALUE);
+        assertEquals(args.getArgsMisc().getWebWait(), ArgsDefault.WAIT_VALUE);
+
     }
 
     private void miscArgs() {
-        ArgsMisc misc = new ArgsMisc();
-        ArgsDefault.argParse(ArgsDefault.MISC_ARGS, misc);
-        this.miscAsserts(misc);
+        this.urlAssert(ArgsDefault.MISC_ARGS);
+        Args args = new Args(ArgsDefault.MISC_ARGS);
+        this.miscAsserts(args);
     }
 
     private void multiArgs(String[] args) {
-        ArgsMain main = new ArgsMain();
-        ArgsWebDriver webDriver = new ArgsWebDriver();
-        ArgsNavigator navigator = new ArgsNavigator();
-        ArgsDownload download = new ArgsDownload();
-        ArgsRecord record = new ArgsRecord();
-        ArgsInteractive interactive = new ArgsInteractive();
-        ArgsMisc misc = new ArgsMisc();
-
-        ArgsDefault.argParse(args, webDriver, main, navigator, download, record, interactive, misc);
-
-        this.mainAsserts(main);
-        this.webDriverAsserts(webDriver);
-        this.downloadAsserts(download);
-        this.navigatorAsserts(navigator);
-        this.recordAsserts(record);
-        this.interactiveAsserts(interactive);
-        this.miscAsserts(misc);
+        this.urlAssert(args);
+        Args argsObj = new Args(args);
+        this.mainAsserts(argsObj);
+        this.webDriverAsserts(argsObj);
+        this.downloadAsserts(argsObj);
+        this.navigatorAsserts(argsObj);
+        this.recordAsserts(argsObj);
+        this.interactiveAsserts(argsObj);
+        this.miscAsserts(argsObj);
     }
 
     @Test
@@ -141,7 +139,7 @@ class ArgsTest {
                 () -> {
                     String[] combined = this.joinArr(new String[][]{
                             ArgsDefault.MAIN_ARGS,
-                            ArgsDefault.WEB_DRIVER_ARGS,
+                            ArgsDefault.WEB_DRIVER_NO_HEADLESS_ARGS,
                             ArgsDefault.NAVIGATOR_ARGS,
                             ArgsDefault.DOWNLOAD_ARGS,
                             ArgsDefault.RECORD_ARGS,
@@ -153,12 +151,35 @@ class ArgsTest {
         );
     }
 
+    /**
+     * Test to check if a URL has not been received.
+     */
     @Test
-    void noPositional() {
-        ArgsMain main = new ArgsMain();
-        ArgsDefault.argParse(ArgsDefault.MAIN_ARGS, main);
-        assertNull(main.getUrls(), "Should not have a positional argument present.");
-        this.mainAsserts(main);
+    void noURLs() {
+        String[] args = new String[]{"-h", "-v", "-V"};
+        assertThrows(ParameterException.class, () -> new Args(args),
+                "Should not have a positional argument and '--input' option present.");
+    }
+
+    @Test
+    @DisplayName("Positional Argument")
+    void positional() {
+        this.urlAssert(ArgsDefault.MAIN_ARGS);
+        Args args = new Args(ArgsDefault.MAIN_ARGS);
+        assertFalse(args.getArgsMain().getUrls().isEmpty(), "Should have a positional argument " +
+                "present.");
+        this.mainAsserts(args);
+    }
+
+    /**
+     * Test if input file and url in command line are combined
+     */
+    @Test
+    @DisplayName("Positional & Input URLs")
+    void positionalInput() {
+        Args argObj = new Args(ArgsDefault.URLS_ARGS);
+        assertEquals(4, argObj.getArgsMain().getUrls().size(), "There should be a total of 4 " +
+                "urls total for Zyod to navigate.");
     }
 
     @Test
@@ -166,33 +187,21 @@ class ArgsTest {
     void incorrectChoice() {
         String incorrectDriverChoice = "safari";
         String[] incorrectArgs = new String[]{"--driver", incorrectDriverChoice};
-        ArgsWebDriver webDriver = new ArgsWebDriver();
-        assertThrows(ParameterException.class, () -> ArgsDefault.argParse(incorrectArgs, webDriver));
+        assertThrows(ParameterException.class, () -> new Args(incorrectArgs));
     }
 
     @Test
     void positiveValuesOnly() {
-        String negativeStr = "-3";
-        String[] args = new String[]{"-w", negativeStr, "-d", negativeStr, "--dwait",
-                negativeStr, "--scroll-wait", negativeStr, "--load-wait", negativeStr, "--web-wait",
-                negativeStr};
-        ArgsNavigator navigator = new ArgsNavigator();
-        ArgsDownload download = new ArgsDownload();
-        ArgsInteractive interactive = new ArgsInteractive();
-        ArgsMisc misc = new ArgsMisc();
-        assertThrows(ParameterException.class, () -> ArgsDefault.argParse(args, navigator, download,
-                interactive, misc));
+        assertThrows(ParameterException.class, () -> new Args(ArgsDefault.NEGATIVE_WAIT_ARGS));
     }
 
     @RepeatedTest(10)
     void randomValueGeneration() {
-        String waitStr = String.valueOf(ArgsDefault.WAIT_VALUE);
-        String[] args = new String[]{"--dwait", waitStr, "-w", waitStr, "--random-wait"};
-        ArgsDownload download = new ArgsDownload();
-        ArgsNavigator navigator = new ArgsNavigator();
-        ArgsDefault.argParse(args, download, navigator);
-        int dWaitValue = download.getDownloadWait();
-        int waitValue = navigator.getWait();
+        this.urlAssert(ArgsDefault.RAND_WAIT_ARGS);
+        Args argObj = new Args(ArgsDefault.RAND_WAIT_ARGS);
+
+        int dWaitValue = argObj.getArgsDownload().getDownloadWait();
+        int waitValue = argObj.getArgsNavigator().getWait();
 
         Assert.isPositive(dWaitValue, "download wait");
         Assert.isPositive(waitValue, "wait");
@@ -200,9 +209,13 @@ class ArgsTest {
 
     @Test
     void filePathExists() {
-        ArgsRecord record = new ArgsRecord();
-        ArgsWebDriver webDriver = new ArgsWebDriver();
         String[] args = new String[]{"-i", ArgsDefault.INPUT_FILE};
-        assertDoesNotThrow(() -> ArgsDefault.argParse(args, record, webDriver));
+        assertDoesNotThrow(() -> new Args(args));
+    }
+
+    @Test
+    void ArgConflicts() {
+        String[] args = new String[]{"--headless", "--download"};
+        assertThrows(ParameterException.class, () -> new Args(args));
     }
 }

@@ -3,10 +3,8 @@ package xyz.zimtools.zyod.drivers;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import xyz.zimtools.zyod.Writer;
-import xyz.zimtools.zyod.args.ArgsDownload;
-import xyz.zimtools.zyod.args.ArgsWebDriver;
+import xyz.zimtools.zyod.args.Args;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 import java.util.Map;
@@ -15,8 +13,8 @@ public class FirefoxBrowser extends Browser {
     private final FirefoxOptions options;
     private final FirefoxProfile profile;
 
-    public FirefoxBrowser(ArgsWebDriver argsWebDriver, ArgsDownload argsDownload) {
-        super(argsWebDriver, argsDownload);
+    public FirefoxBrowser(Args args) {
+        super(args);
         this.options = new FirefoxOptions();
         this.profile = new FirefoxProfile();
         this.setCapabilities();
@@ -25,10 +23,11 @@ public class FirefoxBrowser extends Browser {
 
     @Override
     protected void setPreferences() {
-        this.options.setHeadless(this.argsWebDriver.isHeadless()); // set headless mode
-        if (this.argsDownload.isDownloading()) {
-            this.argsDownload.getDownloadDir().mkdirs(); // Create none existent directories, if any
-            this.profile.setPreference("browser.download.dir", argsDownload.getDownloadDir().getAbsolutePath());
+        this.options.setHeadless(this.args.getArgsWebDriver().isHeadless()); // set headless mode
+        if (this.args.getArgsDownload().isDownloading()) {
+            this.args.getArgsDownload().getDownloadDir().mkdirs(); // Create none existent directories, if any
+            this.profile.setPreference("browser.download.dir",
+                    this.args.getArgsDownload().getDownloadDir().getAbsolutePath());
             this.profile.setPreference("browser.download.folderList", 2);
         }
         this.profile.setPreference("browser.helperApps.neverAsk.saveToDisk", Writer.readMimeFile());
@@ -46,10 +45,10 @@ public class FirefoxBrowser extends Browser {
 
     @Override
     public FirefoxDriver getDriver() {
-        if ("auto".equals(this.argsWebDriver.getDriverVersion())) {
+        if ("auto".equals(this.args.getArgsWebDriver().getDriverVersion())) {
             WebDriverManager.getInstance(FirefoxDriver.class).setup();
         } else {
-            WebDriverManager.getInstance(FirefoxDriver.class).driverVersion(this.argsWebDriver.getDriverVersion()).setup();
+            WebDriverManager.getInstance(FirefoxDriver.class).driverVersion(this.args.getArgsWebDriver().getDriverVersion()).setup();
         }
         return new FirefoxDriver(this.options);
     }

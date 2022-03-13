@@ -14,4 +14,5 @@ class WriterTest {
     void readMimeFile() {
         assertNotEquals(Writer.readMimeFile(), "");
     }
+
 }

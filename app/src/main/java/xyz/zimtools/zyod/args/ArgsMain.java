@@ -2,12 +2,13 @@ package xyz.zimtools.zyod.args;
 
 import com.beust.jcommander.Parameter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class ArgsMain {
     @Parameter(description = "The URL(s) of the dynamic ODs. Can be used with or without the" +
             "'--input' option.")
-    private List<String> urls;
+    private List<String> urls = new ArrayList<>();
 
     @Parameter(names = {"-h", "--help"}, description = "Prints usages information.", help = true)
     private boolean help;
