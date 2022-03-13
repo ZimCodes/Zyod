@@ -1,4 +1,4 @@
-package xyz.zimtools.zyod.drivers;
+package xyz.zimtools.zyod.browsers;
 
 import xyz.zimtools.zyod.args.Args;
 

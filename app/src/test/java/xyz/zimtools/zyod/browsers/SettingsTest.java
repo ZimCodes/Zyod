@@ -1,6 +1,5 @@
-package xyz.zimtools.zyod.drivers;
+package xyz.zimtools.zyod.browsers;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -10,7 +9,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import xyz.zimtools.zyod.Writer;
 import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.fixtures.Assert;
-import xyz.zimtools.zyod.fixtures.DriversDefault;
+import xyz.zimtools.zyod.fixtures.GlobalDefault;
 
 import java.util.Map;
 
@@ -19,8 +18,9 @@ import java.util.Map;
  */
 @DisplayName("WebDriver Settings Test")
 class SettingsTest {
-    static String[] firefoxArgs = {"--headless", "--all-certs", DriversDefault.URL};
-    static String[] noHeadlessArg = {"--download", "--all-certs", DriversDefault.URL};
+    private static final String[] MAIN_ARGS = {"--download", "--all-certs"};
+    private static final String[] HEADLESS_ARGS = {"--headless"};
+    private static final String[] URL_ARG = {GlobalDefault.URL};
 
     private void changeSettingName(StringBuilder builder, String settingName) {
         builder.replace(0, builder.length(), settingName);
@@ -33,10 +33,11 @@ class SettingsTest {
 
     /**
      * Tests webdriver and browser if all settings have been applied except '--headless.'
-     * */
+     */
     @Test
     void firefoxSettings() {
-        Args args = new Args(noHeadlessArg);
+        String[] combinedArgs = GlobalDefault.joinArr(new String[][]{MAIN_ARGS, URL_ARG});
+        Args args = new Args(combinedArgs);
         FirefoxBrowser browser = new FirefoxBrowser(args);
         FirefoxDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
@@ -60,10 +61,12 @@ class SettingsTest {
     }
 
     /**
-     * Tests if firefox webdriver '--headless' option has been set.*/
+     * Tests if firefox webdriver '--headless' option has been set.
+     */
     @Test
     void firefoxHeadless() {
-        Args args = new Args(firefoxArgs);
+        String[] combinedArgs = GlobalDefault.joinArr(new String[][]{HEADLESS_ARGS, URL_ARG});
+        Args args = new Args(combinedArgs);
         FirefoxBrowser browser = new FirefoxBrowser(args);
         FirefoxDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
@@ -75,29 +78,31 @@ class SettingsTest {
      */
     @Test
     void chromeSettings() {
-        Args args = new Args(noHeadlessArg);
+        String[] combinedArgs = GlobalDefault.joinArr(new String[][]{MAIN_ARGS, URL_ARG});
+        Args args = new Args(combinedArgs);
         ChromeBrowser browser = new ChromeBrowser(args);
         ChromeDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
 
         this.defaultCapabilitiesAsserts(caps);
         // Check 'chrome://prefs-internals/' in browser to see if other options are applied.
-        driver.navigate().to(DriversDefault.URL);
+        driver.navigate().to(GlobalDefault.URL);
     }
 
     /**
      * NOTE: Unable to check if 'headless' & experimental options has been applied.
      */
     @Test
-    void edgeSettings() {
-        Args args = new Args(noHeadlessArg);
-        EdgeBrowser browser = new EdgeBrowser(args);
+    void msedgeSettings() {
+        String[] combinedArgs = GlobalDefault.joinArr(new String[][]{MAIN_ARGS, URL_ARG});
+        Args args = new Args(combinedArgs);
+        MSEdgeBrowser browser = new MSEdgeBrowser(args);
         EdgeDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
 
         this.defaultCapabilitiesAsserts(caps);
 
         // Check 'edge://prefs-internals' in browser to see if other options are applied.
-        driver.navigate().to(DriversDefault.URL);
+        driver.navigate().to(GlobalDefault.URL);
     }
 }

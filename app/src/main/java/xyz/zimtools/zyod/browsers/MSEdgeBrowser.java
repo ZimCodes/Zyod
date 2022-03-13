@@ -1,4 +1,4 @@
-package xyz.zimtools.zyod.drivers;
+package xyz.zimtools.zyod.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -7,10 +7,10 @@ import xyz.zimtools.zyod.args.Args;
 
 import java.util.Map;
 
-public class EdgeBrowser extends ChromiumBrowser {
+public class MSEdgeBrowser extends ChromiumBrowser {
     EdgeOptions options;
 
-    public EdgeBrowser(Args args) {
+    public MSEdgeBrowser(Args args) {
         super(args);
         this.options = new EdgeOptions();
         this.setCapabilities();

@@ -8,9 +8,7 @@ import xyz.zimtools.zyod.args.*;
 
 import xyz.zimtools.zyod.fixtures.Assert;
 import xyz.zimtools.zyod.fixtures.ArgsDefault;
-
-import java.util.Arrays;
-import java.util.List;
+import xyz.zimtools.zyod.fixtures.GlobalDefault;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,12 +17,6 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @DisplayName("Command Line Argument Tests")
 class ArgsTest {
-
-    private String[] joinArr(String[][] arrs) {
-        List<String> list = Arrays.stream(arrs).flatMap(Arrays::stream).toList();
-        String[] items = new String[list.size()];
-        return list.toArray(items);
-    }
 
     private void urlAssert(String[] args) {
         assertDoesNotThrow(() -> new Args(args), "URL(s) may not have been present.");
@@ -137,7 +129,7 @@ class ArgsTest {
                 this::interactiveArgs,
                 this::miscArgs,
                 () -> {
-                    String[] combined = this.joinArr(new String[][]{
+                    String[] combined = GlobalDefault.joinArr(new String[][]{
                             ArgsDefault.MAIN_ARGS,
                             ArgsDefault.WEB_DRIVER_NO_HEADLESS_ARGS,
                             ArgsDefault.NAVIGATOR_ARGS,

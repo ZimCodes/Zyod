@@ -1,4 +1,4 @@
-package xyz.zimtools.zyod.drivers;
+package xyz.zimtools.zyod.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.firefox.FirefoxDriver;

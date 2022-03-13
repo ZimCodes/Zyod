@@ -1,4 +1,4 @@
-package xyz.zimtools.zyod.drivers;
+package xyz.zimtools.zyod.browsers;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 import xyz.zimtools.zyod.args.Args;

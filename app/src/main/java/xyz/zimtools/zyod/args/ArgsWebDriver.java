@@ -5,7 +5,7 @@ import xyz.zimtools.zyod.args.validators.choice.WebDriverChoiceValidator;
 
 public final class ArgsWebDriver {
     @Parameter(names = "--driver", description = "Type of webdriver to use. Choices: 'firefox'," +
-            "'chrome', 'edge'.", validateWith = WebDriverChoiceValidator.class)
+            "'chrome', 'msedge'.", validateWith = WebDriverChoiceValidator.class)
     private String driverName = "firefox";
 
     @Parameter(names = "--headless", description = "Enable headless mode. Conflicts with " +

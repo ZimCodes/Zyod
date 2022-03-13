@@ -74,7 +74,7 @@ Enable verbose output
 
 ***--driver***
 
-Type of webdriver to use. *Choices:* `firefox`,`chrome`,`edge`. *Default: `firefox`*.
+Type of webdriver to use. *Choices:* `firefox`,`chrome`,`msedge`. *Default: `firefox`*.
 
 ***--headless***
 
