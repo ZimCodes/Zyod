@@ -21,15 +21,6 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.guava/guava
     // implementation 'com.google.guava:guava:31.1-jre'
 
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
-
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
-    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.8.2'
-
-    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params
-    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
-
     // https://mvnrepository.com/artifact/com.beust/jcommander
     implementation 'com.beust:jcommander:1.82'
 
@@ -39,6 +30,17 @@ dependencies {
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
     implementation 'io.github.bonigarcia:webdrivermanager:5.1.0'
 
+    //Gson dependency for parsing JSON files
+    implementation 'com.google.code.gson:gson:2.9.0'
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.2'
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-engine
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-engine', version: '5.8.2'
+
+    // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-params
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.2'
 }
 
 application {

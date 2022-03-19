@@ -6,9 +6,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
 import xyz.zimtools.zyod.args.*;
 
-import xyz.zimtools.zyod.fixtures.Assert;
 import xyz.zimtools.zyod.fixtures.ArgsDefault;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
+import xyz.zimtools.zyod.fixtures.asserts.ArgAssert;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,9 +23,9 @@ class ArgsTest {
     }
 
     private void mainAsserts(Args args) {
-        Assert.argTrue(args.getArgsMain().isVerbose(), "verbose");
-        Assert.argTrue(args.getArgsMain().isHelp(), "help");
-        Assert.argTrue(args.getArgsMain().isVersion(), "version");
+        ArgAssert.argTrue(args.getArgsMain().isVerbose(), "verbose");
+        ArgAssert.argTrue(args.getArgsMain().isHelp(), "help");
+        ArgAssert.argTrue(args.getArgsMain().isVersion(), "version");
     }
 
     private void mainArgs() {
@@ -37,19 +37,19 @@ class ArgsTest {
     private void webDriverAsserts(Args args) {
         assertEquals(args.getArgsWebDriver().getDriverName(), "firefox", "The chosen driver name " +
                 "is incorrect.");
-        Assert.argTrue(args.getArgsWebDriver().isAllCerts(), "all certs");
+        ArgAssert.argTrue(args.getArgsWebDriver().isAllCerts(), "all certs");
         assertEquals(args.getArgsWebDriver().getDriverVersion(), "auto", "Driver versions do not match.");
     }
 
     private void webDriverArgs() {
         this.urlAssert(ArgsDefault.WEB_DRIVER_ARGS);
         Args args = new Args(ArgsDefault.WEB_DRIVER_ARGS);
-        Assert.argTrue(args.getArgsWebDriver().isHeadless(), "headless");
+        ArgAssert.argTrue(args.getArgsWebDriver().isHeadless(), "headless");
         this.webDriverAsserts(args);
     }
 
     private void navigatorAsserts(Args args) {
-        Assert.argTrue(args.getArgsNavigator().isRandomWait(), "random wait");
+        ArgAssert.argTrue(args.getArgsNavigator().isRandomWait(), "random wait");
         assertEquals(args.getArgsNavigator().getDepth(), ArgsDefault.DEPTH_VALUE);
     }
 
@@ -60,8 +60,8 @@ class ArgsTest {
     }
 
     private void downloadAsserts(Args args) {
-        Assert.argTrue(args.getArgsDownload().isDownloading(), "download");
-        assertEquals(args.getArgsDownload().getDownloadDir().getPath(), ArgsDefault.DOWNLOAD_DIR);
+        ArgAssert.argTrue(args.getArgsDownload().isDownloading(), "download");
+        assertEquals(args.getArgsDownload().getDownloadDir().getPath(), AppConfig.getFullDownloadPath());
     }
 
     private void downloadArgs() {
@@ -71,7 +71,7 @@ class ArgsTest {
     }
 
     private void recordAsserts(Args args) {
-        Assert.argTrue(args.getArgsRecord().isNotRecording(), "no args.getArgsRecord");
+        ArgAssert.argTrue(args.getArgsRecord().isNotRecording(), "no args.getArgsRecord");
         assertEquals(args.getArgsRecord().getInputFile().getPath(), ArgsDefault.INPUT_FILE);
         assertEquals(args.getArgsRecord().getOutputFile().getPath(), "output.txt");
     }
@@ -83,8 +83,8 @@ class ArgsTest {
     }
 
     private void interactiveAsserts(Args args) {
-        Assert.argTrue(args.getArgsInteractive().isScrolling(), "scroll");
-        assertEquals(args.getArgsInteractive().getScrollWait(), ArgsDefault.WAIT_VALUE);
+        ArgAssert.argTrue(args.getArgsInteractive().isScrolling(), "scroll");
+        assertEquals(args.getArgsInteractive().getScrollWait(), ArgsDefault.WAIT_LONG_VALUE);
     }
 
     private void interactiveArgs() {
@@ -94,9 +94,9 @@ class ArgsTest {
     }
 
     private void miscAsserts(Args args) {
-        Assert.argTrue(args.getArgsMisc().isRefreshing(), "refresh");
-        assertEquals(args.getArgsMisc().getLoadWait(), ArgsDefault.WAIT_VALUE);
-        assertEquals(args.getArgsMisc().getWebWait(), ArgsDefault.WAIT_VALUE);
+        ArgAssert.argTrue(args.getArgsMisc().isRefreshing(), "refresh");
+        assertEquals(args.getArgsMisc().getLoadWait(), ArgsDefault.WAIT_LONG_VALUE);
+        assertEquals(args.getArgsMisc().getWebWait(), ArgsDefault.WAIT_LONG_VALUE);
 
     }
 
@@ -192,11 +192,11 @@ class ArgsTest {
         this.urlAssert(ArgsDefault.RAND_WAIT_ARGS);
         Args argObj = new Args(ArgsDefault.RAND_WAIT_ARGS);
 
-        int dWaitValue = argObj.getArgsDownload().getDownloadWait();
-        int waitValue = argObj.getArgsNavigator().getWait();
+        long dWaitValue = argObj.getArgsDownload().getDownloadWait();
+        long waitValue = argObj.getArgsNavigator().getWait();
 
-        Assert.isPositive(dWaitValue, "download wait");
-        Assert.isPositive(waitValue, "wait");
+        ArgAssert.isPositive(dWaitValue, "download wait");
+        ArgAssert.isPositive(waitValue, "wait");
     }
 
     @Test

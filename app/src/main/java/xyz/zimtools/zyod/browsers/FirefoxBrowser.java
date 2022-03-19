@@ -7,6 +7,7 @@ import xyz.zimtools.zyod.Writer;
 import xyz.zimtools.zyod.args.Args;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
+import java.time.Duration;
 import java.util.Map;
 
 public class FirefoxBrowser extends Browser {
@@ -24,6 +25,8 @@ public class FirefoxBrowser extends Browser {
     @Override
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless()); // set headless mode
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
+        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
         if (this.args.getArgsDownload().isDownloading()) {
             this.args.getArgsDownload().getDownloadDir().mkdirs(); // Create none existent directories, if any
             this.profile.setPreference("browser.download.dir",

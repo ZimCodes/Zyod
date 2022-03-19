@@ -1,8 +1,5 @@
 package xyz.zimtools.zyod.od.navigators;
 
-/**
- * Holds IDs for different navigational methods
-* */
 public class NavType {
     public enum GoIndex {THUMBNAIL_VIEW, LIST_VIEW, OLDER}
 
@@ -12,7 +9,7 @@ public class NavType {
 
     public enum GDIndex {MAIN}
 
-    public enum OneDriveVercelIndex {MAIN}
+    public enum Onedrive_Vercel_Index {MAIN}
 
     public enum GONEList {MAIN}
 
@@ -22,5 +19,5 @@ public class NavType {
 
     public enum AList {ORIGINAL, WEB}
 
-    public enum WatchListOnFire {MAIN}
+    public enum WatchList_On_Fire {MAIN}
 }

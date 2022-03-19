@@ -30,7 +30,10 @@ While scraping, Zyod will write more text to the console, wait a maximum of *15 
 before scraping each page, search 3 directory levels deep, interact by scrolling, and do not wait in
 between each scroll action.
 
-`python zyod.py --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com`
+```commandline
+zyod --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com
+```
+
 ## Open Directory Support
 Supported ODs can be found in [OD.md](https://github.com/ZimCodes/Zyod/blob/main/OD.md).
 
@@ -89,8 +92,15 @@ Accepts all certificates even invalid ones. **Use this option at your own risk!*
 
 ***--compat-driver***
 
-The driver version to download. In case an incompatible driver was downloaded, use this option to 
-specify the correct driver version. **Default:** `auto`.
+The driver version you want Zyod to download & use. In case an incompatible driver was downloaded, 
+use this option to specify the correct driver version. **Default:** `auto`.
+
+Example:
+To install a driver for Google Chrome version `95.0.4638.69` use:
+
+```commandline
+zyod --compat-driver "95.0.4638.69" https://example.com/folder/images
+```
 
 ---
 
@@ -130,7 +140,7 @@ By default, downloading is disabled. Use this option to allow Zyod to download f
 
 Directory path to store downloaded files.
 
-The directory path to store download files. *Default:* `Downloads folder`
+The directory path to store download files. *Default:* `Downloads folder/Zyod`
 
 ***--dwait, --download-wait***
 

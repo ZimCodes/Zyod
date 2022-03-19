@@ -20,5 +20,6 @@ public abstract class ChromiumBrowser extends Browser {
         this.prefs.put("profile.default_content_setting_values.popups", 0);
         this.prefs.put("download.directory_upgrade", true);
         this.prefs.put("plugins.always_open_pdf_externally", true);
+        this.prefs.put("download.default_directory", this.args.getArgsDownload().getDownloadDir().getAbsolutePath());
     }
 }

@@ -3,6 +3,8 @@ package xyz.zimtools.zyod.args;
 import com.beust.jcommander.Parameter;
 import com.beust.jcommander.converters.FileConverter;
 import com.beust.jcommander.validators.PositiveInteger;
+import xyz.zimtools.zyod.AppConfig;
+import xyz.zimtools.zyod.args.converters.MillisecondConverter;
 
 import java.util.Random;
 
@@ -14,22 +16,22 @@ public final class ArgsDownload {
     private boolean downloading;
 
     @Parameter(names = {"--ddir", "--download-dir"}, description = "Directory path to store " +
-            "downloaded files. (Default: Downloads Folder)", converter = FileConverter.class)
-    private File downloadDir = new File(System.getProperty("user.home") + System.getProperty(
-            "file.separator") + "Downloads");
+            "downloaded files. (Default: Downloads Folder/Zyod)", converter = FileConverter.class)
+    private File downloadDir = new File(AppConfig.getFullDownloadPath());
 
     @Parameter(names = {"--dwait", "--download-wait"}, description = "Wait a random amount of " +
-            "seconds before downloading.", validateWith = PositiveInteger.class)
-    private int downloadWait;
+            "seconds before downloading.", validateWith = PositiveInteger.class, converter =
+            MillisecondConverter.class)
+    private long downloadWait;
 
-    public int getDownloadWait() {
-        int result = 0;
+    public long getDownloadWait() {
+        long result = 0;
         if (this.downloadWait > 0) {
             Random rand = new Random();
             result = rand.doubles(this.downloadWait * 0.5, this.downloadWait * 1.5)
-                    .mapToInt(dval -> (int) dval)
+                    .mapToLong(dval -> (long) dval)
                     .findFirst()
-                    .getAsInt();
+                    .getAsLong();
         }
         return result;
     }

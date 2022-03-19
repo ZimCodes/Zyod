@@ -1,12 +1,14 @@
 package xyz.zimtools.zyod.fixtures;
 
+import xyz.zimtools.zyod.AppConfig;
+
 public final class ArgsDefault {
-    public static final String RES_DIR = "src" + GlobalDefault.SEP + "test" + GlobalDefault.SEP + "resources";
-    public static final String INPUT_FILE = RES_DIR + GlobalDefault.SEP + "input.txt";
-    public static final String DOWNLOAD_DIR = System.getProperty("user.home") + GlobalDefault.SEP + "Downloads";
+    public static final String RES_DIR = "src" + AppConfig.SEP + "test" + AppConfig.SEP + "resources";
+    public static final String INPUT_FILE = RES_DIR + AppConfig.SEP + "input.txt";
 
     public static final int DEPTH_VALUE = 4;
     public static final int WAIT_VALUE = 30;
+    public static final long WAIT_LONG_VALUE = WAIT_VALUE * 1000L;
     public static final String WAIT_VALUE_STR = String.valueOf(WAIT_VALUE);
     public static final String NEGATIVE_STR = "-3";
 

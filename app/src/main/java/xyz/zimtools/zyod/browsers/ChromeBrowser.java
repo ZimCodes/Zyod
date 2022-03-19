@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import xyz.zimtools.zyod.args.Args;
 
+import java.time.Duration;
 import java.util.Map;
 
 public class ChromeBrowser extends ChromiumBrowser {
@@ -28,6 +29,8 @@ public class ChromeBrowser extends ChromiumBrowser {
     @Override
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless());
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
+        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
         if (this.args.getArgsDownload().isDownloading()) {
             super.setPreferences();
         }

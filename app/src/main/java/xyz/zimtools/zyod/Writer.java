@@ -12,14 +12,14 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * Handles all file operations.
+ * Handles file operations.
  */
 public final class Writer {
     public static String readMimeFile() {
-        String resource = "mimes.json";
-        try (InputStream input = Writer.class.getClassLoader().getResourceAsStream(resource)) {
+        try (InputStream input = AppConfig.getMimeStream()) {
             if (input == null) {
-                throw new FileNotFoundException(resource + " resource cannot be found!");
+                throw new FileNotFoundException(AppConfig.MIME_FILE + " resource cannot " +
+                        "be found!");
             }
             try (InputStreamReader reader = new InputStreamReader(input);
                  BufferedReader bufferedReader = new BufferedReader(reader)) {
@@ -42,7 +42,7 @@ public final class Writer {
     public static List<String> readInputFile(File inputFile) {
         List<String> urls = new ArrayList<>();
         try (Scanner scanner = new Scanner(inputFile)) {
-            while(scanner.hasNext()) {
+            while (scanner.hasNext()) {
                 String url = scanner.nextLine();
                 urls.add(url);
             }

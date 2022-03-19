@@ -2,24 +2,24 @@ package xyz.zimtools.zyod.od;
 
 public enum ODType {
     GENERIC("Generic"),
-    GO_INDEX("GoIndex"),
+    GOINDEX("GoIndex"),
     FODI("FODI"),
     ZFILE("ZFile"),
-    GD_INDEX("GDIndex"),
+    GDINDEX("GDIndex"),
     ONEDRIVE_VERCEL_INDEX("onedrive-vercel-index"),
     GONELIST("GONEList"),
     SHARELIST("ShareList"),
-    YUKI_DRIVE("Yuki Drive"),
+    YUKIDRIVE("Yuki Drive"),
     ALIST("AList"),
     WATCHLIST_ON_FIRE("Watchlist on fire 🔥🔥🔥");
-    private final String id;
+    private final String odName;
 
     ODType(String odName) {
-        this.id = odName;
+        this.odName = odName;
     }
 
     @Override
     public String toString() {
-        return this.id;
+        return this.odName;
     }
 }
