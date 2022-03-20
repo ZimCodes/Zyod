@@ -12,7 +12,7 @@ import xyz.zimtools.zyod.fixtures.GlobalDefault;
 import xyz.zimtools.zyod.fixtures.ODDefault;
 import xyz.zimtools.zyod.fixtures.asserts.SupportAssert;
 import xyz.zimtools.zyod.od.ODType;
-import xyz.zimtools.zyod.od.navigators.NavInfoParser;
+import xyz.zimtools.zyod.assets.NavInfoParser;
 import xyz.zimtools.zyod.od.navigators.NavType;
 
 import java.util.Optional;

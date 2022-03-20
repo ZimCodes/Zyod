@@ -1,10 +1,9 @@
-package xyz.zimtools.zyod.od.navigators;
+package xyz.zimtools.zyod.assets;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import xyz.zimtools.zyod.AppConfig;
-import xyz.zimtools.zyod.assets.NavInfo;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +11,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-public class NavInfoParser {
+public final class NavInfoParser {
     private final Map<String, NavInfo> navInfoMap;
 
 
@@ -70,7 +69,8 @@ public class NavInfoParser {
                 case "file_name" -> infoBuilder.setCssFileName(infoValue);
                 case "attribute" -> infoBuilder.setCssAttr(infoValue);
                 case "initial_download" -> infoBuilder.setCssInitialDownload(infoValue);
-                case "reject_filter" -> infoBuilder.setCssRejectFilter(infoValue);
+                case "file_reject_filter" -> infoBuilder.setCssRejectFilter(infoValue);
+                case "download_filter" -> infoBuilder.setCssDownloadFilter(infoValue);
                 default -> {
                 }
             }

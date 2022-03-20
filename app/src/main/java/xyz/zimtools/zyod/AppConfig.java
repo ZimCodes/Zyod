@@ -26,7 +26,7 @@ public final class AppConfig {
         return getResourceStream(MIME_FILE);
     }
 
-    public static InputStream getNavInfoStream(){
+    public static InputStream getNavInfoStream() {
         return getResourceStream(NAV_INFO_FILE);
     }
 
@@ -41,5 +41,13 @@ public final class AppConfig {
     public static String getFullDownloadPath() {
         return System.getProperty("user.home") + SEP + "Downloads" + SEP + props.getProperty(
                 "download.dir");
+    }
+
+    public static void sleep(long waitMillis) {
+        try {
+            Thread.sleep(waitMillis);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

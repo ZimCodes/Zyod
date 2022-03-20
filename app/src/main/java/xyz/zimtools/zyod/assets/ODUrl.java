@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class ODUrl {
+public final class ODUrl {
     private static final Pattern FILE_URL_REGEX = Pattern.compile("[^/=#]/[a-zA-Z0-9" +
             "~+\\-%\\[\\]$_.!'()= ]+\\.(?:[a-zA-Z0-9]{3,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$");
     private String scheme;

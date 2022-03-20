@@ -1,9 +1,9 @@
-package xyz.zimtools.zyod.od.navigators;
+package xyz.zimtools.zyod.assets;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import xyz.zimtools.zyod.assets.NavInfo;
 import xyz.zimtools.zyod.od.ODType;
+import xyz.zimtools.zyod.od.navigators.NavType;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 

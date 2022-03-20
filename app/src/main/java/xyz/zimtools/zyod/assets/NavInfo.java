@@ -15,13 +15,14 @@ public final class NavInfo {
     private final String cssFileName;
     private final String cssAttr;
     private final String cssInitialDownload;
+    private final String cssDownloadFilter;
     private final String cssRejectFilter;
     private final String waitErrorMessage;
     private Consumer<RemoteWebDriver> extraTasks;
 
     private NavInfo(String id, String navType, String cssFileSelector, String cssFileName,
-                    String cssAttr, String cssInitialDownload, String cssRejectFilter, String waitErrorMessage,
-                    Consumer<RemoteWebDriver> extraTasks) {
+                    String cssAttr, String cssInitialDownload, String cssRejectFilter,
+                    String cssDownloadFilter, String waitErrorMessage, Consumer<RemoteWebDriver> extraTasks) {
         this.id = id;
         this.navType = navType;
         this.cssFileSelector = cssFileSelector;
@@ -29,6 +30,7 @@ public final class NavInfo {
         this.cssAttr = cssAttr;
         this.cssInitialDownload = cssInitialDownload;
         this.cssRejectFilter = cssRejectFilter;
+        this.cssDownloadFilter = cssDownloadFilter;
         this.waitErrorMessage = waitErrorMessage;
         this.extraTasks = extraTasks;
     }
@@ -57,6 +59,10 @@ public final class NavInfo {
         return cssInitialDownload;
     }
 
+    public String getCssDownloadFilter() {
+        return cssDownloadFilter;
+    }
+
     public String getCssRejectFilter() {
         return cssRejectFilter;
     }
@@ -78,12 +84,12 @@ public final class NavInfo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NavInfo navInfo = (NavInfo) o;
-        return id.equals(navInfo.id) && navType.equals(navInfo.navType) && cssFileSelector.equals(navInfo.cssFileSelector) && Objects.equals(cssFileName, navInfo.cssFileName) && Objects.equals(cssAttr, navInfo.cssAttr) && Objects.equals(cssInitialDownload, navInfo.cssInitialDownload) && Objects.equals(cssRejectFilter, navInfo.cssRejectFilter);
+        return id.equals(navInfo.id) && navType.equals(navInfo.navType) && cssFileSelector.equals(navInfo.cssFileSelector) && Objects.equals(cssFileName, navInfo.cssFileName) && Objects.equals(cssAttr, navInfo.cssAttr) && Objects.equals(cssInitialDownload, navInfo.cssInitialDownload) && Objects.equals(cssDownloadFilter, navInfo.cssDownloadFilter) && Objects.equals(cssRejectFilter, navInfo.cssRejectFilter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, navType, cssFileSelector, cssFileName, cssAttr, cssInitialDownload, cssRejectFilter);
+        return Objects.hash(id, navType, cssFileSelector, cssFileName, cssAttr, cssInitialDownload, cssDownloadFilter, cssRejectFilter);
     }
 
     public static class Builder {
@@ -93,6 +99,7 @@ public final class NavInfo {
         private String cssFileName;
         private String cssAttr;
         private String cssInitialDownload;
+        private String cssDownloadFilter;
         private String cssRejectFilter;
         private String waitErrorMessage;
         private Consumer<RemoteWebDriver> extraTasks;
@@ -151,6 +158,13 @@ public final class NavInfo {
         }
 
         /**
+         * Sets the CSS path to use in order to filter out files
+         */
+        public void setCssDownloadFilter(String cssDownloadFilter) {
+            this.cssDownloadFilter = cssDownloadFilter;
+        }
+
+        /**
          * Sets the CSS path elements found in
          * {@link xyz.zimtools.zyod.assets.NavInfo#cssFileSelector} to be rejected.
          * <p>
@@ -182,8 +196,8 @@ public final class NavInfo {
         public NavInfo build() {
             this.waitErrorMessage = String.format("%s navigation method failed!", this.navType);
             return new NavInfo(this.id, this.navType, this.cssFileSelector, this.cssFileName,
-                    this.cssAttr, this.cssInitialDownload, this.cssRejectFilter, this.waitErrorMessage,
-                    this.extraTasks);
+                    this.cssAttr, this.cssInitialDownload, this.cssRejectFilter, this.cssDownloadFilter,
+                    this.waitErrorMessage, this.extraTasks);
         }
     }
 }

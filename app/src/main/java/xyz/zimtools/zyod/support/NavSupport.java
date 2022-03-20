@@ -23,7 +23,8 @@ public class NavSupport {
                     new WebDriverWait(driver, Duration.ofMillis(UNTIL_WAIT)).until((el) -> el.findElements(By.cssSelector(cssSelect)));
         } catch (TimeoutException e) {
             System.out.printf("Element(s) cannot be found! %s might not be " +
-                            "fully loaded for the element(s) to make an appearance.%n",
+                            "fully loaded for the element(s) to make an appearance. Or page is " +
+                            "empty.%n",
                     driver.getCurrentUrl());
         }
         return elements;

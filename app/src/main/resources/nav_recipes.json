@@ -15,7 +15,8 @@
     "main": {
       "file_selector": "div#file-list div.row.file-wrapper",
       "file_name": "div#file-list div.row.file-wrapper div.file span.name",
-      "initial_download": "div#file-list div.row.file-wrapper"
+      "initial_download": "div#file-list div.row.file-wrapper",
+      "download_filter": "div.file ion-icon[name]"
     }
   },
   "gdindex": {
@@ -43,7 +44,8 @@
   "gonelist": {
     "main": {
       "file_selector": "div.ivu-table-cell div.ivu-table-cell-slot a",
-      "initial_download": "div.ivu-table-cell div.ivu-table-cell-slot a"
+      "initial_download": "div.ivu-table-cell div.ivu-table-cell-slot a",
+      "download_filter": "span i"
     }
   },
   "onedrive_vercel_index": {
@@ -61,11 +63,13 @@
     },
     "download_query": {
       "file_selector": "div.drive-body a[href]",
-      "initial_download": "div.drive-body a[href]"
+      "initial_download": "div.drive-body a[href]",
+      "download_filter": "span svg use[*|href]"
     },
     "preview_query": {
       "file_selector": "ul.node-list__body li a[href]",
-      "initial_download": "ul.node-list__body li a[href]"
+      "initial_download": "ul.node-list__body li a[href]",
+      "download_filter": "span[data-type]"
     }
   },
   "watchlist_on_fire": {
@@ -85,8 +89,9 @@
     "main": {
       "file_selector": "tr.el-table__row",
       "file_name": "tr.el-table__row td:first-child div.cell",
-      "reject_filter": "svg use[*|href='#el-icon-my-back']",
-      "initial_download": "ul.v-contextmenu li.v-contextmenu-item:nth-child(2)"
+      "file_reject_filter": "svg use[*|href='#el-icon-my-back']",
+      "initial_download": "ul.v-contextmenu li.v-contextmenu-item:nth-child(2)",
+      "download_filter": "tr.el-table__row svg use[*|href]"
     }
   }
 }

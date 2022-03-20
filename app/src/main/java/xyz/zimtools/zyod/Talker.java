@@ -4,6 +4,16 @@ package xyz.zimtools.zyod;
  * Prints messages to the console
  */
 public final class Talker {
+
+    public static void arrowHeaderInfo(String title, String info, boolean newLine) {
+        Talker.println(String.format("%s: %n" +
+                "--->| %s |<---", title, info), newLine);
+    }
+
+    public static void arrowInfo(String title, String info, boolean newLine) {
+        Talker.println(String.format("%s --> %s", title, info), newLine);
+    }
+
     private static void println(String message, boolean newLine) {
         if (newLine) {
             message += "\n";

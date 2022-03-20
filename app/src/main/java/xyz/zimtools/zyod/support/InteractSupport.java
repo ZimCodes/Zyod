@@ -42,7 +42,7 @@ public class InteractSupport {
      * @param jsCode JavaScript code to execute
      * @param jsArgs arguments to add to the JavaScript code
      */
-    public static void script(RemoteWebDriver driver, String jsCode, Object... jsArgs) {
+    private static void script(RemoteWebDriver driver, String jsCode, Object... jsArgs) {
         driver.executeScript(jsCode, jsArgs);
     }
 }
