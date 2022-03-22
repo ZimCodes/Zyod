@@ -1,9 +1,7 @@
-package xyz.zimtools.zyod.assets;
+package xyz.zimtools.zyod.assets.info;
 
-import org.openqa.selenium.remote.RemoteWebDriver;
-
+import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 /**
  * Holds navigation/navigator details.
@@ -14,25 +12,21 @@ public final class NavInfo {
     private final String cssFileSelector;
     private final String cssFileName;
     private final String cssAttr;
-    private final String cssInitialDownload;
-    private final String cssDownloadFilter;
     private final String cssRejectFilter;
+    private final Map<String, String> cssBackMap;
     private final String waitErrorMessage;
-    private Consumer<RemoteWebDriver> extraTasks;
 
     private NavInfo(String id, String navType, String cssFileSelector, String cssFileName,
-                    String cssAttr, String cssInitialDownload, String cssRejectFilter,
-                    String cssDownloadFilter, String waitErrorMessage, Consumer<RemoteWebDriver> extraTasks) {
+                    String cssAttr, String cssRejectFilter,
+                    Map<String, String> cssBackMap, String waitErrorMessage) {
         this.id = id;
         this.navType = navType;
         this.cssFileSelector = cssFileSelector;
         this.cssFileName = cssFileName;
         this.cssAttr = cssAttr;
-        this.cssInitialDownload = cssInitialDownload;
         this.cssRejectFilter = cssRejectFilter;
-        this.cssDownloadFilter = cssDownloadFilter;
+        this.cssBackMap = cssBackMap;
         this.waitErrorMessage = waitErrorMessage;
-        this.extraTasks = extraTasks;
     }
 
     public String getId() {
@@ -55,28 +49,16 @@ public final class NavInfo {
         return cssAttr;
     }
 
-    public String getCssInitialDownload() {
-        return cssInitialDownload;
-    }
-
-    public String getCssDownloadFilter() {
-        return cssDownloadFilter;
-    }
-
     public String getCssRejectFilter() {
         return cssRejectFilter;
     }
 
+    public Map<String, String> getCssBackMap() {
+        return cssBackMap;
+    }
+
     public String getWaitErrorMessage() {
         return waitErrorMessage;
-    }
-
-    public Consumer<RemoteWebDriver> getExtraTasks() {
-        return extraTasks;
-    }
-
-    public void setExtraTasks(Consumer<RemoteWebDriver> extraTasks) {
-        this.extraTasks = extraTasks;
     }
 
     @Override
@@ -84,13 +66,14 @@ public final class NavInfo {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         NavInfo navInfo = (NavInfo) o;
-        return id.equals(navInfo.id) && navType.equals(navInfo.navType) && cssFileSelector.equals(navInfo.cssFileSelector) && Objects.equals(cssFileName, navInfo.cssFileName) && Objects.equals(cssAttr, navInfo.cssAttr) && Objects.equals(cssInitialDownload, navInfo.cssInitialDownload) && Objects.equals(cssDownloadFilter, navInfo.cssDownloadFilter) && Objects.equals(cssRejectFilter, navInfo.cssRejectFilter);
+        return id.equals(navInfo.id) && navType.equals(navInfo.navType) && cssFileSelector.equals(navInfo.cssFileSelector) && Objects.equals(cssFileName, navInfo.cssFileName) && Objects.equals(cssAttr, navInfo.cssAttr) && Objects.equals(cssRejectFilter, navInfo.cssRejectFilter);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, navType, cssFileSelector, cssFileName, cssAttr, cssInitialDownload, cssDownloadFilter, cssRejectFilter);
+        return Objects.hash(id, navType, cssFileSelector, cssFileName, cssAttr, cssRejectFilter);
     }
+
 
     public static class Builder {
         private String id;
@@ -98,11 +81,9 @@ public final class NavInfo {
         private String cssFileSelector;
         private String cssFileName;
         private String cssAttr;
-        private String cssInitialDownload;
-        private String cssDownloadFilter;
         private String cssRejectFilter;
+        private Map<String, String> cssBackMap;
         private String waitErrorMessage;
-        private Consumer<RemoteWebDriver> extraTasks;
 
         public Builder() {
             this.cssAttr = "href";
@@ -150,29 +131,25 @@ public final class NavInfo {
         }
 
         /**
-         * Sets the first CSS path element to interact with in order to start download process.
-         */
-        public Builder setCssInitialDownload(String cssInitialDownload) {
-            this.cssInitialDownload = cssInitialDownload;
-            return this;
-        }
-
-        /**
-         * Sets the CSS path to use in order to filter out files
-         */
-        public void setCssDownloadFilter(String cssDownloadFilter) {
-            this.cssDownloadFilter = cssDownloadFilter;
-        }
-
-        /**
          * Sets the CSS path elements found in
-         * {@link xyz.zimtools.zyod.assets.NavInfo#cssFileSelector} to be rejected.
+         * {@link xyz.zimtools.zyod.assets.info.NavInfo#cssFileSelector} to be rejected.
          * <p>
          * All elements in this CSS path will be filtered out from the scraper.;
          * </p>
          */
         public Builder setCssRejectFilter(String cssRejectFilter) {
             this.cssRejectFilter = cssRejectFilter;
+            return this;
+        }
+
+        /**
+         * CSS path to elements allowing to go back home or a previous page.
+         * <p>
+         * This option is used mostly for navigators that a derive from TouchNavigation
+         * </p>
+         */
+        public Builder setCssBackMap(Map<String, String> cssBackMap) {
+            this.cssBackMap = cssBackMap;
             return this;
         }
 
@@ -184,20 +161,13 @@ public final class NavInfo {
             return this;
         }
 
-        /**
-         * Sets extra tasks to perform after clicking the first element (from:
-         * {@link xyz.zimtools.zyod.assets.NavInfo#cssInitialDownload}) to download.
-         */
-        public Builder setExtraTasks(Consumer<RemoteWebDriver> extraTasks) {
-            this.extraTasks = extraTasks;
-            return this;
-        }
-
         public NavInfo build() {
             this.waitErrorMessage = String.format("%s navigation method failed!", this.navType);
             return new NavInfo(this.id, this.navType, this.cssFileSelector, this.cssFileName,
-                    this.cssAttr, this.cssInitialDownload, this.cssRejectFilter, this.cssDownloadFilter,
-                    this.waitErrorMessage, this.extraTasks);
+                    this.cssAttr,
+                    this.cssRejectFilter,
+                    this.cssBackMap,
+                    this.waitErrorMessage);
         }
     }
 }

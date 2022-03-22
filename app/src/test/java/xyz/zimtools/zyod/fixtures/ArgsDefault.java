@@ -3,8 +3,7 @@ package xyz.zimtools.zyod.fixtures;
 import xyz.zimtools.zyod.AppConfig;
 
 public final class ArgsDefault {
-    public static final String RES_DIR = "src" + AppConfig.SEP + "test" + AppConfig.SEP + "resources";
-    public static final String INPUT_FILE = RES_DIR + AppConfig.SEP + "input.txt";
+    public static final String INPUT_FILE = GlobalDefault.RES_DIR + AppConfig.SEP + "input.txt";
 
     public static final int DEPTH_VALUE = 4;
     public static final int WAIT_VALUE = 30;

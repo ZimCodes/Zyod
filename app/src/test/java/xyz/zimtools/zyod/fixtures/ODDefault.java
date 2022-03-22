@@ -1,8 +1,7 @@
 package xyz.zimtools.zyod.fixtures;
 
 public class ODDefault {
-    public final static String GO_INDEX_1 = "https://goindex.teamsdrives.workers.dev";
-    public final static String GO_INDEX_2 = "https://ossdev.node6.workers.dev";
+    public final static String GO_INDEX = "https://ossdev.node6.workers.dev";
     public final static String GD_INDEX = "https://gdindex-demo.maple3142.workers.dev/";
     public final static String FODI = "https://logi.im/fodi.html";
     public final static String ZFILE = "https://zfile.jun6.net/1/main";

@@ -8,11 +8,8 @@ public final class AppConfig {
     private final static Properties props;
     public static final String SEP;
     public static final String MIME_FILE;
-    private static final String NAV_INFO_FILE;
 
     static {
-        NAV_INFO_FILE = "nav_recipes.json";
-        MIME_FILE = "mimes.json";
         SEP = System.getProperty("file.separator");
         props = new Properties();
         try {
@@ -20,6 +17,7 @@ public final class AppConfig {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
+        MIME_FILE = props.getProperty("resource.info.mimes");
     }
 
     public static InputStream getMimeStream() {
@@ -27,7 +25,11 @@ public final class AppConfig {
     }
 
     public static InputStream getNavInfoStream() {
-        return getResourceStream(NAV_INFO_FILE);
+        return getResourceStream(props.getProperty("resource.info.navigation"));
+    }
+
+    public static InputStream getDownloadInfoStream(){
+        return getResourceStream(props.getProperty("resource.info.download"));
     }
 
     public static InputStream getResourceStream(String res) {

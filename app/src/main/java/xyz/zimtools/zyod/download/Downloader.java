@@ -4,11 +4,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import xyz.zimtools.zyod.AppConfig;
 import xyz.zimtools.zyod.args.Args;
-import xyz.zimtools.zyod.assets.NavInfo;
+import xyz.zimtools.zyod.assets.info.DownloadInfo;
+import xyz.zimtools.zyod.assets.info.NavInfo;
+import xyz.zimtools.zyod.download.filters.DownloadFilter;
 import xyz.zimtools.zyod.support.InteractSupport;
 import xyz.zimtools.zyod.support.NavSupport;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Downloads resources from an OD
@@ -17,32 +20,27 @@ public final class Downloader {
     private final RemoteWebDriver driver;
     private final Args args;
     private final NavInfo navInfo;
+    private final DownloadInfo downloadInfo;
     private final DownloadFilter filter;
 
-    public Downloader(RemoteWebDriver driver, Args args, NavInfo navInfo, DownloadFilter filter) {
+    public Downloader(RemoteWebDriver driver, Args args, NavInfo navInfo,
+                      DownloadInfo downloadInfo, DownloadFilter filter) {
         this.driver = driver;
         this.args = args;
         this.navInfo = navInfo;
+        this.downloadInfo = downloadInfo;
         this.filter = filter;
     }
 
-    public Downloader(RemoteWebDriver driver, Args args, NavInfo navInfo) {
-        this(driver, args, navInfo, null);
+    public Downloader(RemoteWebDriver driver, Args args, NavInfo navInfo, DownloadInfo downloadInfo) {
+        this(driver, args, navInfo, downloadInfo, null);
     }
 
     /**
-     * Download files in the current URL
+     * Download files in the current URL.
      */
-    public void download() {
-        List<WebElement> elements = this.getDownloadElements(driver);
-        if (elements.isEmpty()) {
-            return;
-        }
-        if (this.filter != null) {
-            elements = this.filter.apply(elements);
-        }
-
-        if (this.navInfo.getExtraTasks() != null) {
+    private void download(List<WebElement> elements) {
+        if (this.downloadInfo.getExtraTasks() != null) {
             this.multipleTasks(elements);
         } else {
             this.singleTask(elements);
@@ -50,29 +48,93 @@ public final class Downloader {
     }
 
     /**
-     * Downloads files using the context menu.
+     * Download the first located file.
      */
-    public void rightClickDownload() {
-        List<WebElement> elements = NavSupport.getElements(this.driver, this.navInfo.getCssFileSelector());
-        if (this.filter != null) {
-            elements = this.filter.apply(elements);
+    public void singleDownload() {
+        Optional<WebElement> element = this.getDownloadElement(this.driver);
+        if (element.isEmpty()) {
+            return;
         }
+        List<WebElement> elList = List.of(element.get());
+        this.download(elList);
+    }
+
+    /**
+     * Download multiple files
+     */
+    public void multiDownload() {
+        List<WebElement> elements = this.getDownloadElements(driver);
+        if (elements.isEmpty()) {
+            return;
+        }
+
+        if (this.filter != null) {
+            elements = this.filter.apply(elements, this.downloadInfo);
+        }
+        this.download(elements);
+    }
+
+    /**
+     * Downloads the first file using the context menu.
+     */
+    public void rightClickSingleDownload() {
+        List<WebElement> elements = NavSupport.getElements(this.driver, this.navInfo.getCssFileSelector());
+        if (elements.isEmpty()) {
+            return;
+        }
+        if (this.filter != null) {
+            elements = this.filter.apply(elements, this.downloadInfo);
+        }
+
+        if (elements.isEmpty()) {
+            return;
+        }
+
+        WebElement validEl = elements.get(0);
+        WebElement contextEl = this.getDownloadElements(driver).get(0);
+        this.rightClick(contextEl, validEl);
+    }
+
+    /**
+     * Downloads multiple files using the context menu.
+     */
+    public void rightClickMultiDownload() {
+        List<WebElement> elements = NavSupport.getElements(this.driver, this.navInfo.getCssFileSelector());
+        if (elements.isEmpty()) {
+            return;
+        }
+        if (this.filter != null) {
+            elements = this.filter.apply(elements, this.downloadInfo);
+        }
+
         WebElement contextEl = this.getDownloadElements(driver).get(0);
         for (WebElement el : elements) {
-            if (this.args.getArgsInteractive().isScrolling()) {
-                InteractSupport.scrollToElement(this.driver, el);
-                long scrollWait = this.args.getArgsInteractive().getScrollWait();
-                if (scrollWait > 0) {
-                    AppConfig.sleep(scrollWait);
-                }
-            }
-            InteractSupport.rightClick(driver, el);
-            contextEl.click();
+            this.rightClick(contextEl, el);
         }
     }
 
+    /**
+     * Right-Click to download file
+     */
+    private void rightClick(WebElement contextEl, WebElement el) {
+        if (this.args.getArgsInteractive().isScrolling()) {
+            InteractSupport.scrollToElement(this.driver, el);
+            long scrollWait = this.args.getArgsInteractive().getScrollWait();
+            if (scrollWait > 0) {
+                AppConfig.sleep(scrollWait);
+            }
+        }
+        InteractSupport.rightClick(driver, el);
+        contextEl.click();
+    }
+
+
     public List<WebElement> getDownloadElements(RemoteWebDriver driver) {
-        return NavSupport.getElements(driver, this.navInfo.getCssInitialDownload());
+        return NavSupport.getElements(driver, this.downloadInfo.getCssInitialDownload());
+    }
+
+    public Optional<WebElement> getDownloadElement(RemoteWebDriver driver) {
+        return NavSupport.getElement(driver, this.downloadInfo.getCssInitialDownload());
     }
 
     /**
@@ -85,7 +147,7 @@ public final class Downloader {
             this.waiting();
             List<WebElement> downloadEls = this.getDownloadElements(driver);
             if (this.filter != null) {
-                downloadEls = this.filter.apply(downloadEls);
+                downloadEls = this.filter.apply(downloadEls, this.downloadInfo);
             }
             downloadEls.get(i).click();
         }
@@ -104,11 +166,11 @@ public final class Downloader {
             } else {
                 List<WebElement> downloadEls = this.getDownloadElements(driver);
                 if (this.filter != null) {
-                    downloadEls = this.filter.apply(downloadEls);
+                    downloadEls = this.filter.apply(downloadEls, this.downloadInfo);
                 }
                 downloadEls.get(i).click();
             }
-            this.navInfo.getExtraTasks().accept(this.driver);
+            this.downloadInfo.getExtraTasks().accept(this.driver);
         }
     }
 
@@ -116,10 +178,10 @@ public final class Downloader {
         this.waiting();
         List<WebElement> downloadEls = this.getDownloadElements(this.driver);
         if (this.filter != null) {
-            downloadEls = this.filter.apply(downloadEls);
+            downloadEls = this.filter.apply(downloadEls, this.downloadInfo);
         }
         downloadEls.get(index).click();
-        this.navInfo.getExtraTasks().accept(this.driver);
+        this.downloadInfo.getExtraTasks().accept(this.driver);
     }
 
     /**

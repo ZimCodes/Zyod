@@ -1,4 +1,4 @@
-package xyz.zimtools.zyod.assets;
+package xyz.zimtools.zyod.assets.info;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -11,20 +11,10 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class NavInfoParser {
-    private final Map<String, NavInfo> navInfoMap;
+public final class NavInfoParser extends ODInfoParser<NavInfo> {
 
-
-    public NavInfoParser() {
-        this.navInfoMap = new HashMap<>();
-        initNavInfos();
-    }
-
-    public NavInfo getNavInfo(String id, String navType) {
-        return this.navInfoMap.get(getKey(id, navType));
-    }
-
-    private void initNavInfos() {
+    @Override
+    protected void parse() {
         try (InputStream inputStream = AppConfig.getNavInfoStream();
              InputStreamReader reader = new InputStreamReader(inputStream)) {
             JsonElement element = JsonParser.parseReader(reader);
@@ -42,7 +32,8 @@ public final class NavInfoParser {
      *
      * @param odEntry JSON entries for OD types
      */
-    private void parseODEntry(Map.Entry<String, JsonElement> odEntry) {
+    @Override
+    protected void parseODEntry(Map.Entry<String, JsonElement> odEntry) {
         String odName = odEntry.getKey();
         JsonObject navTypeObject = odEntry.getValue().getAsJsonObject();
         for (Map.Entry<String, JsonElement> navTypeEntry : navTypeObject.entrySet()) {
@@ -63,23 +54,27 @@ public final class NavInfoParser {
         infoBuilder.setNavType(odType);
         JsonObject infoObject = odTypeEntry.getValue().getAsJsonObject();
         for (Map.Entry<String, JsonElement> infoEntry : infoObject.entrySet()) {
-            String infoValue = infoEntry.getValue().getAsString();
             switch (infoEntry.getKey()) {
-                case "file_selector" -> infoBuilder.setCssFileSelector(infoValue);
-                case "file_name" -> infoBuilder.setCssFileName(infoValue);
-                case "attribute" -> infoBuilder.setCssAttr(infoValue);
-                case "initial_download" -> infoBuilder.setCssInitialDownload(infoValue);
-                case "file_reject_filter" -> infoBuilder.setCssRejectFilter(infoValue);
-                case "download_filter" -> infoBuilder.setCssDownloadFilter(infoValue);
+                case "file_selector" -> infoBuilder.setCssFileSelector(infoEntry.getValue().getAsString());
+                case "file_name" -> infoBuilder.setCssFileName(infoEntry.getValue().getAsString());
+                case "attribute" -> infoBuilder.setCssAttr(infoEntry.getValue().getAsString());
+                case "file_reject_filter" -> infoBuilder.setCssRejectFilter(infoEntry.getValue().getAsString());
+                case "back" ->
+                    parseBackInfo(infoEntry.getValue().getAsJsonObject(),
+                            infoBuilder);
                 default -> {
                 }
             }
         }
         NavInfo navInfo = infoBuilder.build();
-        this.navInfoMap.put(getKey(navInfo.getId(), navInfo.getNavType()), navInfo);
+        this.infoMap.put(getKey(navInfo.getId(), navInfo.getNavType()), navInfo);
     }
 
-    private String getKey(String id, String navType) {
-        return id.toLowerCase() + "_" + navType.toLowerCase();
+    private void parseBackInfo(JsonObject backEl, NavInfo.Builder infoBuilder) {
+        Map<String, String> cssBackMap = new HashMap<>();
+        for (Map.Entry<String, JsonElement> backEntry : backEl.entrySet()) {
+            cssBackMap.put(backEntry.getKey(), backEntry.getValue().getAsString());
+        }
+        infoBuilder.setCssBackMap(cssBackMap);
     }
 }

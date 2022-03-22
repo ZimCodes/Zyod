@@ -1,0 +1,97 @@
+{
+  "alist": {
+    "original": {
+      "initial_download": "div.chakra-stack div.chakra-linkbox a[href]",
+      "download_task_selector": "div.header div.buttons span:first-child"
+    },
+    "web": {
+      "initial_download": "tbody.ant-table-tbody tr td:first-child a"
+    }
+  },
+  "fodi": {
+    "main": {
+      "initial_download": "div#file-list div.row.file-wrapper",
+      "download_filter": {
+        "file_ids": "div.file ion-icon[name]",
+        "attribute": "name",
+        "file_check": "document"
+      },
+      "download_task_selector": "div.btn.download"
+    }
+  },
+  "gdindex": {
+    "main": {
+      "initial_download": "div a.v-list-item--link div.v-list-item__action a"
+    }
+  },
+  "goindex": {
+    "list_view": {
+      "initial_download": "div.golist tbody td span.icon:nth-child(n+3)"
+    },
+    "thumbnail_view": {
+      "initial_download": "div.golist tbody td span.icon:nth-child(n+3)"
+    },
+    "older": {
+      "initial_download": "a[gd-type]",
+      "download_task_selector": "a.mdui-fab"
+    }
+  },
+  "gonelist": {
+    "main": {
+      "initial_download": "div.ivu-table-cell div.ivu-table-cell-slot a",
+      "download_filter": {
+        "file_ids": "span i",
+        "attribute": "class",
+        "file_check": "fa-folder-open"
+      }
+    }
+  },
+  "onedrive_vercel_index": {
+    "main": {
+      "initial_download": "a[title=\"Download file\"]"
+    }
+  },
+  "sharelist": {
+    "interactive": {
+      "initial_download": "div.drive-body div[title]"
+    },
+    "download_query": {
+      "initial_download": "div.drive-body a[href]",
+      "download_filter": {
+        "file_ids": "span svg use[*|href]",
+        "attribute": "xlink:href",
+        "file_check": "#icon-folder"
+      }
+    },
+    "preview_query": {
+      "initial_download": "ul.node-list__body li a[href]",
+      "download_filter": {
+        "file_ids": "span[data-type]",
+        "attribute": "data-type",
+        "file_check": "folder"
+      },
+      "download_task_selector": "div a.download-menu"
+    }
+  },
+  "watchlist_on_fire": {
+    "main": {
+      "initial_download": "div#list svg + a",
+      "download_task_selector": "div.btn-group a[type='button']"
+    }
+  },
+  "yukidrive": {
+    "main": {
+      "initial_download": "div.v-list div[role='listbox'] a.v-btn"
+    }
+  },
+  "zfile": {
+    "main": {
+      "initial_download": "ul.v-contextmenu li.v-contextmenu-item:nth-child(2)",
+      "download_filter": {
+        "file_ids": "tr.el-table__row svg use[*|href]",
+        "attribute": "xlink:href",
+        "file_check": "#el-icon-my-folder"
+      }
+    }
+  }
+}

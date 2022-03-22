@@ -2,96 +2,80 @@
   "alist": {
     "original": {
       "file_selector": "div.chakra-stack div.chakra-linkbox a[href]",
-      "file_name": "div.chakra-stack div.chakra-linkbox a[href] svg:first-child + p",
-      "initial_download": "div.chakra-stack div.chakra-linkbox a[href]"
+      "file_name": "div.chakra-stack div.chakra-linkbox a[href] svg:first-child + p"
     },
     "web": {
       "file_selector": "tbody.ant-table-tbody tr td:first-child",
-      "file_name": "tbody.ant-table-tbody tr td:first-child",
-      "initial_download": "tbody.ant-table-tbody tr td:first-child a"
+      "file_name": "tbody.ant-table-tbody tr td:first-child"
     }
   },
   "fodi": {
     "main": {
       "file_selector": "div#file-list div.row.file-wrapper",
       "file_name": "div#file-list div.row.file-wrapper div.file span.name",
-      "initial_download": "div#file-list div.row.file-wrapper",
-      "download_filter": "div.file ion-icon[name]"
+      "back": {
+        "back_btn": "div.header ion-icon#arrow-back",
+        "home_btn": "ion-icon#main-page"
+      }
     }
   },
   "gdindex": {
     "main": {
-      "file_selector": "div a.v-list-item--link",
-      "initial_download": "div a.v-list-item--link div.v-list-item__action a"
+      "file_selector": "div a.v-list-item--link"
     }
   },
   "goindex": {
     "list_view": {
       "file_selector": "div.golist tbody td:first-child[title]",
-      "attribute": "title",
-      "initial_download": "div.golist tbody td span.icon:nth-child(n+3)"
+      "attribute": "title"
     },
     "thumbnail_view": {
       "file_selector": "div.column.is-one-quarter[data-v-1871190e] div[title]",
-      "attribute": "title",
-      "initial_download": "div.golist tbody td span.icon:nth-child(n+3)"
+      "attribute": "title"
     },
     "older": {
-      "file_selector": "ul#list li.mdui-list-item a",
-      "initial_download": "a[gd-type]"
+      "file_selector": "ul#list li.mdui-list-item a"
     }
   },
   "gonelist": {
     "main": {
-      "file_selector": "div.ivu-table-cell div.ivu-table-cell-slot a",
-      "initial_download": "div.ivu-table-cell div.ivu-table-cell-slot a",
-      "download_filter": "span i"
+      "file_selector": "div.ivu-table-cell div.ivu-table-cell-slot a"
     }
   },
   "onedrive_vercel_index": {
     "main": {
       "file_selector": "div.md\\:col-span-6.space-x-2",
-      "file_name": "div.md\\:col-span-6.space-x-2",
-      "initial_download": "a[title=\"Download file\"]"
+      "file_name": "div.md\\:col-span-6.space-x-2"
     }
   },
   "sharelist": {
     "interactive": {
       "file_selector": "div.drive-body div[title]",
-      "file_name": "title",
-      "initial_download": "div.drive-body div[title]"
+      "file_name": "title"
     },
     "download_query": {
-      "file_selector": "div.drive-body a[href]",
-      "initial_download": "div.drive-body a[href]",
-      "download_filter": "span svg use[*|href]"
+      "file_selector": "div.drive-body a[href]"
     },
     "preview_query": {
-      "file_selector": "ul.node-list__body li a[href]",
-      "initial_download": "ul.node-list__body li a[href]",
-      "download_filter": "span[data-type]"
+      "file_selector": "ul.node-list__body li a[href]"
     }
   },
   "watchlist_on_fire": {
     "main": {
-      "file_selector": "div#list a[href]",
-      "initial_download": "div#list svg + a"
+      "file_selector": "div#list a[href]"
     }
   },
   "yukidrive": {
     "main": {
       "file_selector": "div.v-list div[role='listbox'] div[role] div.v-list-item__title, div.v-list div[role='listbox'] a[role] div.v-list-item__title",
-      "file_name": "div.v-list div[role='listbox'] div[role] div.v-list-item__title, div.v-list div[role='listbox'] a[role] div.v-list-item__title",
-      "initial_download": "div.v-lsit div[role='listbox'] a.v-btn"
+      "file_name": "div.v-list div[role='listbox'] div[role] div.v-list-item__title, div.v-list div[role='listbox'] a[role] div.v-list-item__title"
     }
   },
   "zfile": {
     "main": {
       "file_selector": "tr.el-table__row",
       "file_name": "tr.el-table__row td:first-child div.cell",
-      "file_reject_filter": "svg use[*|href='#el-icon-my-back']",
-      "initial_download": "ul.v-contextmenu li.v-contextmenu-item:nth-child(2)",
-      "download_filter": "tr.el-table__row svg use[*|href]"
+      "file_reject_filter": "svg use[*|href='#el-icon-my-back']"
     }
   }
 }

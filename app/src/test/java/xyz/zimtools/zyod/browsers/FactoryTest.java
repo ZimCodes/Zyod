@@ -25,5 +25,6 @@ class FactoryTest {
         Map<String, Object> caps = driver.getCapabilities().asMap();
         assertEquals(browserType, caps.get("browserName"), "An Incorrect driver was created from " +
                 "the driver factory.");
+        driver.close();
     }
 }
