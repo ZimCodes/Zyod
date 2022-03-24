@@ -21,6 +21,7 @@ For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
     - [Recording](#recording)
     - [Interactivity](#interactivity)
     - [Misc.](#miscellaneous)
+- [Contribute](#contribute)
 - [License](#license)
 
 ## Sample Usage
@@ -197,6 +198,14 @@ Then try again.
 ***--load-wait***
 
 Amount of seconds to wait for a page load to complete before throwing an error. *Default:* `30`.
+
+---
+
+## Contribute
+
+Interested in contributing to the project? 
+
+Please take a look at the [CONTRIBUTING.md](https://github.com/ZimCodes/Zyod/blob/main/CONTRIBUTING.md) file.
 
 ---
 
