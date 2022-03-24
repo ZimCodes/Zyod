@@ -9,11 +9,11 @@ public class NavType {
 
     public enum GDIndex {MAIN}
 
-    public enum Onedrive_Vercel_Index {MAIN}
+    public enum Onedrive_Vercel_Index {OLDER, THUMBNAIL_VIEW, LIST_VIEW, NO_THUMBNAIL_OPTION}
 
     public enum GONEList {MAIN}
 
-    public enum ShareList {PREVIEW_QUERY, DOWNLOAD_QUERY, INTERACTIVE}
+    public enum ShareList {PREVIEW_QUERY, DOWNLOAD_QUERY, INTERACTIVE, NO_HREF}
 
     public enum YukiDrive {MAIN}
 

@@ -78,7 +78,7 @@ class SingleElementTest {
     void onedriveVercelIndexMain() {
         this.assertElement(ODDefault.ONEDRIVE_VERCEL_INDEX,
                 navInfoParser.getInfo(ODType.ONEDRIVE_VERCEL_INDEX.name(),
-                        NavType.Onedrive_Vercel_Index.MAIN.name()).getCssFileSelector());
+                        NavType.Onedrive_Vercel_Index.LIST_VIEW.name()).getCssFileSelector());
     }
 
 }

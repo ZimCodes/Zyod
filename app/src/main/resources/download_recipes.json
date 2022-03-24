@@ -47,7 +47,16 @@
     }
   },
   "onedrive_vercel_index": {
-    "main": {
+    "older": {
+      "initial_download": "a[title=\"Download file\"]"
+    },
+    "thumbnail_view": {
+      "initial_download": "a[title=\"Download file\"]"
+    },
+    "list_view": {
+      "initial_download": "a[title=\"Download file\"]"
+    },
+    "no_thumbnail_option": {
       "initial_download": "a[title=\"Download file\"]"
     }
   },
@@ -71,6 +80,9 @@
         "file_check": "folder"
       },
       "download_task_selector": "div a.download-menu"
+    },
+    "no_href": {
+      "initial_download": "div.drive-body a[title]"
     }
   },
   "watchlist_on_fire": {

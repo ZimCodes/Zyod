@@ -3,7 +3,7 @@ package xyz.zimtools.zyod.od.identifiers;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public final class ZFileID extends ODID {
-    private static final String HEADER = "文件名";
+    private static final String HEADER = "件";
 
     public ZFileID(RemoteWebDriver driver) {
         super(driver);
@@ -39,7 +39,8 @@ public final class ZFileID extends ODID {
      * Table header name column
      */
     private boolean tableHeader() {
-        return this.findTextCheck("thead th div span:not(.caret-wrapper)", HEADER);
+        return this.findHasText("thead th div span:not(.caret-wrapper)", HEADER)
+		|| this.findHasText("thead th div", HEADER) ;
     }
 
 

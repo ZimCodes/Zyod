@@ -67,7 +67,7 @@ class InfoTest {
     @MethodSource("getParser")
     void onedriveVercelIndexMain(ODParser parser) {
         AssetInfoAssert.infoExists(ODType.ONEDRIVE_VERCEL_INDEX.name(),
-                NavType.Onedrive_Vercel_Index.MAIN.name(), parser);
+                NavType.Onedrive_Vercel_Index.LIST_VIEW.name(), parser);
     }
 
     @ParameterizedTest

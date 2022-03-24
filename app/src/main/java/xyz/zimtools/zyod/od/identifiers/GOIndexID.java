@@ -23,7 +23,7 @@ public final class GOIndexID extends ODID {
     private boolean totalFiles() {
         String[] langCSS = {"Total", "共"};
         for (String css : langCSS) {
-            String path = String.format("div.is-divider[data-content*=%s]", css);
+            String path = String.format("div.is-divider[data-content~=%s]", css);
             List<WebElement> elements = NavSupport.getElements(this.driver, path);
             if (!elements.isEmpty()) {
                 return true;

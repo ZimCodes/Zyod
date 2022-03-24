@@ -98,7 +98,7 @@ class DownloaderTest {
     @Test
     void onedriveVercelIndex() {
         this.assertDownload(ODDefault.ONEDRIVE_VERCEL_INDEX, ODType.ONEDRIVE_VERCEL_INDEX.name(),
-                NavType.Onedrive_Vercel_Index.MAIN.name());
+                NavType.Onedrive_Vercel_Index.LIST_VIEW.name());
     }
 
     @Test
