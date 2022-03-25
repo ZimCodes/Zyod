@@ -17,6 +17,7 @@ For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
     - [General](#general)
     - [WebDriver](#webdriver)
     - [Navigator](#navigator)
+    - [Scraper](#scraper)
     - [Downloading](#downloading)
     - [Recording](#recording)
     - [Interactivity](#interactivity)
@@ -111,12 +112,17 @@ zyod --compat-driver "95.0.4638.69" https://example.com/folder/images
 Specify the maximum depth for recursive scraping. _Default: `20`_. **Depth of`1` is current
 directory.**
 
+---
+
+#### Scraper
 ***-w, --wait***
 
 Wait a maximum number of seconds before scraping.
 
-Most dynamic ODs load content on the page *very slooooowly*. This option allows Zyod to wait a 
+Most dynamic ODs load content on the page *very slooooowly*. This option allows Zyod to wait a
 certain amount of time before scraping.
+
+*Default:* `4`
 
 ***--random-wait***
 
@@ -198,15 +204,6 @@ Amount of seconds to wait before attempting to scroll again.
 ---
 
 #### Miscellaneous
-
-***--web-wait***
-
-Amount of seconds to wait for browser to initially load up each OD before executing Zyod.
-
-When Zyod visits a dynamic OD for the first time, it may take a long time for the OD to load up. 
-Use this option to delay execution of Zyod, giving the page time to load up. 
-
-*Default:* `15`.
 
 ***-r, --refresh***
 

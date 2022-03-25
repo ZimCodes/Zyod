@@ -6,6 +6,7 @@ import java.util.Objects;
  * Holds information about a URL directory
  */
 public final class Directory {
+    private static final int FORWARD_SLASH_CHAR_CODE = 47;
     private int depthLevel;
     private final ODUrl url;
 
@@ -14,9 +15,13 @@ public final class Directory {
         this.url = url;
     }
 
+    public int getDepthLevel() {
+        return depthLevel;
+    }
+
     /**
-    * Sets depth level to zero.
-     * */
+     * Sets depth level to zero.
+     */
     public void resetDepthLevel() {
         this.depthLevel = 0;
     }
@@ -30,7 +35,7 @@ public final class Directory {
      * Total number of directories found in the current URL address.
      * */
     public long totalFolders() {
-        return this.url.getPath().chars().filter(charNum -> charNum == 47).count();
+        return this.url.getPath().chars().filter(charNum -> charNum == FORWARD_SLASH_CHAR_CODE).count();
     }
 
     @Override
@@ -50,4 +55,5 @@ public final class Directory {
     public String toString() {
         return this.url.toString();
     }
+
 }

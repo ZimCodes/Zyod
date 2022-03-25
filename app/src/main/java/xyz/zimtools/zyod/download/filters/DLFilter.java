@@ -9,14 +9,15 @@ import java.util.List;
 import java.util.function.Function;
 
 abstract class DLFilter implements DownloadFilter {
+    private static final String FILE_ID_KEY = "file_ids";
+    private static final String FILE_ATTRIBUTE_KEY = "attribute";
     protected static final String FILE_CHECK_KEY = "file_check";
 
     private List<WebElement> getWebFileElements(List<WebElement> elements, DownloadInfo downloadInfo) {
         List<WebElement> files = new ArrayList<>();
         for (WebElement el : elements) {
             WebElement odFileType =
-                    el.findElement(By.cssSelector(downloadInfo.getCssDownloadFilter().get(
-                            "file_ids")));
+                    el.findElement(By.cssSelector(downloadInfo.getCssDownloadFilter().get(FILE_ID_KEY)));
             files.add(odFileType);
         }
         return files;
@@ -34,7 +35,7 @@ abstract class DLFilter implements DownloadFilter {
         List<WebElement> filteredFiles = new ArrayList<>();
         for (int i = 0; i < files.size(); i++) {
             String fileType = files.get(i).getAttribute(downloadInfo.getCssDownloadFilter().get(
-                    "attribute"));
+                    FILE_ATTRIBUTE_KEY));
             if (fileChecker.apply(fileType)) {
                 filteredFiles.add(elements.get(i));
             }

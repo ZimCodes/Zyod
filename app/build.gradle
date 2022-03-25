@@ -62,5 +62,6 @@ jar {
 test{
     filter{
         excludeTestsMatching("InteractTest")
+        excludeTestsMatching("AppTest")
     }
 }

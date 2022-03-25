@@ -49,7 +49,7 @@ class ArgsTest {
     }
 
     private void navigatorAsserts(Args args) {
-        ArgAssert.argTrue(args.getArgsNavigator().isRandomWait(), "random wait");
+        ArgAssert.argTrue(args.getArgsScraper().isRandomWait(), "random wait");
         assertEquals(args.getArgsNavigator().getDepth(), ArgsDefault.DEPTH_VALUE);
     }
 
@@ -96,7 +96,6 @@ class ArgsTest {
     private void miscAsserts(Args args) {
         ArgAssert.argTrue(args.getArgsMisc().isRefreshing(), "refresh");
         assertEquals(args.getArgsMisc().getLoadWait(), ArgsDefault.WAIT_LONG_VALUE);
-        assertEquals(args.getArgsMisc().getWebWait(), ArgsDefault.WAIT_LONG_VALUE);
 
     }
 
@@ -193,7 +192,7 @@ class ArgsTest {
         Args argObj = new Args(ArgsDefault.RAND_WAIT_ARGS);
 
         long dWaitValue = argObj.getArgsDownload().getDownloadWait();
-        long waitValue = argObj.getArgsNavigator().getWait();
+        long waitValue = argObj.getArgsScraper().getWait();
 
         ArgAssert.isPositive(dWaitValue, "download wait");
         ArgAssert.isPositive(waitValue, "wait");

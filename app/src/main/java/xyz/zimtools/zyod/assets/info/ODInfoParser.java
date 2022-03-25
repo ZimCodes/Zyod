@@ -36,12 +36,12 @@ abstract class ODInfoParser<T> implements ODParser<T> {
     protected abstract void parseODEntry(Map.Entry<String, JsonElement> odEntry);
 
     @Override
-    public T getInfo(String id, String navType) {
-        return this.infoMap.get(this.getKey(id, navType));
+    public T getInfo(String odType, String navType) {
+        return this.infoMap.get(this.getKey(odType, navType));
     }
 
     @Override
-    public String getKey(String id, String navType) {
-        return id.toLowerCase() + "_" + navType.toLowerCase();
+    public String getKey(String odType, String navType) {
+        return odType.toLowerCase() + "_" + navType.toLowerCase();
     }
 }

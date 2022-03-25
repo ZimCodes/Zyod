@@ -9,8 +9,13 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class ODUrl {
-    private static final Pattern FILE_URL_REGEX = Pattern.compile("[^/=#]/[a-zA-Z0-9" +
-            "~+\\-%\\[\\]$_.!'()= ]+\\.(?:[a-zA-Z0-9]{3,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$");
+    private static final int MIN_EXT_LENGTH = 3;
+    private static final int MAX_EXT_LENGTH = 7;
+    private static final Pattern FILE_URL_PAT = Pattern.compile(String.format("[^/=#]/[a-zA-Z0-9" +
+                    "~+\\-%%\\[\\]$_.!'()= ]+\\.(?:[a-zA-Z0-9]{%d,%d}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$",
+            MIN_EXT_LENGTH, MAX_EXT_LENGTH));
+    private static final Pattern SPACE_PAT = Pattern.compile(" ");
+    private static final String SPACE_ENCODING = "%20";
     private String scheme;
     private String authority;
     private String path;
@@ -21,23 +26,32 @@ public final class ODUrl {
         URI uri;
         try {
             uri = new URI(link);
-            this.scheme = uri.getScheme();
-            if (this.scheme == null) {
-                this.scheme = "";
-            }
-            this.authority = uri.getRawAuthority();
-            if (this.authority == null) {
-                this.authority = "";
-            }
-            this.path = uri.getRawPath();
-            this.path = this.path == null ? "/" : addStartSlash(this.path);
-            this.query = uri.getRawQuery();
-            this.addQueryPathToPath();
-            this.fragment = uri.getRawFragment();
-            this.addRefPathToPath();
+            this.init(uri);
         } catch (URISyntaxException e) {
-            System.out.println(e.getMessage());
+            link = link.replaceAll(" ", "%20");
+            try {
+                this.init(new URI(link));
+            } catch (URISyntaxException a) {
+                a.printStackTrace();
+            }
         }
+    }
+
+    private void init(URI uri) {
+        this.scheme = uri.getScheme();
+        if (this.scheme == null) {
+            this.scheme = "";
+        }
+        this.authority = uri.getRawAuthority();
+        if (this.authority == null) {
+            this.authority = "";
+        }
+        this.path = uri.getRawPath();
+        this.path = this.path == null || this.path.isEmpty() ? "/" : addStartSlash(this.path);
+        this.query = uri.getRawQuery();
+        this.addQueryPathToPath();
+        this.fragment = uri.getRawFragment();
+        this.addRefPathToPath();
     }
 
     public String getScheme() {
@@ -125,34 +139,49 @@ public final class ODUrl {
      * @return {@link xyz.zimtools.zyod.assets.ODUrl}
      * @see xyz.zimtools.zyod.assets.ODUrl
      */
-    public static String joiner(String url, String rel) {
+    public static ODUrl joiner(String url, String rel) {
         ODUrl parsedUrl = new ODUrl(url);
         ODUrl parsedRel = new ODUrl(rel);
         if (parsedUrl.equals(parsedRel)) {
-            return parsedUrl.toString();
+            return parsedUrl;
         }
 
-        if (!parsedUrl.getPath().equals(parsedRel.getPath())) {
-            if (parsedRel.getPath().contains(parsedUrl.getPath())) {
+        if (!encodeEquals(parsedUrl.getPath(), parsedRel.getPath())) {
+            if (encodeContains(parsedUrl.getPath(), parsedRel.getPath())) {
                 parsedUrl.setPath(parsedRel.getPath());
             } else {
                 parsedUrl.setPath(slashJoin(parsedUrl.getPath(), parsedRel.getPath()));
             }
         }
 
-        if (!parsedUrl.getQuery().equals(parsedRel.getQuery())) {
-            if (parsedRel.getQuery().contains(parsedUrl.getQuery())) {
+        if (!encodeEquals(parsedUrl.getQuery(), parsedRel.getQuery())) {
+            if (encodeContains(parsedUrl.getQuery(), parsedRel.getQuery())) {
                 parsedUrl.setQuery(parsedRel.getQuery());
             } else {
                 parsedUrl.setQuery(parsedUrl.getQuery() + "&" + parsedRel.getQuery());
             }
         }
 
-        return parsedUrl.toString();
+        return parsedUrl;
     }
 
+    /**
+     * Determines if a link references a file.
+     * <p>
+     * Files with extensions less than 3 characters OR more than 7 in length are considered
+     * directories. This can be changed using {@link ODUrl#MIN_EXT_LENGTH} &
+     * {@link ODUrl#MAX_EXT_LENGTH}.
+     * </p>
+     * <p>
+     * Although this can be changed, keep in mind directories can also be named as a file.
+     * Ex: {@code folder.c} is the name of a folder.
+     * </p>
+     *
+     * @param link the link to decipher
+     * @return true if link is a file; false otherwise
+     */
     public static boolean isFile(String link) {
-        Matcher fileMat = FILE_URL_REGEX.matcher(link);
+        Matcher fileMat = FILE_URL_PAT.matcher(link);
         return fileMat.find();
     }
 
@@ -212,11 +241,11 @@ public final class ODUrl {
         if (this == other)
             return true;
         if (other instanceof ODUrl otherURL) {
-            boolean schemeMatch = this.scheme.equals(otherURL.getScheme());
-            boolean authorityMatch = this.authority.equals(otherURL.getAuthority());
-            boolean pathMatch = this.path.equals(otherURL.getPath());
-            boolean queryMatch = this.query.equals(otherURL.getQuery());
-            boolean fragmentMatch = this.fragment.equals(otherURL.getFragment());
+            boolean schemeMatch = encodeEquals(this.scheme, otherURL.getScheme());
+            boolean authorityMatch = encodeEquals(this.authority, otherURL.getAuthority());
+            boolean pathMatch = encodeEquals(this.path, otherURL.getPath());
+            boolean queryMatch = encodeEquals(this.query, otherURL.getQuery());
+            boolean fragmentMatch = encodeEquals(this.fragment, otherURL.getFragment());
             return schemeMatch && authorityMatch && pathMatch && queryMatch && fragmentMatch;
         }
         return false;
@@ -246,5 +275,29 @@ public final class ODUrl {
             urlBuf.append("#").append(this.fragment);
         }
         return urlBuf.toString();
+    }
+
+    /**
+     * Determine if two urls are equal with and without using URL encoding.
+     *
+     * @param url the absolute URL
+     * @param rel the relative URL
+     * @return true if two urls are equal; false otherwise
+     */
+    private static boolean encodeEquals(String url, String rel) {
+        return url.equals(rel) || SPACE_PAT.matcher(url).replaceAll(SPACE_ENCODING)
+                .equals(SPACE_PAT.matcher(rel).replaceAll(SPACE_ENCODING));
+    }
+
+    /**
+     * Determine if relative URL contains the absolute URL with and without using URL encoding.
+     *
+     * @param url the absolute URL
+     * @param rel the relative URL
+     * @return true if relative URL contains the absolute URL; false otherwise
+     */
+    private static boolean encodeContains(String url, String rel) {
+        return rel.contains(url) || SPACE_PAT.matcher(rel).replaceAll(SPACE_ENCODING)
+                .contains(SPACE_PAT.matcher(url).replaceAll(SPACE_ENCODING));
     }
 }

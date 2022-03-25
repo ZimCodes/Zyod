@@ -22,13 +22,12 @@ public final class ArgsDefault {
     public static final String[] RECORD_ARGS = new String[]{"--no-record", "-i", INPUT_FILE};
     public static final String[] INTERACTIVE_ARGS = new String[]{"--scroll", "--scroll-wait",
             WAIT_VALUE_STR, GlobalDefault.URL};
-    public static final String[] MISC_ARGS = new String[]{"--web-wait", WAIT_VALUE_STR
-            , "--load-wait", WAIT_VALUE_STR, "-r", GlobalDefault.URL};
+    public static final String[] MISC_ARGS = new String[]{"--load-wait", WAIT_VALUE_STR, "-r", GlobalDefault.URL};
 
     public static final String[] RAND_WAIT_ARGS = new String[]{"--dwait",
             WAIT_VALUE_STR, "-w", WAIT_VALUE_STR, "--random-wait",
             GlobalDefault.URL};
     public static final String[] NEGATIVE_WAIT_ARGS = new String[]{"-w", NEGATIVE_STR, "-d",
-            NEGATIVE_STR, "--dwait", NEGATIVE_STR, "--scroll-wait", NEGATIVE_STR, "--load-wait", NEGATIVE_STR, "--web-wait",
-            NEGATIVE_STR, GlobalDefault.URL};
+            NEGATIVE_STR, "--dwait", NEGATIVE_STR, "--scroll-wait", NEGATIVE_STR, "--load-wait", NEGATIVE_STR,
+            GlobalDefault.URL};
 }

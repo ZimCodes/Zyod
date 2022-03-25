@@ -4,10 +4,13 @@
 # Ignore Gradle build output directory
 build/
 
-# IntelliJ 
+# IntelliJ
 .idea/
 
 # Miscellaneous
 *.log
 *.exe
 *.txt
+
+# Test download folder
+DLTest/

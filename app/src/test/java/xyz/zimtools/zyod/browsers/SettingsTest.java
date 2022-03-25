@@ -74,7 +74,7 @@ class SettingsTest {
     }
 
     /**
-     * NOTE: Unable to check if 'headless' & experimental options has been applied.
+     * NOTE: Unable to check if 'headless' & experimental options has been applied. Check manually!
      */
     @Test
     void chromeSettings() {
@@ -90,7 +90,7 @@ class SettingsTest {
     }
 
     /**
-     * NOTE: Unable to check if 'headless' & experimental options has been applied.
+     * NOTE: Unable to check if 'headless' & experimental options has been applied. Check manually!
      */
     @Test
     void msedgeSettings() {

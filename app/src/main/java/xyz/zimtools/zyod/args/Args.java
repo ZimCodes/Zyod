@@ -14,6 +14,7 @@ public final class Args {
     private final ArgsInteractive argsInteractive = new ArgsInteractive();
     private final ArgsRecord argsRecord = new ArgsRecord();
     private final ArgsNavigator argsNavigator = new ArgsNavigator();
+    private final ArgsScraper argsScraper = new ArgsScraper();
 
     public Args(String[] args) {
         this.argParse(args);
@@ -37,7 +38,8 @@ public final class Args {
                         this.argsDownload,
                         this.argsInteractive,
                         this.argsMisc,
-                        this.argsMain
+                        this.argsMain,
+                        this.argsScraper
                 })
                 .args(args)
                 .build();
@@ -83,5 +85,9 @@ public final class Args {
 
     public ArgsNavigator getArgsNavigator() {
         return argsNavigator;
+    }
+
+    public ArgsScraper getArgsScraper() {
+        return argsScraper;
     }
 }
