@@ -212,9 +212,17 @@ Refresh the page and try again upon failure.
 Refresh the page when Zyod fails to navigate to a page or fails to locate elements on the page.
 Then try again.
 
-***--load-wait***
+***--page-wait***
 
 Amount of seconds to wait for a page load to complete before throwing an error. *Default:* `30`.
+
+***--element-wait***
+
+Amount of seconds to implicitly wait for web elements to appear before throwing an error. If 
+Zyod is taking too long to retrieve anything on the current page, try reducing the amoount of 
+seconds. 
+
+*Default*`30`.
 
 ---
 

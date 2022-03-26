@@ -49,7 +49,6 @@ class ArgsTest {
     }
 
     private void navigatorAsserts(Args args) {
-        ArgAssert.argTrue(args.getArgsScraper().isRandomWait(), "random wait");
         assertEquals(args.getArgsNavigator().getDepth(), ArgsDefault.DEPTH_VALUE);
     }
 
@@ -57,6 +56,16 @@ class ArgsTest {
         this.urlAssert(ArgsDefault.NAVIGATOR_ARGS);
         Args args = new Args(ArgsDefault.NAVIGATOR_ARGS);
         this.navigatorAsserts(args);
+    }
+
+    private void scraperAsserts(Args args) {
+        ArgAssert.argTrue(args.getArgsScraper().isRandomWait(), "random wait");
+    }
+
+    private void scraperArgs() {
+        this.urlAssert(ArgsDefault.SCRAPER_ARGS);
+        Args args = new Args(ArgsDefault.SCRAPER_ARGS);
+        this.scraperAsserts(args);
     }
 
     private void downloadAsserts(Args args) {
@@ -95,8 +104,8 @@ class ArgsTest {
 
     private void miscAsserts(Args args) {
         ArgAssert.argTrue(args.getArgsMisc().isRefreshing(), "refresh");
-        assertEquals(args.getArgsMisc().getLoadWait(), ArgsDefault.WAIT_LONG_VALUE);
-
+        assertEquals(args.getArgsMisc().getPageWait(), ArgsDefault.WAIT_LONG_VALUE);
+        assertEquals(args.getArgsMisc().getImplicitWait(), ArgsDefault.WAIT_LONG_VALUE);
     }
 
     private void miscArgs() {
@@ -115,6 +124,7 @@ class ArgsTest {
         this.recordAsserts(argsObj);
         this.interactiveAsserts(argsObj);
         this.miscAsserts(argsObj);
+        this.scraperAsserts(argsObj);
     }
 
     @Test
@@ -127,6 +137,7 @@ class ArgsTest {
                 this::recordArgs,
                 this::interactiveArgs,
                 this::miscArgs,
+                this::scraperArgs,
                 () -> {
                     String[] combined = GlobalDefault.joinArr(new String[][]{
                             ArgsDefault.MAIN_ARGS,
@@ -135,7 +146,8 @@ class ArgsTest {
                             ArgsDefault.DOWNLOAD_ARGS,
                             ArgsDefault.RECORD_ARGS,
                             ArgsDefault.INTERACTIVE_ARGS,
-                            ArgsDefault.MISC_ARGS
+                            ArgsDefault.MISC_ARGS,
+                            ArgsDefault.SCRAPER_ARGS
                     });
                     this.multiArgs(combined);
                 }

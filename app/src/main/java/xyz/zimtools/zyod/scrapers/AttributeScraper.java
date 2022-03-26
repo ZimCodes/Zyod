@@ -4,6 +4,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import xyz.zimtools.zyod.AppConfig;
 import xyz.zimtools.zyod.args.Args;
+import xyz.zimtools.zyod.args.ArgsScraper;
 import xyz.zimtools.zyod.assets.Directory;
 import xyz.zimtools.zyod.assets.ODUrl;
 import xyz.zimtools.zyod.assets.info.NavInfo;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * Scrape ODs using the {@link WebElement}'s existing attributes.
  */
-public class JoinScraper implements ODScraper {
+public class AttributeScraper implements ODScraper {
     protected final RemoteWebDriver driver;
     protected final Args args;
     protected final ScrapeFilter filter;
@@ -25,7 +26,7 @@ public class JoinScraper implements ODScraper {
     protected List<ODUrl> files;
     protected List<Directory> dirs;
 
-    public JoinScraper(RemoteWebDriver driver, Args args, NavInfo navInfo, ScrapeFilter filter) {
+    public AttributeScraper(RemoteWebDriver driver, Args args, NavInfo navInfo, ScrapeFilter filter) {
         this.driver = driver;
         this.args = args;
         this.navInfo = navInfo;
@@ -34,7 +35,7 @@ public class JoinScraper implements ODScraper {
         this.dirs = new ArrayList<>(); // Holds all scraped directories
     }
 
-    public JoinScraper(RemoteWebDriver driver, Args args, NavInfo navInfo) {
+    public AttributeScraper(RemoteWebDriver driver, Args args, NavInfo navInfo) {
         this(driver, args, navInfo, null);
     }
 
@@ -77,10 +78,7 @@ public class JoinScraper implements ODScraper {
      */
     @Override
     public List<WebElement> scrapeItems() {
-        long waitTime = this.args.getArgsScraper().getWait();
-        if (waitTime > 0) {
-            AppConfig.sleep(waitTime);
-        }
+        this.pause();
         return NavSupport.getElements(this.driver, this.navInfo.getCssFileSelector());
     }
 
@@ -151,6 +149,16 @@ public class JoinScraper implements ODScraper {
             elements = this.scrapeItems();
         }
         return elements;
+    }
+
+    /**
+     * Wait for a certain amount of time specified by {@link ArgsScraper#getWait()}
+     * */
+    protected void pause(){
+        long waitTime = this.args.getArgsScraper().getWait();
+        if (waitTime > 0) {
+            AppConfig.sleep(waitTime);
+        }
     }
 
     /**

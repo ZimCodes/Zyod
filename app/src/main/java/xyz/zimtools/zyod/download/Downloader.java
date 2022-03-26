@@ -124,6 +124,7 @@ public final class Downloader {
                 AppConfig.sleep(scrollWait);
             }
         }
+        this.waiting();
         InteractSupport.rightClick(driver, el);
         contextEl.click();
     }

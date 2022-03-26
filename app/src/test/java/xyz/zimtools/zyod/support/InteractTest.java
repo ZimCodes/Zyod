@@ -33,6 +33,7 @@ class InteractTest {
     @AfterEach
     void after() throws InterruptedException {
         Thread.sleep(10000);
+        driver.close();
     }
 
     @Test

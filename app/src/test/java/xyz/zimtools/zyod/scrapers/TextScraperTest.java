@@ -1,5 +1,6 @@
 package xyz.zimtools.zyod.scrapers;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -15,18 +16,16 @@ import xyz.zimtools.zyod.fixtures.ODDefault;
 import xyz.zimtools.zyod.fixtures.asserts.ScraperAssert;
 import xyz.zimtools.zyod.od.ODType;
 import xyz.zimtools.zyod.od.navigators.NavType;
-import xyz.zimtools.zyod.scrapers.filters.GenericScrapeFilter;
+import xyz.zimtools.zyod.scrapers.filters.OneDriveVercelIndexScrapeFilter;
 import xyz.zimtools.zyod.scrapers.filters.ScrapeFilter;
 
 import java.util.List;
 import java.util.stream.Stream;
 
-/**
- * Tests {@link JoinScraper}
- * */
-class JoinScraperTest {
+class TextScraperTest {
     private static final String[] MAIN_ARGS = {"--headless", "-r"};
     private static NavInfoParser parser;
+    private static RemoteWebDriver driver;
     private ODScraper scraper;
 
     @BeforeAll
@@ -34,11 +33,16 @@ class JoinScraperTest {
         parser = new NavInfoParser();
     }
 
+    @AfterAll
+    static void afterAll() {
+        driver.close();
+    }
+
     private void init(String url, String odType, String navType, ScrapeFilter filter) {
         Args args = new Args(GlobalDefault.joinArr(new String[][]{new String[]{url}, MAIN_ARGS}));
-        RemoteWebDriver driver = DriverFactory.getDriver(args);
+        driver = DriverFactory.getDriver(args);
         driver.get(url);
-        scraper = new JoinScraper(driver, args, parser.getInfo(odType, navType), filter);
+        scraper = new TextScraper(driver, args, parser.getInfo(odType, navType), filter);
         scraper.scrape(List.of(), new Directory(1, new ODUrl(url)));
     }
 
@@ -53,10 +57,10 @@ class JoinScraperTest {
 
     private static Stream<Arguments> getParams() {
         return Stream.of(
-                Arguments.of(ODDefault.GO_INDEX, ODType.GOINDEX, NavType.GoIndex.LIST_VIEW.name()
-                        , 10, 0, new GenericScrapeFilter()),
-                Arguments.of(ODDefault.GD_INDEX, ODType.GDINDEX, NavType.GDIndex.MAIN.name(), 5,
-                        4, null)
+                Arguments.of(ODDefault.ONEDRIVE_VERCEL_INDEX, ODType.ONEDRIVE_VERCEL_INDEX,
+                        NavType.Onedrive_Vercel_Index.LIST_VIEW.name(), 10, 0,
+                        new OneDriveVercelIndexScrapeFilter()),
+                Arguments.of(ODDefault.FODI, ODType.FODI, NavType.FODI.MAIN.name(), 4, 0, null)
         );
     }
 }

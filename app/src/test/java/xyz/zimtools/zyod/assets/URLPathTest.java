@@ -51,13 +51,11 @@ class URLPathTest {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "example.com",
             "https://example.com",
             "https://api.example.com",
             "https://example.org/index.mkv/",
             "https://example.net/common/memes/index.html.aspx/",
-            "https://www.example.com/az/index.html?dir=/LessonsPiano.cpp",
-            "https://www.example.com/az/index.html#/cat.txt",
+            "https://example.com/golden Eyes/#piano/cat-45-3.txt",
     })
     void isNotURLFile(String url) {
         URLDefault.fileFalse(url);
@@ -71,7 +69,8 @@ class URLPathTest {
             "example.net/index.html",
             "https://www.example.net/index-8.flv5",
             "https://www.example.com/az/index.html?dir=/LessonsPiano.cpp/mystery 0 Folder.txt",
-            "https://example.com/golden Eyes/#piano/cat-45-3.txt"
+            "https://www.example.com/az/index.html?dir=/LessonsPiano.cpp",
+            "https://www.example.com/az/index.html#/cat.txt",
     })
     void isURLFile(String url){
         URLDefault.fileTrue(url);

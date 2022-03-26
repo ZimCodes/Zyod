@@ -29,8 +29,8 @@ public class MSEdgeBrowser extends ChromiumBrowser {
     @Override
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless());
-        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
-        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
+        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getPageWait()));
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
         this.prefs.put("printing.headless_save_as_pdf_enabled", false);
         this.prefs.put("download.open_pdf_in_system_reader", false);
         if (this.args.getArgsDownload().isDownloading()) {

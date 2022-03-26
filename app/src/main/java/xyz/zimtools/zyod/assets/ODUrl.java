@@ -1,7 +1,9 @@
 package xyz.zimtools.zyod.assets;
 
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -9,11 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class ODUrl {
-    private static final int MIN_EXT_LENGTH = 3;
-    private static final int MAX_EXT_LENGTH = 7;
-    private static final Pattern FILE_URL_PAT = Pattern.compile(String.format("[^/=#]/[a-zA-Z0-9" +
-                    "~+\\-%%\\[\\]$_.!'()= ]+\\.(?:[a-zA-Z0-9]{%d,%d}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$",
-            MIN_EXT_LENGTH, MAX_EXT_LENGTH));
+    private static final Pattern FILE_URL_PAT = Pattern.compile("[^/=#.]+\\." +
+            "(?:[a-zA-Z0-9]{3,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$");
     private static final Pattern SPACE_PAT = Pattern.compile(" ");
     private static final String SPACE_ENCODING = "%20";
     private String scheme;
@@ -167,22 +166,22 @@ public final class ODUrl {
 
     /**
      * Determines if a link references a file.
-     * <p>
-     * Files with extensions less than 3 characters OR more than 7 in length are considered
-     * directories. This can be changed using {@link ODUrl#MIN_EXT_LENGTH} &
-     * {@link ODUrl#MAX_EXT_LENGTH}.
-     * </p>
-     * <p>
-     * Although this can be changed, keep in mind directories can also be named as a file.
-     * Ex: {@code folder.c} is the name of a folder.
-     * </p>
      *
      * @param link the link to decipher
      * @return true if link is a file; false otherwise
      */
     public static boolean isFile(String link) {
-        Matcher fileMat = FILE_URL_PAT.matcher(link);
-        return fileMat.find();
+        Matcher fileMat;
+        boolean isAFile;
+        try {
+            URL url = new URL(link);
+            fileMat = FILE_URL_PAT.matcher(url.getFile());
+            isAFile = fileMat.find();
+        } catch (MalformedURLException e) {
+            fileMat = FILE_URL_PAT.matcher(link);
+            isAFile = fileMat.find();
+        }
+        return isAFile;
     }
 
     /**

@@ -87,7 +87,7 @@ public final class AListID extends ODID {
      */
     private boolean searchbar() {
         return this.attributeCheck("input.ant-input[placeholder]", "placeholder",
-                "件(夹)");
+                "搜索文件(夹)");
     }
 
     /**

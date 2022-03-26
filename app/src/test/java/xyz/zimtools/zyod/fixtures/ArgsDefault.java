@@ -13,8 +13,9 @@ public final class ArgsDefault {
 
     public static final String[] URLS_ARGS = new String[]{"-i", INPUT_FILE, GlobalDefault.URL};
     public static final String[] MAIN_ARGS = new String[]{"-h", "-v", "-V", GlobalDefault.URL};
-    public static final String[] NAVIGATOR_ARGS = new String[]{"--random-wait", "-d",
+    public static final String[] NAVIGATOR_ARGS = new String[]{"-d",
             String.valueOf(DEPTH_VALUE), GlobalDefault.URL};
+    public static final String[] SCRAPER_ARGS = new String[]{"--random-wait", GlobalDefault.URL};
     public static final String[] WEB_DRIVER_ARGS = new String[]{"--headless", "--all-certs", GlobalDefault.URL};
     public static final String[] WEB_DRIVER_NO_HEADLESS_ARGS = new String[]{"--all" +
             "-certs", GlobalDefault.URL};
@@ -22,12 +23,13 @@ public final class ArgsDefault {
     public static final String[] RECORD_ARGS = new String[]{"--no-record", "-i", INPUT_FILE};
     public static final String[] INTERACTIVE_ARGS = new String[]{"--scroll", "--scroll-wait",
             WAIT_VALUE_STR, GlobalDefault.URL};
-    public static final String[] MISC_ARGS = new String[]{"--load-wait", WAIT_VALUE_STR, "-r", GlobalDefault.URL};
+    public static final String[] MISC_ARGS = new String[]{"--page-wait", WAIT_VALUE_STR,
+            "--element-wait", WAIT_VALUE_STR, "-r", GlobalDefault.URL};
 
     public static final String[] RAND_WAIT_ARGS = new String[]{"--dwait",
             WAIT_VALUE_STR, "-w", WAIT_VALUE_STR, "--random-wait",
             GlobalDefault.URL};
     public static final String[] NEGATIVE_WAIT_ARGS = new String[]{"-w", NEGATIVE_STR, "-d",
-            NEGATIVE_STR, "--dwait", NEGATIVE_STR, "--scroll-wait", NEGATIVE_STR, "--load-wait", NEGATIVE_STR,
-            GlobalDefault.URL};
+            NEGATIVE_STR, "--dwait", NEGATIVE_STR, "--scroll-wait", NEGATIVE_STR, "--page-wait",
+            NEGATIVE_STR, "--element-wait", NEGATIVE_STR, GlobalDefault.URL};
 }

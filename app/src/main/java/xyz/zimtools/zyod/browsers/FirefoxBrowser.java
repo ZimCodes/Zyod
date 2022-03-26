@@ -25,8 +25,8 @@ public class FirefoxBrowser extends Browser {
     @Override
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless()); // set headless mode
-        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
-        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
+        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getPageWait()));
         if (this.args.getArgsDownload().isDownloading()) {
             this.args.getArgsDownload().getDownloadDir().mkdirs(); // Create none existent directories, if any
             this.profile.setPreference("browser.download.dir",

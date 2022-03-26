@@ -29,8 +29,8 @@ public class ChromeBrowser extends ChromiumBrowser {
     @Override
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless());
-        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
-        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getLoadWait()));
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
+        this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getPageWait()));
         if (this.args.getArgsDownload().isDownloading()) {
             super.setPreferences();
         }

@@ -8,16 +8,25 @@ public final class ArgsMisc {
     @Parameter(names = {"-r", "--refresh"}, description = "Refresh the page and try again upon failure.")
     private boolean refreshing;
 
-    @Parameter(names = "--load-wait", description = "Amount of seconds to wait for a page load to" +
+    @Parameter(names = "--page-wait", description = "Amount of seconds to wait for a page load to" +
             " complete before throwing an error.", validateWith = PositiveInteger.class,
             converter = MillisecondConverter.class)
-    private Long loadWait = 30000L;
+    private Long pageWait = 30000L;
+
+    @Parameter(names = "--element-wait", description = "Implicitly wait a certain amount of " +
+            "seconds for a web element to appear.", validateWith = PositiveInteger.class,
+            converter = MillisecondConverter.class)
+    private Long implicitWait = 30000L;
 
     public boolean isRefreshing() {
         return refreshing;
     }
 
-    public long getLoadWait() {
-        return loadWait;
+    public long getPageWait() {
+        return pageWait;
+    }
+
+    public Long getImplicitWait() {
+        return implicitWait;
     }
 }

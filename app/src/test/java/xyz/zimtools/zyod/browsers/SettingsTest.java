@@ -58,6 +58,7 @@ class SettingsTest {
         changeSettingName(setting, "pdfjs.disabled");
         BrowserAssert.settingEquals(profile.getBooleanPreference(setting.toString(), false), true,
                 setting.toString());
+        driver.close();
     }
 
     /**
@@ -71,6 +72,7 @@ class SettingsTest {
         FirefoxDriver driver = browser.getDriver();
         Map<String, Object> caps = driver.getCapabilities().asMap();
         BrowserAssert.settingTrue((Boolean) caps.get("moz:headless"), "headless");
+        driver.close();
     }
 
     /**
@@ -86,7 +88,8 @@ class SettingsTest {
 
         this.defaultCapabilitiesAsserts(caps);
         // Check 'chrome://prefs-internals/' in browser to see if other options are applied.
-        driver.navigate().to(GlobalDefault.URL);
+        //driver.navigate().to(GlobalDefault.URL);
+        driver.close();
     }
 
     /**
@@ -103,6 +106,7 @@ class SettingsTest {
         this.defaultCapabilitiesAsserts(caps);
 
         // Check 'edge://prefs-internals' in browser to see if other options are applied.
-        driver.navigate().to(GlobalDefault.URL);
+        //driver.navigate().to(GlobalDefault.URL);
+        driver.close();
     }
 }

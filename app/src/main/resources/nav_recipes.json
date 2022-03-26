@@ -1,8 +1,7 @@
 {
   "alist": {
     "original": {
-      "file_selector": "div.chakra-stack div.chakra-linkbox a[href]",
-      "file_name": "div.chakra-stack div.chakra-linkbox a[href] svg:first-child + p"
+      "file_selector": "div.chakra-stack div.chakra-linkbox a[href]"
     },
     "web": {
       "file_selector": "tbody.ant-table-tbody tr td:first-child",
