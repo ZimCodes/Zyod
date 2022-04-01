@@ -201,16 +201,26 @@ Amount of seconds to wait before attempting to scroll again.
 
  *Default:* `4`.
 
+***--interact-wait***
+
+Amount of seconds to wait before/after a simulated interaction.
+
+After performing an action (ex: *right-click, click, dragging, etc.*), the OD may go into a loading 
+phase as it loads up the next set of content for the page. Use this option to increase the wait 
+time before/after performing a simulated interaction.
+
+*Default:* `5`.
+
 ---
 
 #### Miscellaneous
 
-***-r, --refresh***
+***--no-refresh***
 
-Refresh the page and try again upon failure.
+Do not refresh the page and try again upon a scrape failure.
 
-Refresh the page when Zyod fails to navigate to a page or fails to locate elements on the page.
-Then try again.
+Do not refresh the page when Zyod fails to navigate to a page or fails to locate elements on the 
+page.
 
 ***--page-wait***
 

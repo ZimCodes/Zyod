@@ -10,9 +10,9 @@ import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.assets.Directory;
 import xyz.zimtools.zyod.assets.ODUrl;
 import xyz.zimtools.zyod.assets.info.NavInfoParser;
-import xyz.zimtools.zyod.browsers.DriverFactory;
+import xyz.zimtools.zyod.browsers.BrowserFactory;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
-import xyz.zimtools.zyod.fixtures.ODDefault;
+import xyz.zimtools.zyod.fixtures.ODDemoRef;
 import xyz.zimtools.zyod.fixtures.asserts.ScraperAssert;
 import xyz.zimtools.zyod.od.ODType;
 import xyz.zimtools.zyod.od.navigators.NavType;
@@ -26,7 +26,7 @@ class SiftScraperTest {
     private static final String[] MAIN_ARGS = {"--headless", "-r"};
     private static NavInfoParser parser;
     private static RemoteWebDriver driver;
-    private ODScraper scraper;
+    private Scraper scraper;
 
     @BeforeAll
     static void beforeAll() {
@@ -35,12 +35,12 @@ class SiftScraperTest {
 
     @AfterAll
     static void afterAll() {
-        driver.close();
+        driver.quit();
     }
 
     private void init(String url, String odType, String navType, ScrapeFilter filter) {
         Args args = new Args(GlobalDefault.joinArr(new String[][]{new String[]{url}, MAIN_ARGS}));
-        driver = DriverFactory.getDriver(args);
+        driver = BrowserFactory.getBrowser(args).getDriver();
         driver.get(url);
         scraper = new SiftScraper(driver, args, parser.getInfo(odType, navType), filter);
         scraper.scrape(List.of(), new Directory(1, new ODUrl(url)));
@@ -57,7 +57,7 @@ class SiftScraperTest {
 
     private static Stream<Arguments> getParams() {
         return Stream.of(
-                Arguments.of(ODDefault.ZFILE, ODType.ZFILE, NavType.ZFile.MAIN.name(), 11, 5,
+                Arguments.of(ODDemoRef.ZFILE, ODType.ZFILE, NavType.ZFile.MAIN.name(), 11, 5,
                         new GenericScrapeFilter())
         );
     }

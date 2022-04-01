@@ -10,6 +10,6 @@ public final class ShareListPreviewDLFilter extends DLFilter {
     @Override
     public List<WebElement> apply(List<WebElement> elements, DownloadInfo downloadInfo) {
         return this.filterElements(elements, downloadInfo,
-                fileType -> !downloadInfo.getCssDownloadFilter().get(FILE_CHECK_KEY).contains(fileType));
+                fileType -> !fileType.contains(downloadInfo.getCssDownloadFilter().get(FILE_CHECK_KEY)));
     }
 }

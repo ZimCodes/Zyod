@@ -2,10 +2,10 @@ package xyz.zimtools.zyod.od.identifiers;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public final class ShareListID extends ODID {
+public final class ShareListID extends ODIdentifier {
     private static final String REPO = "reruin/sharelist";
     private static final String MANAGE_EN = "Manage";
-    private static final String MANAGE_CH = "管理";
+    private static final String MANAGE_CH = "\u7BA1\u7406";
     private static final String TITLE = "ShareList";
 
 

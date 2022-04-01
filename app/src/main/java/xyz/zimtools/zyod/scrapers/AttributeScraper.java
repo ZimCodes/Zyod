@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Scrape ODs using the {@link WebElement}'s existing attributes.
  */
-public class AttributeScraper implements ODScraper {
+public class AttributeScraper implements Scraper {
     protected final RemoteWebDriver driver;
     protected final Args args;
     protected final ScrapeFilter filter;
@@ -126,10 +126,10 @@ public class AttributeScraper implements ODScraper {
             this.files.add(joinedURL);
         } else {
             int newDepthLevel = parentDir.getDepthLevel() + 1;
-            ODUrl dirURL = ODUrl.joiner(parentDir.toString(), link);
-            dirURL.dirTransform();
-            Directory newDir = new Directory(newDepthLevel, dirURL);
             if (newDepthLevel < this.args.getArgsNavigator().getDepth()) {
+                ODUrl dirURL = ODUrl.joiner(parentDir.toString(), link);
+                dirURL.dirTransform();
+                Directory newDir = new Directory(newDepthLevel, dirURL);
                 this.dirs.add(newDir);
             }
         }
@@ -144,7 +144,7 @@ public class AttributeScraper implements ODScraper {
      * @return list of WebElements on current page.
      */
     protected List<WebElement> refresh(List<WebElement> elements) {
-        if (elements.isEmpty() && this.args.getArgsMisc().isRefreshing()) {
+        if (elements.isEmpty() && !this.args.getArgsMisc().isDontRefresh()) {
             this.driver.navigate().refresh();
             elements = this.scrapeItems();
         }
@@ -153,8 +153,8 @@ public class AttributeScraper implements ODScraper {
 
     /**
      * Wait for a certain amount of time specified by {@link ArgsScraper#getWait()}
-     * */
-    protected void pause(){
+     */
+    protected void pause() {
         long waitTime = this.args.getArgsScraper().getWait();
         if (waitTime > 0) {
             AppConfig.sleep(waitTime);

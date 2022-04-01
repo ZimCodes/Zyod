@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import xyz.zimtools.zyod.args.Args;
+import xyz.zimtools.zyod.support.NavSupport;
 
 import java.time.Duration;
 import java.util.Map;
@@ -29,7 +30,6 @@ public class ChromeBrowser extends ChromiumBrowser {
     @Override
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless());
-        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
         this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getPageWait()));
         if (this.args.getArgsDownload().isDownloading()) {
             super.setPreferences();
@@ -49,6 +49,18 @@ public class ChromeBrowser extends ChromiumBrowser {
      */
     @Override
     public ChromeDriver getDriver() {
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
+        return prepareDriver();
+    }
+
+    @Override
+    public ChromeDriver getIDDriver() {
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(NavSupport.ID_WAIT_IMPLICIT));
+        return prepareDriver();
+    }
+
+    @Override
+    protected ChromeDriver prepareDriver() {
         if ("auto".equals(this.args.getArgsWebDriver().getDriverVersion())) {
             WebDriverManager.getInstance(ChromeDriver.class).setup();
         } else {
@@ -56,5 +68,4 @@ public class ChromeBrowser extends ChromiumBrowser {
         }
         return new ChromeDriver(this.options);
     }
-
 }

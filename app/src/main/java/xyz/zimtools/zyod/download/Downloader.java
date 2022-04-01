@@ -17,6 +17,7 @@ import java.util.Optional;
  * Downloads resources from an OD
  */
 public final class Downloader {
+
     private final RemoteWebDriver driver;
     private final Args args;
     private final NavInfo navInfo;
@@ -51,12 +52,14 @@ public final class Downloader {
      * Download the first located file.
      */
     public void singleDownload() {
-        Optional<WebElement> element = this.getDownloadElement(this.driver);
-        if (element.isEmpty()) {
+        List<WebElement> elements = this.getDownloadElements(this.driver);
+        if (elements.isEmpty()) {
             return;
         }
-        List<WebElement> elList = List.of(element.get());
-        this.download(elList);
+        if (this.filter != null) {
+            elements = this.filter.apply(elements, this.downloadInfo);
+        }
+        this.download(elements.stream().limit(1).toList());
     }
 
     /**
@@ -123,8 +126,9 @@ public final class Downloader {
             if (scrollWait > 0) {
                 AppConfig.sleep(scrollWait);
             }
+        } else {
+            this.waiting();
         }
-        this.waiting();
         InteractSupport.rightClick(driver, el);
         contextEl.click();
     }
@@ -171,18 +175,31 @@ public final class Downloader {
                 }
                 downloadEls.get(i).click();
             }
-            this.downloadInfo.getExtraTasks().accept(this.driver);
+            this.downloadInfo.getExtraTasks().accept(this.driver, this.downloadInfo);
         }
     }
 
-    public void multipleTaskLazy(int index) {
+    public void downloadTaskLazy(int index) {
         this.waiting();
         List<WebElement> downloadEls = this.getDownloadElements(this.driver);
         if (this.filter != null) {
             downloadEls = this.filter.apply(downloadEls, this.downloadInfo);
         }
         downloadEls.get(index).click();
-        this.downloadInfo.getExtraTasks().accept(this.driver);
+        this.downloadInfo.getExtraTasks().accept(this.driver, this.downloadInfo);
+    }
+
+    /**
+     * Apply download filter to a group of {@link WebElement}s.
+     *
+     * @param downloadEls list of WebElements to filter
+     * @return list of WebElements that are downloadable
+     * */
+    public List<WebElement> applyFilter(List<WebElement> downloadEls) {
+        if (this.filter != null) {
+            return this.filter.apply(downloadEls, this.downloadInfo);
+        }
+        return downloadEls;
     }
 
     /**
@@ -198,6 +215,4 @@ public final class Downloader {
             AppConfig.sleep(wait);
         }
     }
-
-
 }

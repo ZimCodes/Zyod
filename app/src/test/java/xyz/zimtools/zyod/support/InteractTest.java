@@ -7,8 +7,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.assets.info.NavInfoParser;
-import xyz.zimtools.zyod.browsers.DriverFactory;
-import xyz.zimtools.zyod.fixtures.ODDefault;
+import xyz.zimtools.zyod.browsers.BrowserFactory;
+import xyz.zimtools.zyod.fixtures.ODDemoRef;
 import xyz.zimtools.zyod.od.ODType;
 import xyz.zimtools.zyod.od.navigators.NavType;
 
@@ -21,13 +21,13 @@ class InteractTest {
 
     @BeforeAll
     static void init() {
-        Args args = new Args(new String[]{ODDefault.GO_INDEX});
-        driver = DriverFactory.getDriver(args);
-        driver.get(ODDefault.GO_INDEX);
+        Args args = new Args(new String[]{ODDemoRef.GO_INDEX});
+        driver = BrowserFactory.getBrowser(args).getDriver();
+        driver.get(ODDemoRef.GO_INDEX);
         NavInfoParser parser = new NavInfoParser();
         element = NavSupport.getElements(driver,
-                        parser.getInfo(ODType.GOINDEX.name(), NavType.GoIndex.LIST_VIEW.name()).getCssFileSelector())
-                .get(4);
+                        parser.getInfo(ODType.GOINDEX.name(), NavType.GoIndex.LIST_VIEW.name())
+                                .getCssFileSelector()).get(4);
     }
 
     @AfterEach

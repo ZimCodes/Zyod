@@ -2,7 +2,7 @@ package xyz.zimtools.zyod.od.identifiers;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public final class WatchlistOnFireID extends ODID {
+public final class WatchlistOnFireID extends ODIdentifier {
     private static final String TITLE = "watchlist on fire";
     private static final String LINK = "pmny.in";
 

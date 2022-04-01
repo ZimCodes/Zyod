@@ -2,6 +2,9 @@
   "alist": {
     "original": {
       "initial_download": "div.chakra-stack div.chakra-linkbox a[href]",
+      "download_filter": {
+        "attribute": "href"
+      },
       "download_task_selector": "div.header div.buttons span:first-child"
     },
     "web": {
@@ -26,9 +29,6 @@
   },
   "goindex": {
     "list_view": {
-      "initial_download": "div.golist tbody td span.icon:nth-child(n+3)"
-    },
-    "thumbnail_view": {
       "initial_download": "div.golist tbody td span.icon:nth-child(n+3)"
     },
     "older": {
@@ -62,7 +62,12 @@
   },
   "sharelist": {
     "interactive": {
-      "initial_download": "div.drive-body div[title]"
+      "initial_download": "div.drive-body div[title]",
+      "download_filter": {
+        "file_ids": "span svg use[*|href]",
+        "attribute": "xlink:href",
+        "file_check": "#icon-folder"
+      }
     },
     "download_query": {
       "initial_download": "div.drive-body a[href]",
@@ -82,7 +87,19 @@
       "download_task_selector": "div a.download-menu"
     },
     "no_href": {
-      "initial_download": "div.drive-body a[title]"
+      "initial_download": "div.drive-body a[title]",
+      "download_filter": {
+        "file_ids": "span svg use[*|href]",
+        "attribute": "xlink:href",
+        "file_check": "#icon-folder"
+      }
+    },
+    "list": {
+      "initial_download": "ul.node-list__body li a[href]",
+      "download_filter": {
+        "attribute": "target",
+        "file_check": "_blank"
+      }
     }
   },
   "watchlist_on_fire": {

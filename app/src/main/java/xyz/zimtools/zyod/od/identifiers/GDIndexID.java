@@ -2,7 +2,7 @@ package xyz.zimtools.zyod.od.identifiers;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public final class GDIndexID extends ODID {
+public final class GDIndexID extends ODIdentifier {
     private static final String TITLE = "GDIndex";
     private static final String REPO = "maple3142/GDIndex";
 

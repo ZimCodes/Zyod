@@ -15,6 +15,8 @@ public final class NavInfo {
     private final String cssRejectFilter;
     private final Map<String, String> cssBackMap;
     private final String waitErrorMessage;
+    public static final String BACK_BTN_KEY = "back_btn";
+    public static final String HOME_BTN_KEY = "home_btn";
 
     private NavInfo(String id, String navType, String cssFileSelector, String cssFileName,
                     String cssAttr, String cssRejectFilter,

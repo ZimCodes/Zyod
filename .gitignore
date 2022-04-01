@@ -14,3 +14,4 @@ build/
 
 # Test download folder
 DLTest/
+**/zyod/extra/

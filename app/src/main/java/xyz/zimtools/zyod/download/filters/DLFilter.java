@@ -15,9 +15,13 @@ abstract class DLFilter implements DownloadFilter {
 
     private List<WebElement> getWebFileElements(List<WebElement> elements, DownloadInfo downloadInfo) {
         List<WebElement> files = new ArrayList<>();
+        String subElementCss = downloadInfo.getCssDownloadFilter().get(FILE_ID_KEY);
+        if (subElementCss == null) {
+            return elements;
+        }
         for (WebElement el : elements) {
             WebElement odFileType =
-                    el.findElement(By.cssSelector(downloadInfo.getCssDownloadFilter().get(FILE_ID_KEY)));
+                    el.findElement(By.cssSelector(subElementCss));
             files.add(odFileType);
         }
         return files;

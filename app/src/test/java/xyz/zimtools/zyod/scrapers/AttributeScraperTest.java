@@ -6,13 +6,14 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import xyz.zimtools.zyod.AppConfig;
 import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.assets.Directory;
 import xyz.zimtools.zyod.assets.ODUrl;
 import xyz.zimtools.zyod.assets.info.NavInfoParser;
-import xyz.zimtools.zyod.browsers.DriverFactory;
+import xyz.zimtools.zyod.browsers.BrowserFactory;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
-import xyz.zimtools.zyod.fixtures.ODDefault;
+import xyz.zimtools.zyod.fixtures.ODDemoRef;
 import xyz.zimtools.zyod.fixtures.asserts.ScraperAssert;
 import xyz.zimtools.zyod.od.ODType;
 import xyz.zimtools.zyod.od.navigators.NavType;
@@ -26,10 +27,10 @@ import java.util.stream.Stream;
  * Tests {@link AttributeScraper}
  */
 class AttributeScraperTest {
-    private static final String[] MAIN_ARGS = {"-r", "--headless"};
+    private static final String[] MAIN_ARGS = {"--headless","--all-certs"};
     private static NavInfoParser parser;
     private static RemoteWebDriver driver;
-    private ODScraper scraper;
+    private Scraper scraper;
 
     @BeforeAll
     static void beforeAll() {
@@ -38,13 +39,14 @@ class AttributeScraperTest {
 
     @AfterAll
     static void cleanUp() {
-        driver.close();
+        driver.quit();
     }
 
     private void init(String url, String odType, String navType, ScrapeFilter filter) {
         Args args = new Args(GlobalDefault.joinArr(new String[][]{new String[]{url}, MAIN_ARGS}));
-        driver = DriverFactory.getDriver(args);
+        driver = BrowserFactory.getBrowser(args).getDriver();
         driver.get(url);
+        AppConfig.sleep(7000);
         scraper = new AttributeScraper(driver, args, parser.getInfo(odType, navType), filter);
         scraper.scrape(List.of(), new Directory(1, new ODUrl(url)));
     }
@@ -60,11 +62,11 @@ class AttributeScraperTest {
 
     private static Stream<Arguments> getParams() {
         return Stream.of(
-                Arguments.of(ODDefault.GO_INDEX, ODType.GOINDEX, NavType.GoIndex.LIST_VIEW.name()
+                Arguments.of(ODDemoRef.GO_INDEX, ODType.GOINDEX, NavType.GoIndex.LIST_VIEW.name()
                         , 9, 1, new GenericScrapeFilter()),
-                Arguments.of(ODDefault.GD_INDEX, ODType.GDINDEX, NavType.GDIndex.MAIN.name(), 5,
+                Arguments.of(ODDemoRef.GD_INDEX, ODType.GDINDEX, NavType.GDIndex.MAIN.name(), 5,
                         4, null),
-                Arguments.of(ODDefault.ALIST, ODType.ALIST, NavType.AList.ORIGINAL.name()
+                Arguments.of(ODDemoRef.ALIST, ODType.ALIST, NavType.AList.ORIGINAL.name()
                         , 19, 0, null)
         );
     }

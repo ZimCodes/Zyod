@@ -51,9 +51,10 @@ public final class Directory {
         return Objects.hash(depthLevel, url);
     }
 
+
     @Override
     public String toString() {
-        return this.url.toString();
+        return this.url != null ? this.url.toString() : "";
     }
 
 }

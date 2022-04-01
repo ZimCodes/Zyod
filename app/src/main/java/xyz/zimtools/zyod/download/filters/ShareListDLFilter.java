@@ -6,7 +6,7 @@ import xyz.zimtools.zyod.assets.info.DownloadInfo;
 import java.util.List;
 
 /**
- * Download filter for ShareList Download type
+ * Basic download filter for ShareList
  */
 public final class ShareListDLFilter extends DLFilter {
 

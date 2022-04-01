@@ -2,7 +2,7 @@ package xyz.zimtools.zyod.od.identifiers;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public final class OneDriveVercelIndexID extends ODID {
+public final class OneDriveVercelIndexID extends ODIdentifier {
     private static final String POWERED_TAG = "spencerwooo/onedrive-vercel-index";
 
     public OneDriveVercelIndexID(RemoteWebDriver driver) {

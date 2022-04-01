@@ -9,7 +9,6 @@ public class URLAssert {
     public static void popAssert(String poppedItem, ODUrl parsedURL) {
         assertEquals(poppedItem, parsedURL.popPath(), "The path that was removed is incorrect.");
     }
-
     /**
      * Asserts if URLs match.
      *

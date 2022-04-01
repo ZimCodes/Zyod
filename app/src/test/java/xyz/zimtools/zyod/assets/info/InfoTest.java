@@ -47,8 +47,14 @@ class InfoTest {
     @ParameterizedTest
     @MethodSource("getParser")
     void goIndexThumbnailView(ODParser parser) {
-        AssetInfoAssert.infoExists(ODType.GOINDEX.name(), NavType.GoIndex.THUMBNAIL_VIEW.name(),
-                parser);
+        if (parser instanceof DownloadInfoParser p) {
+            AssetInfoAssert.infoNotExists(ODType.GOINDEX.name(),
+                    NavType.GoIndex.THUMBNAIL_VIEW.name(),
+                    p);
+        } else {
+            AssetInfoAssert.infoExists(ODType.GOINDEX.name(), NavType.GoIndex.THUMBNAIL_VIEW.name(), parser);
+        }
+
     }
 
     @ParameterizedTest

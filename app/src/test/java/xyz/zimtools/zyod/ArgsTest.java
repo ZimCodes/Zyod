@@ -94,6 +94,7 @@ class ArgsTest {
     private void interactiveAsserts(Args args) {
         ArgAssert.argTrue(args.getArgsInteractive().isScrolling(), "scroll");
         assertEquals(args.getArgsInteractive().getScrollWait(), ArgsDefault.WAIT_LONG_VALUE);
+        assertEquals(args.getArgsInteractive().getInteractWait(), ArgsDefault.WAIT_LONG_VALUE);
     }
 
     private void interactiveArgs() {
@@ -103,7 +104,7 @@ class ArgsTest {
     }
 
     private void miscAsserts(Args args) {
-        ArgAssert.argTrue(args.getArgsMisc().isRefreshing(), "refresh");
+        ArgAssert.argTrue(args.getArgsMisc().isDontRefresh(), "dont refresh");
         assertEquals(args.getArgsMisc().getPageWait(), ArgsDefault.WAIT_LONG_VALUE);
         assertEquals(args.getArgsMisc().getImplicitWait(), ArgsDefault.WAIT_LONG_VALUE);
     }

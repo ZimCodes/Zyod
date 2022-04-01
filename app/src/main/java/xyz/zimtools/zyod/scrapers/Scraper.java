@@ -7,7 +7,7 @@ import xyz.zimtools.zyod.assets.info.NavInfo;
 
 import java.util.List;
 
-public interface ODScraper {
+public interface Scraper {
     List<WebElement> scrape(List<WebElement> elements, Directory currentDir);
 
     List<WebElement> scrapeItems();

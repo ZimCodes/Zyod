@@ -2,8 +2,8 @@ package xyz.zimtools.zyod.od.identifiers;
 
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public final class ZFileID extends ODID {
-    private static final String HEADER = "文件名";
+public final class ZFileID extends ODIdentifier {
+    private static final String HEADER = "\u6587\u4EF6\u540D";
 
     public ZFileID(RemoteWebDriver driver) {
         super(driver);

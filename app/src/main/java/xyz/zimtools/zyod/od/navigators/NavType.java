@@ -13,7 +13,7 @@ public class NavType {
 
     public enum GONEList {MAIN}
 
-    public enum ShareList {PREVIEW_QUERY, DOWNLOAD_QUERY, INTERACTIVE, NO_HREF}
+    public enum ShareList {PREVIEW_QUERY, DOWNLOAD_QUERY, INTERACTIVE, NO_HREF, LIST}
 
     public enum YukiDrive {MAIN}
 

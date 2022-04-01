@@ -25,4 +25,13 @@ public abstract class Browser {
     }
 
     public abstract RemoteWebDriver getDriver();
+
+    public abstract RemoteWebDriver getIDDriver();
+    /**
+     * Make final preparations to the driver.
+     * <p>
+     *     Preparation includes downloading the driver from the internet as well as setting the
+     *     appropriate driver version to match the installed browser.
+     * </p>*/
+    protected abstract RemoteWebDriver prepareDriver();
 }

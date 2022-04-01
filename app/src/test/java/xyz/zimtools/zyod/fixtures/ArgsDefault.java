@@ -22,14 +22,15 @@ public final class ArgsDefault {
     public static final String[] DOWNLOAD_ARGS = new String[]{"--download", GlobalDefault.URL};
     public static final String[] RECORD_ARGS = new String[]{"--no-record", "-i", INPUT_FILE};
     public static final String[] INTERACTIVE_ARGS = new String[]{"--scroll", "--scroll-wait",
-            WAIT_VALUE_STR, GlobalDefault.URL};
-    public static final String[] MISC_ARGS = new String[]{"--page-wait", WAIT_VALUE_STR,
-            "--element-wait", WAIT_VALUE_STR, "-r", GlobalDefault.URL};
+            WAIT_VALUE_STR, "--interact-wait", WAIT_VALUE_STR, GlobalDefault.URL};
+    public static final String[] MISC_ARGS = new String[]{"--no-refresh", "--page-wait",
+            WAIT_VALUE_STR, "--element-wait", WAIT_VALUE_STR, GlobalDefault.URL};
 
     public static final String[] RAND_WAIT_ARGS = new String[]{"--dwait",
             WAIT_VALUE_STR, "-w", WAIT_VALUE_STR, "--random-wait",
             GlobalDefault.URL};
     public static final String[] NEGATIVE_WAIT_ARGS = new String[]{"-w", NEGATIVE_STR, "-d",
             NEGATIVE_STR, "--dwait", NEGATIVE_STR, "--scroll-wait", NEGATIVE_STR, "--page-wait",
-            NEGATIVE_STR, "--element-wait", NEGATIVE_STR, GlobalDefault.URL};
+            NEGATIVE_STR, "--element-wait", NEGATIVE_STR, "--interact-wait", NEGATIVE_STR,
+            GlobalDefault.URL};
 }

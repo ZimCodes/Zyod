@@ -2,10 +2,11 @@ package xyz.zimtools.zyod.browsers;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import xyz.zimtools.zyod.Writer;
 import xyz.zimtools.zyod.args.Args;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import xyz.zimtools.zyod.support.NavSupport;
 
 import java.time.Duration;
 import java.util.Map;
@@ -25,7 +26,6 @@ public class FirefoxBrowser extends Browser {
     @Override
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless()); // set headless mode
-        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
         this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getPageWait()));
         if (this.args.getArgsDownload().isDownloading()) {
             this.args.getArgsDownload().getDownloadDir().mkdirs(); // Create none existent directories, if any
@@ -48,6 +48,25 @@ public class FirefoxBrowser extends Browser {
 
     @Override
     public FirefoxDriver getDriver() {
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
+        return this.prepareDriver();
+    }
+
+    @Override
+    public FirefoxDriver getIDDriver() {
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(NavSupport.ID_WAIT_IMPLICIT));
+        return this.prepareDriver();
+    }
+
+    /**
+     * Make final preparations to the driver.
+     * <p>
+     * Preparation includes downloading the driver from the internet as well as setting the
+     * appropriate driver version to match the installed browser.
+     * </p>
+     */
+    @Override
+    protected FirefoxDriver prepareDriver() {
         if ("auto".equals(this.args.getArgsWebDriver().getDriverVersion())) {
             WebDriverManager.getInstance(FirefoxDriver.class).setup();
         } else {

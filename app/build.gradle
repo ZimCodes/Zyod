@@ -59,9 +59,10 @@ jar {
         attributes("Main-Class": "xyz.zimtools.zyod.App")
     }
 }
-test{
-    filter{
+
+test {
+    filter {
         excludeTestsMatching("InteractTest")
-        excludeTestsMatching("AppTest")
+        excludeTestsMatching("xyz.zimtools.zyod.extra.*")
     }
 }

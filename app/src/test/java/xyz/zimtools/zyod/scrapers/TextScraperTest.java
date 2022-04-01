@@ -10,9 +10,9 @@ import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.assets.Directory;
 import xyz.zimtools.zyod.assets.ODUrl;
 import xyz.zimtools.zyod.assets.info.NavInfoParser;
-import xyz.zimtools.zyod.browsers.DriverFactory;
+import xyz.zimtools.zyod.browsers.BrowserFactory;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
-import xyz.zimtools.zyod.fixtures.ODDefault;
+import xyz.zimtools.zyod.fixtures.ODDemoRef;
 import xyz.zimtools.zyod.fixtures.asserts.ScraperAssert;
 import xyz.zimtools.zyod.od.ODType;
 import xyz.zimtools.zyod.od.navigators.NavType;
@@ -23,10 +23,10 @@ import java.util.List;
 import java.util.stream.Stream;
 
 class TextScraperTest {
-    private static final String[] MAIN_ARGS = {"--headless", "-r"};
+    private static final String[] MAIN_ARGS = {"--headless"};
     private static NavInfoParser parser;
     private static RemoteWebDriver driver;
-    private ODScraper scraper;
+    private Scraper scraper;
 
     @BeforeAll
     static void beforeAll() {
@@ -35,12 +35,12 @@ class TextScraperTest {
 
     @AfterAll
     static void afterAll() {
-        driver.close();
+        driver.quit();
     }
 
     private void init(String url, String odType, String navType, ScrapeFilter filter) {
         Args args = new Args(GlobalDefault.joinArr(new String[][]{new String[]{url}, MAIN_ARGS}));
-        driver = DriverFactory.getDriver(args);
+        driver = BrowserFactory.getBrowser(args).getDriver();
         driver.get(url);
         scraper = new TextScraper(driver, args, parser.getInfo(odType, navType), filter);
         scraper.scrape(List.of(), new Directory(1, new ODUrl(url)));
@@ -57,10 +57,10 @@ class TextScraperTest {
 
     private static Stream<Arguments> getParams() {
         return Stream.of(
-                Arguments.of(ODDefault.ONEDRIVE_VERCEL_INDEX, ODType.ONEDRIVE_VERCEL_INDEX,
+                Arguments.of(ODDemoRef.ONEDRIVE_VERCEL_INDEX, ODType.ONEDRIVE_VERCEL_INDEX,
                         NavType.Onedrive_Vercel_Index.LIST_VIEW.name(), 10, 0,
                         new OneDriveVercelIndexScrapeFilter()),
-                Arguments.of(ODDefault.FODI, ODType.FODI, NavType.FODI.MAIN.name(), 4, 0, null)
+                Arguments.of(ODDemoRef.FODI, ODType.FODI, NavType.FODI.MAIN.name(), 4, 0, null)
         );
     }
 }

@@ -48,11 +48,13 @@
     },
 	"thumbnail_view":{
 	  "file_selector": "div.md\\:grid-cols-4 a:not([title='Download file']) div.space-x-2 span[data-tail]",
-	  "file_name": "div.md\\:grid-cols-4 a:not([title='Download file']) div.space-x-2 span[data-tail]"
+	  "file_name": "div.md\\:grid-cols-4 a:not([title='Download file']) div.space-x-2 span[data-tail]",
+      "attribute": "data-tail"
 	},
 	"list_view":{
 	  "file_selector": "div.md\\:col-span-6.truncate span[data-tail]",
-	  "file_name": "div.md\\:col-span-6.truncate span[data-tail]"
+	  "file_name": "div.md\\:col-span-6.truncate span[data-tail]",
+      "attribute": "data-tail"
 	},
 	"no_thumbnail_option":{
 		"file_selector": "div.md\\:col-span-6.truncate div.truncate",
@@ -61,7 +63,7 @@
   },
   "sharelist": {
     "interactive": {
-      "file_selector": "div.drive-body div[title]",
+      "file_selector": "div.drive-body div[title], div.drive-body a[title]",
       "attribute": "title"
     },
     "download_query": {
@@ -73,6 +75,9 @@
     "no_href": {
       "file_selector": "div.drive-body a[title]",
       "attribute": "title"
+    },
+    "list": {
+      "file_selector": "ul.node-list__body li a[href]"
     }
   },
   "watchlist_on_fire": {

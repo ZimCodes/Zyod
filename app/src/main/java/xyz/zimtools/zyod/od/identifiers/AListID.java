@@ -7,7 +7,7 @@ import xyz.zimtools.zyod.support.NavSupport;
 import java.util.List;
 import java.util.Optional;
 
-public final class AListID extends ODID {
+public final class AListID extends ODIdentifier {
     private final static String POWERED_TAG = "Powered by Alist";
     private final static String MANAGE_TAG = "Manage";
     private final static String TITLE_A = "Alist";
@@ -27,13 +27,13 @@ public final class AListID extends ODID {
      * Find the id in the footer
      */
     private boolean footer() {
-        Optional<WebElement> element = NavSupport.getElement(this.driver, "div.footer div " +
+        Optional<WebElement> element = NavSupport.getIDElement(this.driver, "div.footer div " +
                 "a:first-child");
         boolean hasPoweredTag = this.textCheck(element, POWERED_TAG);
         if (!hasPoweredTag) {
             return false;
         }
-        element = NavSupport.getElement(this.driver, "div.chakra-stack div span + a");
+        element = NavSupport.getIDElement(this.driver, "div.chakra-stack div span + a");
         return this.textCheck(element, MANAGE_TAG);
     }
 
@@ -41,7 +41,7 @@ public final class AListID extends ODID {
      * Search for iconic toolbar
      */
     private boolean toolbarIcons() {
-        List<WebElement> elements = NavSupport.getElements(this.driver, "div.overlay div" +
+        List<WebElement> elements = NavSupport.getIDElements(this.driver, "div.overlay div" +
                 ".chakra-stack span");
         if (elements.isEmpty()) {
             return false;
@@ -60,7 +60,7 @@ public final class AListID extends ODID {
      * Check preload {@code <link>} for id.
      */
     private boolean linkPreloadTag() {
-        List<WebElement> elements = NavSupport.getElements(this.driver, "link[rel=modulepreload" +
+        List<WebElement> elements = NavSupport.getIDElements(this.driver, "link[rel=modulepreload" +
                 "][href]");
         if (elements.isEmpty()) {
             return false;
@@ -87,7 +87,7 @@ public final class AListID extends ODID {
      */
     private boolean searchbar() {
         return this.attributeCheck("input.ant-input[placeholder]", "placeholder",
-                "搜索文件(夹)");
+                "\u641C\u7D22\u6587\u4EF6(\u5939)");
     }
 
     /**

@@ -7,11 +7,11 @@ import xyz.zimtools.zyod.support.NavSupport;
 import java.util.List;
 import java.util.Optional;
 
-public final class YukiDriveID extends ODID {
+public final class YukiDriveID extends ODIdentifier {
     private static final String TITLE = "Yuki Drive";
-    private static final String FILE_SECT_A = "文件";
-    private static final String FILE_SECT_B = "文件夹";
-    private static final String SIDE_DRAWER = "驱动器";
+    private static final String FILE_SECT_A = "\u6587\u4EF6";
+    private static final String FILE_SECT_B = "\u6587\u4EF6\u5939";
+    private static final String SIDE_DRAWER = "\u9A71\u52A8\u5668";
 
 
     public YukiDriveID(RemoteWebDriver driver) {
@@ -27,14 +27,14 @@ public final class YukiDriveID extends ODID {
      * Check {@code <title>} for id
      */
     private boolean title() {
-        return this.findTextCheck("title", TITLE);
+        return this.findTextCheck("head title", TITLE);
     }
 
     /**
      * Look for the presence of file sections
      */
     private boolean fileSections() {
-        Optional<WebElement> element = NavSupport.getElement(this.driver, "div.v-list " +
+        Optional<WebElement> element = NavSupport.getIDElement(this.driver, "div.v-list " +
                 "div:first-child div.v-subheader");
         boolean hasFileSection = this.textCheck(element, FILE_SECT_A);
         if (hasFileSection) {
@@ -47,7 +47,7 @@ public final class YukiDriveID extends ODID {
      * Check {@code <noscript>} for id
      */
     private boolean noscript() {
-        List<WebElement> elements = NavSupport.getElements(this.driver, "noscript");
+        List<WebElement> elements = NavSupport.getIDElements(this.driver, "noscript");
         for (WebElement el : elements) {
             boolean hasId = this.hasText(Optional.of(el), TITLE);
             if (hasId) {

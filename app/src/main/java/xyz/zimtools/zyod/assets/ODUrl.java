@@ -28,6 +28,8 @@ public final class ODUrl {
             this.init(uri);
         } catch (URISyntaxException e) {
             link = link.replaceAll(" ", "%20");
+            link = link.replaceAll("\\[","%5B");
+            link = link.replaceAll("]","%5D");
             try {
                 this.init(new URI(link));
             } catch (URISyntaxException a) {

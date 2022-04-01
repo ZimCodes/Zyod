@@ -1,15 +1,7 @@
 package xyz.zimtools.zyod;
 
-import java.io.InputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 /**
  * Handles file operations.

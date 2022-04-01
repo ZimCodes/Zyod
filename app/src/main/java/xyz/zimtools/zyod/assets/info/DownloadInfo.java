@@ -1,10 +1,7 @@
 package xyz.zimtools.zyod.assets.info;
 
-import org.openqa.selenium.remote.RemoteWebDriver;
-
 import java.util.Map;
 import java.util.Objects;
-import java.util.function.Consumer;
 
 public final class DownloadInfo {
     private final String id;
@@ -12,11 +9,11 @@ public final class DownloadInfo {
     private final String cssInitialDownload;
     private final Map<String, String> cssDownloadFilter;
     private final String cssDownloadTask;
-    private Consumer<RemoteWebDriver> extraTasks;
+    private DownloadTasks extraTasks;
 
     public DownloadInfo(String id, String navType, String cssInitialDownload,
                         Map<String, String> cssDownloadFilter,
-                        String cssDownloadTask, Consumer<RemoteWebDriver> extraTasks) {
+                        String cssDownloadTask, DownloadTasks extraTasks) {
         this.id = id;
         this.navType = navType;
         this.cssInitialDownload = cssInitialDownload;
@@ -45,11 +42,11 @@ public final class DownloadInfo {
         return cssDownloadTask;
     }
 
-    public Consumer<RemoteWebDriver> getExtraTasks() {
+    public DownloadTasks getExtraTasks() {
         return extraTasks;
     }
 
-    public void setExtraTasks(Consumer<RemoteWebDriver> extraTasks) {
+    public void setExtraTasks(DownloadTasks extraTasks) {
         this.extraTasks = extraTasks;
     }
 
@@ -72,7 +69,7 @@ public final class DownloadInfo {
         private String cssInitialDownload;
         private Map<String, String> cssDownloadFilter;
         private String cssDownloadTask;
-        private Consumer<RemoteWebDriver> extraTasks;
+        private DownloadTasks extraTasks;
 
         public Builder() {
         }
@@ -102,7 +99,7 @@ public final class DownloadInfo {
             return this;
         }
 
-        public Builder setExtraTasks(Consumer<RemoteWebDriver> extraTasks) {
+        public Builder setExtraTasks(DownloadTasks extraTasks) {
             this.extraTasks = extraTasks;
             return this;
         }

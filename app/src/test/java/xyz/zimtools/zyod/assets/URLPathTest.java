@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import xyz.zimtools.zyod.fixtures.URLDefault;
+import xyz.zimtools.zyod.fixtures.asserts.URLAssert;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -15,7 +16,7 @@ class URLPathTest {
     @ValueSource(strings = {"https://example.com", "https://example.com/", "https://www.example.com"})
     void noPath(String url) {
         ODUrl parsedURL = new ODUrl(url);
-        URLDefault.popAssert("", parsedURL);
+        URLAssert.popAssert("", parsedURL);
         assertEquals("/", parsedURL.getPath(), "No path should be present in " + url);
     }
 
@@ -24,15 +25,15 @@ class URLPathTest {
         String[] paths = {"breakfast", "common", "folder"};
         ODUrl parsedURL = new ODUrl(URLDefault.BASE_URL + "/" + String.join("/", paths));
 
-        URLDefault.popAssert(paths[2], parsedURL);
-        URLDefault.urlAssert(String.format("%s/%s/%s", URLDefault.BASE_URL, paths[0], paths[1]),
+        URLAssert.popAssert(paths[2], parsedURL);
+        URLAssert.urlAssert(String.format("%s/%s/%s", URLDefault.BASE_URL, paths[0], paths[1]),
                 parsedURL.toString());
 
-        URLDefault.popAssert(paths[1], parsedURL);
-        URLDefault.urlAssert(String.format("%s/%s", URLDefault.BASE_URL, paths[0]), parsedURL.toString());
+        URLAssert.popAssert(paths[1], parsedURL);
+        URLAssert.urlAssert(String.format("%s/%s", URLDefault.BASE_URL, paths[0]), parsedURL.toString());
 
-        URLDefault.popAssert(paths[0], parsedURL);
-        URLDefault.urlAssert(URLDefault.BASE_URL, parsedURL.toString());
+        URLAssert.popAssert(paths[0], parsedURL);
+        URLAssert.urlAssert(URLDefault.BASE_URL, parsedURL.toString());
     }
 
     @Test
@@ -42,11 +43,11 @@ class URLPathTest {
 
         String rel = "/doc_folder";
         parsedUrl.addPath("doc_folder");
-        URLDefault.urlAssert(url + rel, parsedUrl.toString());
+        URLAssert.urlAssert(url + rel, parsedUrl.toString());
 
         rel += "/common";
         parsedUrl.addPath("/common");
-        URLDefault.urlAssert(url + rel, parsedUrl.toString());
+        URLAssert.urlAssert(url + rel, parsedUrl.toString());
     }
 
     @ParameterizedTest
@@ -58,7 +59,7 @@ class URLPathTest {
             "https://example.com/golden Eyes/#piano/cat-45-3.txt",
     })
     void isNotURLFile(String url) {
-        URLDefault.fileFalse(url);
+        URLAssert.fileFalse(url);
     }
 
     @ParameterizedTest
@@ -73,6 +74,6 @@ class URLPathTest {
             "https://www.example.com/az/index.html#/cat.txt",
     })
     void isURLFile(String url){
-        URLDefault.fileTrue(url);
+        URLAssert.fileTrue(url);
     }
 }

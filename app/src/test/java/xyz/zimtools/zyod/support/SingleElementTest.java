@@ -6,9 +6,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.assets.info.NavInfoParser;
-import xyz.zimtools.zyod.browsers.DriverFactory;
+import xyz.zimtools.zyod.browsers.BrowserFactory;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
-import xyz.zimtools.zyod.fixtures.ODDefault;
+import xyz.zimtools.zyod.fixtures.ODDemoRef;
 import xyz.zimtools.zyod.fixtures.asserts.SupportAssert;
 import xyz.zimtools.zyod.od.ODType;
 import xyz.zimtools.zyod.od.navigators.NavType;
@@ -32,7 +32,7 @@ class SingleElementTest {
     private void initArgs(String[][] cmdArgs) {
         String[] combinedArgs = GlobalDefault.joinArr(cmdArgs);
         args = new Args(combinedArgs);
-        driver = DriverFactory.getDriver(args);
+        driver = BrowserFactory.getBrowser(args).getDriver();
     }
 
     private void assertElement(String url, String cssSelector) {
@@ -46,37 +46,37 @@ class SingleElementTest {
 
     @Test
     void alistOriginal() {
-        this.assertElement(ODDefault.ALIST,
+        this.assertElement(ODDemoRef.ALIST,
                 navInfoParser.getInfo(ODType.ALIST.name(), NavType.AList.ORIGINAL.name()).getCssFileSelector());
     }
 
     @Test
     void goIndexListView() {
-        this.assertElement(ODDefault.GO_INDEX,
+        this.assertElement(ODDemoRef.GO_INDEX,
                 navInfoParser.getInfo(ODType.GOINDEX.name(), NavType.GoIndex.LIST_VIEW.name()).getCssFileSelector());
     }
 
     @Test
     void gdIndexMain() {
-        this.assertElement(ODDefault.GD_INDEX, navInfoParser.getInfo(ODType.GDINDEX.name(),
+        this.assertElement(ODDemoRef.GD_INDEX, navInfoParser.getInfo(ODType.GDINDEX.name(),
                 NavType.GDIndex.MAIN.name()).getCssFileSelector());
     }
 
     @Test
     void fodiMain() {
-        this.assertElement(ODDefault.FODI, navInfoParser.getInfo(ODType.FODI.name(),
+        this.assertElement(ODDemoRef.FODI, navInfoParser.getInfo(ODType.FODI.name(),
                 NavType.FODI.MAIN.name()).getCssFileSelector());
     }
 
     @Test
     void zfileMain() {
-        this.assertElement(ODDefault.ZFILE, navInfoParser.getInfo(ODType.ZFILE.name(),
+        this.assertElement(ODDemoRef.ZFILE, navInfoParser.getInfo(ODType.ZFILE.name(),
                 NavType.ZFile.MAIN.name()).getCssFileSelector());
     }
 
     @Test
     void onedriveVercelIndexMain() {
-        this.assertElement(ODDefault.ONEDRIVE_VERCEL_INDEX,
+        this.assertElement(ODDemoRef.ONEDRIVE_VERCEL_INDEX,
                 navInfoParser.getInfo(ODType.ONEDRIVE_VERCEL_INDEX.name(),
                         NavType.Onedrive_Vercel_Index.LIST_VIEW.name()).getCssFileSelector());
     }

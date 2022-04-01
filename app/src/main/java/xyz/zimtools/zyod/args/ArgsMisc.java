@@ -5,8 +5,9 @@ import com.beust.jcommander.validators.PositiveInteger;
 import xyz.zimtools.zyod.args.converters.MillisecondConverter;
 
 public final class ArgsMisc {
-    @Parameter(names = {"-r", "--refresh"}, description = "Refresh the page and try again upon failure.")
-    private boolean refreshing;
+    @Parameter(names = {"--no-refresh"}, description = "Refresh the page and try again upon" +
+            " a scrape failure.")
+    private boolean dontRefresh;
 
     @Parameter(names = "--page-wait", description = "Amount of seconds to wait for a page load to" +
             " complete before throwing an error.", validateWith = PositiveInteger.class,
@@ -18,8 +19,8 @@ public final class ArgsMisc {
             converter = MillisecondConverter.class)
     private Long implicitWait = 30000L;
 
-    public boolean isRefreshing() {
-        return refreshing;
+    public boolean isDontRefresh() {
+        return dontRefresh;
     }
 
     public long getPageWait() {

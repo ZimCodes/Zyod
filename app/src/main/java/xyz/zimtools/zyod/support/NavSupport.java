@@ -15,17 +15,29 @@ import java.util.Optional;
  * Helper methods to retrieve {@link WebElement} from a webpage
  */
 public class NavSupport {
-    private final static long UNTIL_WAIT = 20000L;
+    private final static long UNTIL_WAIT = 10000L;
+    public final static long ID_WAIT_IMPLICIT = 1L;
 
-    public static List<WebElement> getElements(RemoteWebDriver driver, String cssSelect) {
+    public static List<WebElement> getWaitElements(RemoteWebDriver driver, String cssSelect, long wait) {
         List<WebElement> elements = List.of();
         try {
             elements =
-                    new WebDriverWait(driver, Duration.ofMillis(UNTIL_WAIT)).until((el) -> el.findElements(By.cssSelector(cssSelect)));
+                    new WebDriverWait(driver, Duration.ofMillis(wait)).until((el) -> el.findElements(By.cssSelector(cssSelect)));
         } catch (TimeoutException e) {
             printError(driver);
         }
         return elements;
+    }
+
+    public static List<WebElement> getElements(RemoteWebDriver driver, String cssSelect) {
+        return getWaitElements(driver, cssSelect, UNTIL_WAIT);
+    }
+
+    /**
+     * Retrieve Web elements using the implicit wait time for finding ID
+     * */
+    public static List<WebElement> getIDElements(RemoteWebDriver driver, String cssSelect) {
+        return getWaitElements(driver, cssSelect, ID_WAIT_IMPLICIT);
     }
 
     /**
@@ -34,15 +46,26 @@ public class NavSupport {
      * @param driver    {@link RemoteWebDriver}
      * @param cssSelect the css selector pointing to a WebElement
      */
-    public static Optional<WebElement> getElement(RemoteWebDriver driver, String cssSelect) {
+    public static Optional<WebElement> getWaitElement(RemoteWebDriver driver, String cssSelect, long wait) {
         Optional<WebElement> element = Optional.empty();
         try {
             element =
-                    Optional.of(new WebDriverWait(driver, Duration.ofMillis(UNTIL_WAIT)).until((el) -> el.findElement(By.cssSelector(cssSelect))));
+                    Optional.of(new WebDriverWait(driver, Duration.ofMillis(wait)).until((el) -> el.findElement(By.cssSelector(cssSelect))));
         } catch (TimeoutException | NoSuchElementException e) {
             printError(driver);
         }
         return element;
+    }
+
+    public static Optional<WebElement> getElement(RemoteWebDriver driver, String cssSelect) {
+        return getWaitElement(driver, cssSelect, UNTIL_WAIT);
+    }
+
+    /**
+     * Retrieve Web element using the implicit wait time for finding ID
+     * */
+    public static Optional<WebElement> getIDElement(RemoteWebDriver driver, String cssSelect) {
+        return getWaitElement(driver, cssSelect, ID_WAIT_IMPLICIT);
     }
 
     private static void printError(RemoteWebDriver driver) {

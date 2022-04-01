@@ -3,10 +3,10 @@ package xyz.zimtools.zyod.od.identifiers;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 
-public final class GONEListID extends ODID {
+public final class GONEListID extends ODIdentifier {
     private static final String TITLE = "GONEList";
-    private static final String GLOBAL_OPTION = "全局";
-    private static final String OTHER_OPTION = "当前";
+    private static final String GLOBAL_OPTION = "\u5168\u5C40";
+    private static final String OTHER_OPTION = "\u5F53\u524D";
 
     public GONEListID(RemoteWebDriver driver) {
         super(driver);

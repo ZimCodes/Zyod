@@ -14,11 +14,20 @@ public final class ArgsInteractive {
             MillisecondConverter.class)
     private Long scrollWait = 4000L;
 
+    @Parameter(names = "--interact-wait", description = "Amount of seconds to wait before/after a" +
+            "simulated interaction (ex: right-click, click, dragging).", validateWith =
+            PositiveInteger.class, converter = MillisecondConverter.class)
+    private Long interactWait = 5000L;
+
     public boolean isScrolling() {
         return this.scrolling;
     }
 
     public long getScrollWait() {
         return scrollWait;
+    }
+
+    public long getInteractWait() {
+        return this.interactWait;
     }
 }

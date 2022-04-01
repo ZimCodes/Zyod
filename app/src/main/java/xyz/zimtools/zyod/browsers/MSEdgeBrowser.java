@@ -4,6 +4,7 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import xyz.zimtools.zyod.args.Args;
+import xyz.zimtools.zyod.support.NavSupport;
 
 import java.time.Duration;
 import java.util.Map;
@@ -30,7 +31,6 @@ public class MSEdgeBrowser extends ChromiumBrowser {
     protected void setPreferences() {
         this.options.setHeadless(this.args.getArgsWebDriver().isHeadless());
         this.options.setPageLoadTimeout(Duration.ofMillis(this.args.getArgsMisc().getPageWait()));
-        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
         this.prefs.put("printing.headless_save_as_pdf_enabled", false);
         this.prefs.put("download.open_pdf_in_system_reader", false);
         if (this.args.getArgsDownload().isDownloading()) {
@@ -44,6 +44,25 @@ public class MSEdgeBrowser extends ChromiumBrowser {
 
     @Override
     public EdgeDriver getDriver() {
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(this.args.getArgsMisc().getImplicitWait()));
+        return this.prepareDriver();
+    }
+
+    @Override
+    public EdgeDriver getIDDriver() {
+        this.options.setImplicitWaitTimeout(Duration.ofMillis(NavSupport.ID_WAIT_IMPLICIT));
+        return this.prepareDriver();
+    }
+
+    /**
+     * Make final preparations to the driver.
+     * <p>
+     * Preparation includes downloading the driver from the internet as well as setting the
+     * appropriate driver version to match the installed browser.
+     * </p>
+     */
+    @Override
+    protected EdgeDriver prepareDriver() {
         if ("auto".equals(this.args.getArgsWebDriver().getDriverVersion())) {
             WebDriverManager.getInstance(EdgeDriver.class).setup();
         } else {
