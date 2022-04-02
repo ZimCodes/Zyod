@@ -41,7 +41,7 @@ class CustomScraperTest {
         driver.quit();
     }
 
-    private void init(String url, String odType, String navType, ScrapeFilter filter) {
+    private void init(String url) {
         args = new Args(GlobalDefault.joinArr(new String[][]{new String[]{url}, MAIN_ARGS}));
         driver = BrowserFactory.getBrowser(args).getDriver();
         driver.get(url);
@@ -51,7 +51,7 @@ class CustomScraperTest {
     @MethodSource("getParams")
     void scrapeTest(String url, ODType odType, String navType, int dirCount, int fileCount,
                     ScrapeFilter filter) {
-        this.init(url, odType.name(), navType, filter);
+        this.init(url);
         Scraper scraper = new OneDriveVercelIndexScraper(driver, args, parser.getInfo(odType.name(), navType),
                 filter);
         scraper.scrape(List.of(), new Directory(1, new ODUrl(url)));

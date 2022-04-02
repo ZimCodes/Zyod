@@ -7,6 +7,14 @@ import java.util.*;
  * Handles file operations.
  */
 public final class Writer {
+
+    /**
+     * Extract data from Mime file.
+     * <p>
+     *     The extracted mime data will be transformed into a comma delimited format.
+     * </p>
+     *
+     * @return all mime types in a comma separated format.*/
     public static String readMimeFile() {
         try (InputStream input = AppConfig.getMimeStream()) {
             if (input == null) {
@@ -31,6 +39,15 @@ public final class Writer {
         return "";
     }
 
+    /**
+     * Read URLs from a file.
+     * <p>
+     *     Retrieve links from a file. Each line in the file must contain one link to an OD to
+     *     operate on.
+     * </p>
+     * @param inputFile the input file
+     * @return list of OD references
+     * */
     public static List<String> readInputFile(File inputFile) {
         List<String> urls = new ArrayList<>();
         try (Scanner scanner = new Scanner(inputFile)) {
