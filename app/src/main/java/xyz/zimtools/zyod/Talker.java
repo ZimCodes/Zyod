@@ -10,7 +10,7 @@ import java.util.List;
  */
 public final class Talker {
     public static void fileStats(List<Directory> dirs, List<ODUrl> files) {
-        Talker.header("Directories", false);
+        Talker.header("New Directories", false);
         Talker.dirListInfo(dirs, "Dir", false);
         Talker.arrowInfo("Total", String.valueOf(dirs.size()), true);
         Talker.header("Files", false);

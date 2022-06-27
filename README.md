@@ -1,7 +1,7 @@
 # Zyod
 
 **Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
-Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**. 
+Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**.
 
 For static ODs check out [Zeiver!](https://github.com/ZimCodes/Zeiver)
 
@@ -22,6 +22,7 @@ For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
     - [Recording](#recording)
     - [Interactivity](#interactivity)
     - [Misc.](#miscellaneous)
+- [Things to Note](#things-to-note)
 - [License](#license)
 
 ## Sample Usage
@@ -122,7 +123,7 @@ Wait a maximum number of seconds before scraping.
 Most dynamic ODs load content on the page *very slooooowly*. This option allows Zyod to wait a
 certain amount of time before scraping.
 
-*Default:* `4`
+*Default:* `6`
 
 ***--random-wait***
 
@@ -215,6 +216,12 @@ time before/after performing a simulated interaction.
 
 #### Miscellaneous
 
+***--init-refresh***
+
+Refresh the FIRST page.
+
+Refresh the first *(initial)* webpage when Zyod navigates to it.
+
 ***--no-refresh***
 
 Do not refresh the page and try again upon a scrape failure.
@@ -222,13 +229,21 @@ Do not refresh the page and try again upon a scrape failure.
 Do not refresh the page when Zyod fails to navigate to a page or fails to locate elements on the 
 page.
 
+***--init-page-wait***
+
+Amount of seconds to *explicitly* wait after navigating to the first *(initial)* 
+webpage. *Default:* 
+`0`.
+
 ***--page-wait***
 
-Amount of seconds to wait for a page load to complete before throwing an error. *Default:* `30`.
+Amount of seconds to *implicitly* wait for a page load to complete before throwing an error. 
+
+*Default:* `30`.
 
 ***--element-wait***
 
-Amount of seconds to implicitly wait for web elements to appear before throwing an error. If 
+Amount of seconds to *implicitly* wait for web elements to appear before throwing an error. If 
 Zyod is taking too long to retrieve anything on the current page, try reducing the amoount of 
 seconds. 
 
@@ -236,6 +251,27 @@ seconds.
 
 ---
 
+## Things to Note
+### Recording Incorrect URLs
+
+When recording, incorrect URLs may be generated from certain Open Directory types *(Ex: FODI)*.
+This is likely because the *true* URL themselves are *hidden*, *protected*, or *masked*.
+
+### Master `waiting` options
+
+In order to successfully use Zyod, take complete advantage of the **waiting options**. Since
+Zyod focuses on dynamic ODs, each OD loads differently the next. Some dynamic ODs' webpages loads
+*super slow*, but the resources **ON** the webpages such as images, animations, styles, files, etc
+loads very quickly. There's also some dynamic ODs that works vice versa.
+
+### File Detection
+Any file passing the below regex is considered a file, otherwise it will be considered a directory.
+
+`[^/=#.]+\.(?:[a-zA-Z0-9]{3,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$`
+
+So in short, file extensions must be `> 1` & `< 8`.
+
+---
 ## License
 
 Zyod is licensed under the MIT License.

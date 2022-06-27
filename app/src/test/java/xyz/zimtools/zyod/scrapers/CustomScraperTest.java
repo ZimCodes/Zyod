@@ -62,7 +62,7 @@ class CustomScraperTest {
     private static Stream<Arguments> getParams() {
         return Stream.of(
                 Arguments.of(ODDemoRef.ONEDRIVE_VERCEL_INDEX, ODType.ONEDRIVE_VERCEL_INDEX,
-                        NavType.Onedrive_Vercel_Index.LIST_VIEW.name(), 9, 1,
+                        NavType.Onedrive_Vercel_Index.LIST_VIEW.name(), 10, 1,
                         new OneDriveVercelIndexScrapeFilter())
         );
     }

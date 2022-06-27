@@ -57,7 +57,7 @@ class SiftScraperTest {
 
     private static Stream<Arguments> getParams() {
         return Stream.of(
-                Arguments.of(ODDemoRef.ZFILE, ODType.ZFILE, NavType.ZFile.MAIN.name(), 11, 5,
+                Arguments.of(ODDemoRef.ZFILE, ODType.ZFILE, NavType.ZFile.MAIN.name(), 12, 6,
                         new GenericScrapeFilter())
         );
     }

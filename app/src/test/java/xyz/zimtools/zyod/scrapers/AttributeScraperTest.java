@@ -27,7 +27,7 @@ import java.util.stream.Stream;
  * Tests {@link AttributeScraper}
  */
 class AttributeScraperTest {
-    private static final String[] MAIN_ARGS = {"--headless","--all-certs"};
+    private static final String[] MAIN_ARGS = {"--headless","--all-certs","--page-wait","60000"};
     private static NavInfoParser parser;
     private static RemoteWebDriver driver;
     private Scraper scraper;
@@ -67,7 +67,7 @@ class AttributeScraperTest {
                 Arguments.of(ODDemoRef.GD_INDEX, ODType.GDINDEX, NavType.GDIndex.MAIN.name(), 5,
                         4, null),
                 Arguments.of(ODDemoRef.ALIST, ODType.ALIST, NavType.AList.ORIGINAL.name()
-                        , 19, 0, null)
+                        , 11, 0, null)
         );
     }
 }

@@ -105,7 +105,9 @@ class ArgsTest {
 
     private void miscAsserts(Args args) {
         ArgAssert.argTrue(args.getArgsMisc().isDontRefresh(), "dont refresh");
+        ArgAssert.argTrue(args.getArgsMisc().isInitRefresh(), "first refresh");
         assertEquals(args.getArgsMisc().getPageWait(), ArgsDefault.WAIT_LONG_VALUE);
+        assertEquals(args.getArgsMisc().getInitPageWait(), ArgsDefault.WAIT_LONG_VALUE);
         assertEquals(args.getArgsMisc().getImplicitWait(), ArgsDefault.WAIT_LONG_VALUE);
     }
 

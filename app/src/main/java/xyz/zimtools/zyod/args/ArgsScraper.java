@@ -10,7 +10,7 @@ public final class ArgsScraper {
     @Parameter(names = {"-w", "--wait"}, description = "Wait a number of seconds before " +
             "scraping.", validateWith = PositiveInteger.class, converter =
             MillisecondConverter.class)
-    private Long wait = 4000L;
+    private Long wait = 6000L;
 
     @Parameter(names = "--random-wait", description = "Randomize the amount of time to wait " +
             "before scraping. Used with '--wait,-w'")

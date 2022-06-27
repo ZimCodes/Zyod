@@ -17,18 +17,15 @@ repositories {
 }
 
 dependencies {
-    // Used with application plugin
-    // https://mvnrepository.com/artifact/com.google.guava/guava
-    // implementation 'com.google.guava:guava:31.1-jre'
-
     // https://mvnrepository.com/artifact/com.beust/jcommander
     implementation 'com.beust:jcommander:1.82'
 
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
-    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.1.2'
+    implementation group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '4.3.0'
+
 
     // https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager
-    implementation 'io.github.bonigarcia:webdrivermanager:5.1.0'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.2.0'
 
     //Gson dependency for parsing JSON files
     implementation 'com.google.code.gson:gson:2.9.0'
@@ -63,6 +60,6 @@ jar {
 test {
     filter {
         excludeTestsMatching("InteractTest")
-        excludeTestsMatching("xyz.zimtools.zyod.extra.*")
+        //excludeTestsMatching("xyz.zimtools.zyod.extra.*")
     }
 }

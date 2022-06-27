@@ -49,13 +49,15 @@ public final class Args {
      * Checks arguments for conflicts and report them
      */
     private void argsCheck() throws ParameterException {
-        if (this.argsDownload.isDownloading() && this.argsWebDriver.isHeadless()) {
-            throw new ParameterException("'--headless' CANNOT be used alongside '--download'!");
-        }
+        if (!this.argsMain.isVersion()) {
+            if (this.argsDownload.isDownloading() && this.argsWebDriver.isHeadless()) {
+                throw new ParameterException("'--headless' CANNOT be used alongside '--download'!");
+            }
 
-        if (this.argsMain.getUrls().isEmpty() && this.argsRecord.getInputFile() == null) {
-            throw new ParameterException("URL(s) must be present either in the command line or in" +
-                    " an input file.");
+            if (this.argsMain.getUrls().isEmpty() && this.argsRecord.getInputFile() == null) {
+                throw new ParameterException("URL(s) must be present either in the command line or in" +
+                        " an input file.");
+            }
         }
     }
 

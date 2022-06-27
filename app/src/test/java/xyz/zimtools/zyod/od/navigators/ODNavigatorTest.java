@@ -75,7 +75,7 @@ class ODNavigatorTest {
     void onedrivevercelindex() {
         this.init(new String[]{ODDemoRef.ONEDRIVE_VERCEL_INDEX, "--ddir", DownloadDefault.DOWNLOAD_DIR, "--download"});
         navigator = new OneDriveVercelIndexNav(driver, args);
-        assertResourceCount(ODDemoRef.ONEDRIVE_VERCEL_INDEX, 9, 1);
+        assertResourceCount(ODDemoRef.ONEDRIVE_VERCEL_INDEX, 10, 1);
         DownloadAssert.fileExists();
     }
 }

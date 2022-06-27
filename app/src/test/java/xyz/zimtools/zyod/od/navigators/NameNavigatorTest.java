@@ -50,7 +50,7 @@ class NameNavigatorTest {
         this.init(new String[]{ODDemoRef.ZFILE, "--ddir", DownloadDefault.DOWNLOAD_DIR,
                 "--download", "--scroll"});
         navigator = new ZFileNav(driver, args);
-        assertResourceCount(ODDemoRef.ZFILE, 11, 5);
+        assertResourceCount(ODDemoRef.ZFILE, 12, 6);
         AppConfig.sleep(5000L);
         DownloadAssert.fileExists();
     }

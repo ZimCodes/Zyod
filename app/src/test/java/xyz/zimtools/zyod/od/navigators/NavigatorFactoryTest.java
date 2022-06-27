@@ -5,6 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import xyz.zimtools.zyod.AppConfig;
 import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.browsers.BrowserFactory;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
@@ -17,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class NavigatorFactoryTest {
-    private static final String[] MAIN_ARGS = {"--all-certs", "--headless"};
+    private static final String[] MAIN_ARGS = {"--all-certs"};
     private static Args args;
     private static RemoteWebDriver driver;
 
@@ -32,6 +33,7 @@ class NavigatorFactoryTest {
         args = new Args(newArgs);
         driver = BrowserFactory.getBrowser(args).getIDDriver();
         driver.get(url);
+        AppConfig.sleep(10000L);
     }
 
     @ParameterizedTest

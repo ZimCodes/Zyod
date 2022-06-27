@@ -43,12 +43,12 @@ public final class Directory {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Directory directory = (Directory) o;
-        return depthLevel == directory.depthLevel && url.equals(directory.url);
+        return url.equals(directory.url);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(depthLevel, url);
+        return Objects.hash(url);
     }
 
 

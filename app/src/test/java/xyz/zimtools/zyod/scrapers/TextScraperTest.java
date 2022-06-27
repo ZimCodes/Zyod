@@ -58,7 +58,7 @@ class TextScraperTest {
     private static Stream<Arguments> getParams() {
         return Stream.of(
                 Arguments.of(ODDemoRef.ONEDRIVE_VERCEL_INDEX, ODType.ONEDRIVE_VERCEL_INDEX,
-                        NavType.Onedrive_Vercel_Index.LIST_VIEW.name(), 10, 0,
+                        NavType.Onedrive_Vercel_Index.LIST_VIEW.name(), 11, 0,
                         new OneDriveVercelIndexScrapeFilter()),
                 Arguments.of(ODDemoRef.FODI, ODType.FODI, NavType.FODI.MAIN.name(), 4, 0, null)
         );

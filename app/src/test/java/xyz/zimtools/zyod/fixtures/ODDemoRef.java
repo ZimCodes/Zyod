@@ -6,5 +6,5 @@ public class ODDemoRef {
     public static final String FODI = "https://logi.im/fodi.html";
     public static final String ZFILE = "https://zfile.jun6.net/1/main";
     public static final String ONEDRIVE_VERCEL_INDEX = "https://drive.swo.moe";
-    public static final String ALIST = "https://alist.xhofe.top";
+    public static final String ALIST = "https://alist.nn.ci";
 }

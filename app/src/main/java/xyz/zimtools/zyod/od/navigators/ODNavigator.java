@@ -84,7 +84,7 @@ abstract class ODNavigator implements Navigator {
         if (!isNotLoginPage) {
             return List.of();
         }
-        List<WebElement> elements = null;
+        List<WebElement> elements = List.of();
         if (this.scraper == null) {
             elements = this.setUpDependencies();
         } else if (this.args.getArgsInteractive().isScrolling()) {

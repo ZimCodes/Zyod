@@ -12,33 +12,45 @@ public final class NavigatorFactory {
     /**
      * Using the identifier, create the appropriate {@link Navigator} for the current OD.
      *
-     * @param driver {@link RemoteWebDriver}
-     * @param args   {@link Args}
+     * @param idDriver {@link RemoteWebDriver} used for quick OD identification
+     * @param driver   {@link RemoteWebDriver} used for primary navigation
+     * @param args     {@link Args}
      * @return the appropriate Navigator for the current OD
      */
-    public static Navigator getNavigator(RemoteWebDriver driver, Args args) {
-        if (new GOIndexID(driver).isOD()) {
+    public static Navigator getNavigator(RemoteWebDriver idDriver, RemoteWebDriver driver, Args args) {
+        if (new GOIndexID(idDriver).isOD()) {
             return new GoIndexNav(driver, args);
-        } else if (new FODIID(driver).isOD()) {
+        } else if (new FODIID(idDriver).isOD()) {
             return new FODINav(driver, args);
-        } else if (new ZFileID(driver).isOD()) {
+        } else if (new ZFileID(idDriver).isOD()) {
             return new ZFileNav(driver, args);
-        } else if (new GDIndexID(driver).isOD()) {
+        } else if (new GDIndexID(idDriver).isOD()) {
             return new GDIndexNav(driver, args);
-        } else if (new OneDriveVercelIndexID(driver).isOD()) {
+        } else if (new OneDriveVercelIndexID(idDriver).isOD()) {
             return new OneDriveVercelIndexNav(driver, args);
-        } else if (new GONEListID(driver).isOD()) {
+        } else if (new GONEListID(idDriver).isOD()) {
             return new GONEListNav(driver, args);
-        } else if (new ShareListID(driver).isOD()) {
+        } else if (new ShareListID(idDriver).isOD()) {
             return new ShareListNav(driver, args);
-        } else if (new YukiDriveID(driver).isOD()) {
+        } else if (new YukiDriveID(idDriver).isOD()) {
             return new YukiDriveNav(driver, args);
-        } else if (new AListID(driver).isOD()) {
+        } else if (new AListID(idDriver).isOD()) {
             return new AListNav(driver, args);
-        } else if (new WatchlistOnFireID(driver).isOD()) {
+        } else if (new WatchlistOnFireID(idDriver).isOD()) {
             return new WatchListOnFireNav(driver, args);
         } else {
             return null;
         }
+    }
+
+    /**
+     * Using the identifier, create the appropriate {@link Navigator} for the current OD.
+     *
+     * @param driver {@link RemoteWebDriver} used for identification and primary navigation
+     * @param args   {@link Args}
+     * @return the appropriate Navigator for the current OD
+     */
+    public static Navigator getNavigator(RemoteWebDriver driver, Args args) {
+        return getNavigator(driver, driver, args);
     }
 }

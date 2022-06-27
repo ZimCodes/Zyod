@@ -18,14 +18,28 @@ import java.util.Map;
  */
 abstract class TouchNavigator extends NameNavigator {
     protected Directory curDir;
+    private boolean hasSetCursor;
 
     public TouchNavigator(ODType id, RemoteWebDriver driver, Args args) {
         super(id, driver, args);
-        this.curDir = new Directory(0, new ODUrl(driver.getCurrentUrl()));
+    }
+
+    /**
+     * Set the current {@link Directory} for the page.
+     *
+     * Ideally, this lazily set the current directory cursor
+     * to the correct starting point of OD.
+     * */
+    public void initCursor() {
+        if (!this.hasSetCursor){
+            this.curDir = new Directory(0, new ODUrl(driver.getCurrentUrl()));
+            this.hasSetCursor = true;
+        }
     }
 
     @Override
     protected Map<String, Object> goToDirectory(Directory directory) {
+        initCursor();
         this.moveUpToDestination(directory);
         this.moveDownToDestination(directory);
         return Map.of(NOT_LOGIN_KEY, true, DIRECTORY_KEY, directory);
