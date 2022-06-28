@@ -40,8 +40,7 @@ java -jar zyod.jar --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 http
 Supported ODs can be found in [OD.md](https://github.com/ZimCodes/Zyod/blob/main/OD.md).
 
 ## How to Use
-1. Make sure you have Java setup on your machine. If not, [download a copy here](https://jdk.java.
-   net/).
+1. Make sure you have *Java* setup on your machine. If not, [download a copy here](https://jdk.java.net/).
 2. Download *zyod.jar* file from the [release page](https://github.com/ZimCodes/Zyod/releases).
 3. Open up a command line interface.
 4. From here type, `java -jar zyod.jar [INSERT YOUR COMMANDS HERE]`. And thats it!
