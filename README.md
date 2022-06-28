@@ -1,12 +1,13 @@
 # Zyod
-> This is `Zyod 1.X` version. Made with `Python`
+> `Zyod 1.X` `Python` edition. 
+> This version will no longer receive updates!
 
 **Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
 Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**. 
 
 For static ODs check out [Zeiver!](https://github.com/ZimCodes/Zeiver)
 
-For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
+~~For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).~~
 
 ## Table of Contents
 - [Sample Usage](#sample-usage)
