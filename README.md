@@ -1,8 +1,7 @@
 # Zyod
 
 **Zyod** is designed to *scrape*, *download*, & *record* files from **dynamic ODs** *(JavaScript 
-focused
-Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**.
+focused Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**.
 
 For static ODs check out [Zeiver!](https://github.com/ZimCodes/Zeiver)
 
@@ -11,7 +10,7 @@ For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
 ## Table of Contents
 - [Sample Usage](#sample-usage)
 - [OD Support](#open-directory-support)
-- [Installation](#installation)
+- [How to Use](#how-to-use)
 - [Commands](#commands)
   - [Positional](#positional)
   - [Options](#options)
@@ -34,19 +33,18 @@ before scraping each page, search 3 directory levels deep, interact by scrolling
 between each scroll action.
 
 ```commandline
-zyod --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com
+java -jar zyod.jar --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com
 ```
 
 ## Open Directory Support
 Supported ODs can be found in [OD.md](https://github.com/ZimCodes/Zyod/blob/main/OD.md).
 
-## Installation
-1. This project requires `Python 3.10`. In order to start, please make sure Python is installed.
-   1. You can download Python here: https://www.python.org/downloads/
-2. Download this repository.
-3. Extract zip file.
-4. Open a terminal and point it to the Zyod project directory containing `zyod.py`.
-5. To run zyod, start you commands using `python zyod.py`.
+## How to Use
+1. Make sure you have Java setup on your machine. If not, [download a copy here](https://jdk.java.
+   net/).
+2. Download *zyod.jar* file from the [release page](https://github.com/ZimCodes/Zyod/releases).
+3. Open up a command line interface.
+4. From here type, `java -jar zyod.jar [INSERT YOUR COMMANDS HERE]`. And thats it!
 
 
 ## Commands
@@ -102,7 +100,7 @@ Example:
 To install a driver for Google Chrome version `95.0.4638.69` use:
 
 ```commandline
-zyod --compat-driver "95.0.4638.69" https://example.com/folder/images
+java -jar zyod.jar --compat-driver "95.0.4638.69" https://example.com/folder/images
 ```
 
 ---
@@ -173,10 +171,9 @@ The output file path to place all recorded links. Links are appended to the file
 Read links from a file.
 
 Read links from a file, which points to a series of ODs. **Each line must represent a link to an
-OD**. **This option can be used with the `URL..` positional argument.** To use this option as a
-standalone you must provide `URL..` as an empty string `""`:
+OD**. **This option can be used with the `URL..` positional argument.**
 
-`python zyod.py -i input.txt ""`
+`java -jar zyod.jar -i input.txt ""`
 
 ***--no-record***
 
