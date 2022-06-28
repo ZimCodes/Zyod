@@ -1,0 +1,101 @@
+{
+  "alist": {
+    "original": {
+      "file_selector": "div.chakra-stack div.chakra-linkbox a[href]"
+    },
+    "web": {
+      "file_selector": "tbody.ant-table-tbody tr td:first-child",
+      "file_name": "tbody.ant-table-tbody tr td:first-child"
+    }
+  },
+  "fodi": {
+    "main": {
+      "file_selector": "div#file-list div.row.file-wrapper",
+      "file_name": "div#file-list div.row.file-wrapper div.file span.name",
+      "back": {
+        "back_btn": "div.header ion-icon#arrow-back",
+        "home_btn": "ion-icon#main-page"
+      }
+    }
+  },
+  "gdindex": {
+    "main": {
+      "file_selector": "div a.v-list-item--link"
+    }
+  },
+  "goindex": {
+    "list_view": {
+      "file_selector": "div.golist tbody td:first-child[title]",
+      "attribute": "title"
+    },
+    "thumbnail_view": {
+      "file_selector": "div.column.is-one-quarter[data-v-1871190e] div[title]",
+      "attribute": "title"
+    },
+    "older": {
+      "file_selector": "ul#list li.mdui-list-item a"
+    }
+  },
+  "gonelist": {
+    "main": {
+      "file_selector": "div.ivu-table-cell div.ivu-table-cell-slot a"
+    }
+  },
+  "onedrive_vercel_index": {
+    "older": {
+      "file_selector": "div.md\\:col-span-7.space-x-2 div.truncate",
+      "file_name": "div.md\\:col-span-7.space-x-2 div.truncate"
+    },
+	"thumbnail_view":{
+	  "file_selector": "div.md\\:grid-cols-4 a:not([title='Download file']) div.space-x-2 span[data-tail]",
+	  "file_name": "div.md\\:grid-cols-4 a:not([title='Download file']) div.space-x-2 span[data-tail]",
+      "attribute": "data-tail"
+	},
+	"list_view":{
+	  "file_selector": "div.md\\:col-span-6.truncate span[data-tail]",
+	  "file_name": "div.md\\:col-span-6.truncate span[data-tail]",
+      "attribute": "data-tail"
+	},
+	"no_thumbnail_option":{
+		"file_selector": "div.md\\:col-span-6.truncate div.truncate",
+		"file_name": "div.md\\:col-span-6.truncate div.truncate"
+	}
+  },
+  "sharelist": {
+    "interactive": {
+      "file_selector": "div.drive-body div[title], div.drive-body a[title]",
+      "attribute": "title"
+    },
+    "download_query": {
+      "file_selector": "div.drive-body a[href]"
+    },
+    "preview_query": {
+      "file_selector": "ul.node-list__body li a[href]"
+    },
+    "no_href": {
+      "file_selector": "div.drive-body a[title]",
+      "attribute": "title"
+    },
+    "list": {
+      "file_selector": "ul.node-list__body li a[href]"
+    }
+  },
+  "watchlist_on_fire": {
+    "main": {
+      "file_selector": "div#list a[href]"
+    }
+  },
+  "yukidrive": {
+    "main": {
+      "file_selector": "div.v-list div[role='listbox'] div[role] div.v-list-item__title, div.v-list div[role='listbox'] a[role] div.v-list-item__title",
+      "file_name": "div.v-list div[role='listbox'] div[role] div.v-list-item__title, div.v-list div[role='listbox'] a[role] div.v-list-item__title"
+    }
+  },
+  "zfile": {
+    "main": {
+      "file_selector": "tr.el-table__row",
+      "file_name": "tr.el-table__row td:first-child div.cell",
+      "file_reject_filter": "svg use[*|href='#el-icon-my-back']"
+    }
+  }
+}

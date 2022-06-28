@@ -1,7 +1,7 @@
 # Zyod
 
 **Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
-Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**. 
+Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**.
 
 For static ODs check out [Zeiver!](https://github.com/ZimCodes/Zeiver)
 
@@ -17,11 +17,12 @@ For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
     - [General](#general)
     - [WebDriver](#webdriver)
     - [Navigator](#navigator)
+    - [Scraper](#scraper)
     - [Downloading](#downloading)
     - [Recording](#recording)
     - [Interactivity](#interactivity)
     - [Misc.](#miscellaneous)
-- [Contribute](#contribute)
+- [Things to Note](#things-to-note)
 - [License](#license)
 
 ## Sample Usage
@@ -31,7 +32,10 @@ While scraping, Zyod will write more text to the console, wait a maximum of *15 
 before scraping each page, search 3 directory levels deep, interact by scrolling, and do not wait in
 between each scroll action.
 
-`python zyod.py --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com`
+```commandline
+zyod --driver "chrome" -v -w 15 -d 3 --scroll --scroll-wait 0 https://od.example.com
+```
+
 ## Open Directory Support
 Supported ODs can be found in [OD.md](https://github.com/ZimCodes/Zyod/blob/main/OD.md).
 
@@ -75,15 +79,30 @@ Enable verbose output
 
 ***--driver***
 
-Type of webdriver to use. *Choices:* `firefox`,`chrome`,`edge`. *Default: `firefox`*.
-
-***--driver-path***
-
-Location of the WebDriver in use. *Default: `%PATH%`*
+Type of webdriver to use. *Choices:* `firefox`,`chrome`,`msedge`. *Default: `firefox`*.
 
 ***--headless***
 
-Activates headless mode. **Cannot be used with `--download`.
+Activates headless mode. Use a browser without the Graphical User Interface component. **Cannot be 
+used with`--download`.**
+
+***--all-certs***
+
+Accepts all certificates *(Beware!)*
+
+Accepts all certificates even invalid ones. **Use this option at your own risk!**
+
+***--compat-driver***
+
+The driver version you want Zyod to download & use. In case an incompatible driver was downloaded, 
+use this option to specify the correct driver version. **Default:** `auto`.
+
+Example:
+To install a driver for Google Chrome version `95.0.4638.69` use:
+
+```commandline
+zyod --compat-driver "95.0.4638.69" https://example.com/folder/images
+```
 
 ---
 
@@ -94,16 +113,21 @@ Activates headless mode. **Cannot be used with `--download`.
 Specify the maximum depth for recursive scraping. _Default: `20`_. **Depth of`1` is current
 directory.**
 
+---
+
+#### Scraper
 ***-w, --wait***
 
 Wait a maximum number of seconds before scraping.
 
-Most dynamic ODs load content on the page *very slooooowly*. This option allows Zyod to wait a 
+Most dynamic ODs load content on the page *very slooooowly*. This option allows Zyod to wait a
 certain amount of time before scraping.
+
+*Default:* `6`
 
 ***--random-wait***
 
-Wait a random amount of seconds before scraping.
+Randomize the amount of time to wait.
 
 The time before scraping will vary between 0.5 * `--wait,-w` (_inclusive_)
 to 1.5 * `--wait,-w` (_exclusive_)
@@ -113,19 +137,19 @@ to 1.5 * `--wait,-w` (_exclusive_)
 #### Downloading
 ***--download***
 
-Enable downloading feature.
+Enable downloading features.
 
 By default, downloading is disabled. Use this option to allow Zyod to download files from ODs. 
 **Cannot be used with `--headless`**.
 
 
-***--dir, --download-dir***
+***--ddir, --download-dir***
 
-Path to store downloaded files.
+Directory path to store downloaded files.
 
-The directory path to store download files. *Default:* `Downloads folder`
+The directory path to store download files. *Default:* `Downloads folder/Zyod`
 
-***--download-wait***
+***--dwait, --download-wait***
 
 Wait a random amount of seconds before downloading.
 
@@ -138,7 +162,10 @@ Wait between 0.5 * `--download-wait` (_inclusive_) to 1.5 * `--download-wait`
 
 ***-o, --output***
 
-The file path to store the scraped links. *Default:* `output.txt`
+The file path to store the scraped links.
+
+The output file path to place all recorded links. Links are appended to the file! 
+*Default:* `./output.txt`.
 
 ***-i, --input***
 
@@ -152,7 +179,7 @@ standalone you must provide `URL..` as an empty string `""`:
 
 ***--no-record***
 
-Disable recording feature.
+Disable recording features.
 
 Recording is enabled by default. Use this option to disable recording.
 
@@ -173,42 +200,90 @@ content from the OD.
 
 Amount of seconds to wait before attempting to scroll again.
 
- *Default:* `4.2`.
+ *Default:* `4`.
+
+***--interact-wait***
+
+Amount of seconds to wait before/after a simulated interaction.
+
+After performing an action (ex: *right-click, click, dragging, etc.*), the OD may go into a loading 
+phase as it loads up the next set of content for the page. Use this option to increase the wait 
+time before/after performing a simulated interaction.
+
+*Default:* `5`.
 
 ---
 
 #### Miscellaneous
 
-***--web-wait***
+***--init-refresh***
 
-Amount of seconds to wait for browser to initially load up each OD before executing Zyod.
+Refresh the FIRST page.
 
-When Zyod visits a dynamic OD for the first time, it may take a long time for the OD to load up. 
-Use this option to delay execution of Zyod, giving the page time to load up. 
+Refresh the first *(initial)* webpage when Zyod navigates to it.
 
-*Default:* `15`.
+***--no-refresh***
 
-***-r, --refresh***
+Do not refresh the page and try again upon a scrape failure.
 
-Refresh the page and try again upon failure.
+Do not refresh the page when Zyod fails to navigate to a page or fails to locate elements on the 
+page.
 
-Refresh the page when Zyod fails to navigate to a page or fails to locate elements on the page.
-Then try again.
+***--init-page-wait***
 
-***--load-wait***
+Amount of seconds to *explicitly* wait after navigating to the first *(initial)* 
+webpage. 
 
-Amount of seconds to wait for a page load to complete before throwing an error. *Default:* `30`.
+*Default:* `0`.
+
+***--page-wait***
+
+Amount of seconds to *implicitly* wait for a page load to complete before throwing an error. 
+
+*Default:* `30`.
+
+***--element-wait***
+
+Amount of seconds to *implicitly* wait for web elements to appear before throwing an error. If 
+Zyod is taking too long to retrieve anything on the current page, try reducing the amoount of 
+seconds. 
+
+*Default*`30`.
 
 ---
 
-## Contribute
+## Things to Note
+### Double Browser Windows
 
-Interested in contributing to the project? 
+In non-headless mode, Zyod will open 2 windows. One of the windows is used to quickly identify 
+the OD type. Once this is finished, Zyod will close this window automatically. The other window 
+is performing the task(s) Zyod has been provided with on the OD.
 
-Please take a look at the [CONTRIBUTING.md](https://github.com/ZimCodes/Zyod/blob/main/CONTRIBUTING.md) file.
+### Files are played instead of downloaded
+
+When Zyod attempts to download a file (such as mp4, mp3, etc.), it will be played in the 
+browser instead. This only happens when you use a Chromium driver. **Use Firefox driver instead.**  
+
+### Recording Incorrect URLs
+
+When recording, incorrect URLs may be generated from certain Open Directory types *(Ex: FODI)*.
+This is likely because the *true* URL themselves are *hidden*, *protected*, or *masked*.
+
+### Master `waiting` options
+
+In order to successfully use Zyod, take complete advantage of the **waiting options**. Since
+Zyod focuses on dynamic ODs, each OD loads differently the next. Some dynamic ODs' webpages loads
+*super slow*, but the resources **ON** the webpages such as images, animations, styles, files, etc
+loads very quickly. There's also some dynamic ODs that works vice versa.
+
+### File Detection
+Any file passing the below regex is considered a file, otherwise it will be considered a directory.
+
+`[^/=#.]+\.(?:[a-zA-Z0-9]{3,7}|[a-zA-Z][a-zA-Z0-9]|[0-9][a-zA-Z])$`
+
+So in short, file extensions must be `> 1` & `< 8`.
 
 ---
-
 ## License
 
 Zyod is licensed under the MIT License.
