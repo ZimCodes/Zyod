@@ -69,9 +69,6 @@ public class NavSupport {
     }
 
     private static void printError(RemoteWebDriver driver) {
-        System.out.printf("Element(s) cannot be found! %s might not be " +
-                        "fully loaded for the element(s) to make an appearance. Or page is " +
-                        "empty.%n",
-                driver.getCurrentUrl());
+        System.out.printf("Web element(s) cannot be found in %s!%n", driver.getCurrentUrl());
     }
 }
