@@ -1,6 +1,7 @@
 # Zyod
 
-**Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
+**Zyod** is designed to *scrape*, *download*, & *record* files from **dynamic ODs** *(JavaScript 
+focused
 Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**.
 
 For static ODs check out [Zeiver!](https://github.com/ZimCodes/Zeiver)

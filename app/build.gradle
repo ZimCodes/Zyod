@@ -9,6 +9,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
 }
 
 repositories {
@@ -62,4 +63,22 @@ test {
         excludeTestsMatching("InteractTest")
         excludeTestsMatching("xyz.zimtools.zyod.extra.*")
     }
+}
+
+shadowJar {
+    archivesBaseName = "zyod"
+    archiveClassifier = ""
+}
+
+tasks.register("renameDist", Copy) {
+    group "custom"
+    it.dependsOn(tasks.assembleShadowDist)
+    from layout.buildDirectory.dir("distributions")
+    rename { String filename -> return "zyod" + filename[filename.size() - 4..filename.size() - 1] }
+    into layout.buildDirectory.dir("release")
+}
+
+tasks.register('noDistDir', Delete) {
+    group "custom"
+    delete layout.buildDirectory.dir("distributions")
 }
