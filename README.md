@@ -232,8 +232,9 @@ page.
 ***--init-page-wait***
 
 Amount of seconds to *explicitly* wait after navigating to the first *(initial)* 
-webpage. *Default:* 
-`0`.
+webpage. 
+
+*Default:* `0`.
 
 ***--page-wait***
 
@@ -252,6 +253,17 @@ seconds.
 ---
 
 ## Things to Note
+### Double Browser Windows
+
+In non-headless mode, Zyod will open 2 windows. One of the windows is used to quickly identify 
+the OD type. Once this is finished, Zyod will close this window automatically. The other window 
+is performing the task(s) Zyod has been provided with on the OD.
+
+### Files are played instead of downloaded
+
+When Zyod attempts to download a file (such as mp4, mp3, etc.), it will be played in the 
+browser instead. This only happens when you use a Chromium driver. **Use Firefox driver instead.**  
+
 ### Recording Incorrect URLs
 
 When recording, incorrect URLs may be generated from certain Open Directory types *(Ex: FODI)*.

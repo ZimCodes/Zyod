@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 class SiftScraperTest {
-    private static final String[] MAIN_ARGS = {"--headless", "-r"};
+    private static final String[] MAIN_ARGS = {"--headless"};
     private static NavInfoParser parser;
     private static RemoteWebDriver driver;
     private Scraper scraper;

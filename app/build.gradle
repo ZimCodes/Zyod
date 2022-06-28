@@ -60,6 +60,6 @@ jar {
 test {
     filter {
         excludeTestsMatching("InteractTest")
-        //excludeTestsMatching("xyz.zimtools.zyod.extra.*")
+        excludeTestsMatching("xyz.zimtools.zyod.extra.*")
     }
 }

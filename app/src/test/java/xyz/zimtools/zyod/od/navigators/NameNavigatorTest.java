@@ -48,7 +48,7 @@ class NameNavigatorTest {
     @Test
     void zFile() {
         this.init(new String[]{ODDemoRef.ZFILE, "--ddir", DownloadDefault.DOWNLOAD_DIR,
-                "--download", "--scroll"});
+                "--download", "--scroll", "--element-wait", "8", "--page-wait", "8"});
         navigator = new ZFileNav(driver, args);
         assertResourceCount(ODDemoRef.ZFILE, 12, 6);
         AppConfig.sleep(5000L);

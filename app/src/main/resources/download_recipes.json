@@ -115,12 +115,7 @@
   },
   "zfile": {
     "main": {
-      "initial_download": "ul.v-contextmenu li.v-contextmenu-item:nth-child(2)",
-      "download_filter": {
-        "file_ids": "tr.el-table__row svg use[*|href]",
-        "attribute": "xlink:href",
-        "file_check": "#el-icon-my-folder"
-      }
+      "initial_download": "i.el-icon-download.operator-btn"
     }
   }
 }

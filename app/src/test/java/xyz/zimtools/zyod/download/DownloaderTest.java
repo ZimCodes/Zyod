@@ -15,7 +15,6 @@ import xyz.zimtools.zyod.browsers.BrowserFactory;
 import xyz.zimtools.zyod.download.filters.DownloadFilter;
 import xyz.zimtools.zyod.download.filters.FODIDLFilter;
 import xyz.zimtools.zyod.download.filters.FileDLFilter;
-import xyz.zimtools.zyod.download.filters.ZFileDLFilter;
 import xyz.zimtools.zyod.fixtures.DownloadDefault;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
 import xyz.zimtools.zyod.fixtures.ODDemoRef;
@@ -43,7 +42,7 @@ class DownloaderTest {
     @AfterEach
     void afterEach() {
         DownloadDefault.cleanDownloadDir();
-        driver.close();
+        driver.quit();
     }
 
     private void init(String[] extraArgs) {
@@ -85,15 +84,7 @@ class DownloaderTest {
 
     @Test
     void zfile() {
-        this.init(new String[]{ODDemoRef.ZFILE});
-        driver.get(ODDemoRef.ZFILE);
-        NavInfo navInfo = navInfoParser.getInfo(ODType.ZFILE.name(), NavType.ZFile.MAIN.name());
-        DownloadInfo downloadInfo = downloadInfoParser.getInfo(ODType.ZFILE.name(),
-                NavType.ZFile.MAIN.name());
-        Downloader = new Downloader(driver, args, navInfo, downloadInfo, new ZFileDLFilter());
-        Downloader.rightClickSingleDownload();
-        AppConfig.sleep(10000L);
-        DownloadAssert.fileExists();
+        this.assertDownload(ODDemoRef.ZFILE,ODType.ZFILE.name(),NavType.ZFile.MAIN.name());
     }
 
     @Test

@@ -35,6 +35,7 @@ public class FirefoxBrowser extends Browser {
         }
         this.profile.setPreference("browser.helperApps.neverAsk.saveToDisk", Writer.readMimeFile());
         this.profile.setPreference("pdfjs.disabled", true);
+        this.profile.setPreference("media.play-stand-alone", false);
         this.options.setProfile(this.profile);
     }
 

@@ -58,6 +58,10 @@ class SettingsTest {
         changeSettingName(setting, "pdfjs.disabled");
         BrowserAssert.settingEquals(profile.getBooleanPreference(setting.toString(), false), true,
                 setting.toString());
+
+        changeSettingName(setting, "media.play-stand-alone");
+        BrowserAssert.settingEquals(profile.getBooleanPreference(setting.toString(), true), false,
+                setting.toString());
         driver.close();
     }
 

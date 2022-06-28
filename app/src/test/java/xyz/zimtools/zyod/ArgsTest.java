@@ -162,9 +162,19 @@ class ArgsTest {
      */
     @Test
     void noURLs() {
-        String[] args = new String[]{"-h", "-v", "-V"};
+        String[] args = new String[]{"-h", "-v"};
         assertThrows(ParameterException.class, () -> new Args(args),
                 "Should not have a positional argument and '--input' option present.");
+    }
+
+    /**
+     * Tests if application version can be printed
+     * */
+    @Test
+    void showVersion() {
+        String[] args = new String[]{"-V"};
+        assertDoesNotThrow(() -> new Args(args),"The '--version' option should be allowed " +
+                "to use without any other option present.");
     }
 
     @Test

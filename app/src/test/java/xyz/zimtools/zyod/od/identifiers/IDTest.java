@@ -3,6 +3,7 @@ package xyz.zimtools.zyod.od.identifiers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import xyz.zimtools.zyod.AppConfig;
 import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.browsers.BrowserFactory;
 import xyz.zimtools.zyod.fixtures.GlobalDefault;
@@ -21,6 +22,7 @@ class IDTest {
         Args args = new Args(GlobalDefault.joinArr(new String[][]{extraArgs, MAIN_ARGS}));
         driver = BrowserFactory.getBrowser(args).getDriver();
         driver.get(extraArgs[0]);
+        AppConfig.sleep(10000L);
     }
 
     @AfterAll
@@ -28,6 +30,7 @@ class IDTest {
         driver.quit();
     }
 
+    //NOTE: OD has a chance of not loading properly without a refresh
     @Test
     void goIndex() {
         this.init(new String[]{ODDemoRef.GO_INDEX});
