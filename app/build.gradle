@@ -73,12 +73,12 @@ shadowJar {
 tasks.register("renameDist", Copy) {
     group "custom"
     it.dependsOn(tasks.assembleShadowDist)
-    from layout.buildDirectory.dir("distributions")
+    from layout.buildDirectory.dir("distributions"), layout.buildDirectory.dir("libs")
     rename { String filename -> return "zyod" + filename[filename.size() - 4..filename.size() - 1] }
     into layout.buildDirectory.dir("release")
 }
 
 tasks.register('noDistDir', Delete) {
     group "custom"
-    delete layout.buildDirectory.dir("distributions")
+    delete layout.buildDirectory.dir("distributions"), layout.buildDirectory.dir("libs")
 }

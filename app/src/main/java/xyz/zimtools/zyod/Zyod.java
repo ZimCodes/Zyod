@@ -1,6 +1,7 @@
 package xyz.zimtools.zyod;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import xyz.zimtools.zyod.args.Args;
 import xyz.zimtools.zyod.assets.Directory;
@@ -37,7 +38,7 @@ class Zyod {
     public void start() {
         if (this.parsedArgs.getArgsMain().isVersion()) {
             Talker.divider();
-            Talker.info("zyod",AppConfig.getAppVersion(),true);
+            Talker.info("zyod", AppConfig.getAppVersion(), true);
             Talker.divider();
             return;
         }
@@ -72,15 +73,20 @@ class Zyod {
      * @param url the webpage to navigate to
      */
     private void goToPage(RemoteWebDriver remoteWebDriver, String url) {
-        Talker.header(String.format("Navigating to %s ", url), false);
-        remoteWebDriver.get(url);
-        if (this.parsedArgs.getArgsMisc().isInitRefresh()) {
-            if (this.parsedArgs.getArgsMain().isVerbose()) {
-                Talker.loading("Refreshing Page", false);
+        Talker.loading(String.format("Navigating to %s ", url), false);
+        try {
+            remoteWebDriver.get(url);
+            if (this.parsedArgs.getArgsMisc().isInitRefresh()) {
+                if (this.parsedArgs.getArgsMain().isVerbose()) {
+                    Talker.loading("Refreshing Page", false);
+                }
+                AppConfig.sleep(6000L);
+                remoteWebDriver.navigate().refresh();
             }
-            AppConfig.sleep(6000L);
+        } catch (TimeoutException e) {
             remoteWebDriver.navigate().refresh();
         }
+
         long initPageWait = this.parsedArgs.getArgsMisc().getInitPageWait();
         if (initPageWait > 0L) {
             AppConfig.sleep(initPageWait);
@@ -118,10 +124,9 @@ class Zyod {
             Directory curDir = dirsToNavigate.pop();
             Talker.currentDirectory(curDir, this.parsedArgs.getArgsMain().isVerbose());
             this.navigator.navigate(curDir);
-            if (this.parsedArgs.getArgsMain().isVerbose()) {
+            if (this.parsedArgs.getArgsMain().isVerbose()){
                 Talker.fileStats(this.navigator.getDirResults(), this.navigator.getFileResults());
             }
-
             this.dirCount += this.navigator.getDirResults().size();
             this.fileSet.addAll(this.navigator.getFileResults());
             dirsToNavigate.addAll(this.navigator.getDirResults());
