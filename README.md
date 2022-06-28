@@ -1,4 +1,5 @@
 # Zyod
+> This is `Zyod 1.X` version. Made with `Python`
 
 **Zyod** is designed to scrape, download, & record files from **dynamic ODs** *(JavaScript focused
 Open Directories)* with the help of **[Selenium](https://github.com/seleniumhq/selenium)**. 
