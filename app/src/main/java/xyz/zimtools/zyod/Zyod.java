@@ -126,6 +126,7 @@ class Zyod {
             this.navigator.navigate(curDir);
             if (this.parsedArgs.getArgsMain().isVerbose()){
                 Talker.fileStats(this.navigator.getDirResults(), this.navigator.getFileResults());
+                AppConfig.sleep(100L);//Required to print current file stats
             }
             this.dirCount += this.navigator.getDirResults().size();
             this.fileSet.addAll(this.navigator.getFileResults());
