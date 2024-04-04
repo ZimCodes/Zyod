@@ -5,7 +5,7 @@ focused Open Directories)* with the help of **[Selenium](https://github.com/sele
 
 For static ODs check out [Zeiver!](https://github.com/ZimCodes/Zeiver)
 
-For ease of use, check out the [Zyod configurator](https://zimtools.xyz/zyod).
+For ease of use, check out the [Zyod configurator](https://zimtools.vercel.app/zyod).
 
 ## Table of Contents
 - [Sample Usage](#sample-usage)
